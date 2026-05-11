@@ -20,9 +20,9 @@ import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webSiteSche
 import { siteConfig } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Calculator - Estimate Costs by Region & Material",
+  title: "Asphalt Calculator - How Much Asphalt Do I Need? Tonnage & Price",
   description:
-    "Free asphalt calculator to estimate driveway, parking lot, and road costs by region. Calculate material needs, coverage, and pricing in seconds.",
+    "Free asphalt calculator to answer how much asphalt you need, estimate tonnage, and compare pricing by region in seconds.",
   path: "/"
 });
 
@@ -57,6 +57,31 @@ const faqs = [
     answer: "Yes. Use the share link button in the calculator to copy a URL with your current inputs."
   },
   {
+    question: "How do I calculate how much asphalt I need?",
+    answer:
+      "Enter the area, thickness, waste allowance, and region above. The calculator uses area × thickness × density ÷ 2000, then adds waste so you get a planning tonnage estimate."
+  },
+  {
+    question: "What is the asphalt formula for tonnage?",
+    answer:
+      "A simple planning formula is area × thickness × density ÷ 2000. This site uses 145 lb/ft³ as the base density, which is a common estimate for quick planning."
+  },
+  {
+    question: "How much asphalt is in a ton?",
+    answer:
+      "At this planning density, one ton covers about 83 square feet at 2 inches or about 55 square feet at 3 inches before waste. The exact coverage changes with thickness and compaction."
+  },
+  {
+    question: "How many tons are in a cubic yard of asphalt?",
+    answer:
+      "A cubic yard of asphalt is roughly 2 tons at the planning density used here. The exact weight depends on the mix and how tightly it is compacted."
+  },
+  {
+    question: "Is blacktop the same as asphalt?",
+    answer:
+      "Yes. Blacktop is another common name for asphalt, so the same calculator and formula apply to both terms."
+  },
+  {
     question: "Why doesn't this calculator use ZIP code pricing?",
     answer:
       "Asphalt pricing varies by region and local market conditions beyond location alone. Our regional estimates provide a solid planning baseline. For precise local pricing, compare quotes from contractors in your area."
@@ -66,12 +91,13 @@ const faqs = [
 const specPoints = [
   "145 lb/ft³ density",
   "7% waste default",
-  "Region-based pricing",
+  "Tonnage + pricing",
   "Copyable estimate link"
 ] as const;
 
 const quickNav = [
   { label: "How it works", href: "#how-it-works" },
+  { label: "Formula", href: "#formula" },
   { label: "Cost factors", href: "#cost-factors" },
   { label: "Regional pricing", href: "#regional-pricing" },
   { label: "Common mistakes", href: "#mistakes" },
@@ -130,6 +156,29 @@ const howItWorks = [
     title: "Pick a region",
     text:
       "Material and labor prices change by market. Choosing the closest region gives you a more useful first-pass range than a single national average."
+  }
+] as const;
+
+const formulaCards = [
+  {
+    title: "Standard formula",
+    text:
+      "Area × thickness × density ÷ 2000 gives a planning tonnage estimate. The calculator uses 145 lb/ft³ as the base density."
+  },
+  {
+    title: "How much in a ton",
+    text:
+      "At this density, one ton covers about 83 square feet at 2 inches or about 55 square feet at 3 inches before waste."
+  },
+  {
+    title: "Tons per cubic yard",
+    text:
+      "One cubic yard of asphalt is roughly 2 tons, depending on the mix and how tightly it is compacted."
+  },
+  {
+    title: "Blacktop calculator",
+    text:
+      "Blacktop is another common name for asphalt, so the same formula and calculator work for both terms."
   }
 ] as const;
 
@@ -330,11 +379,11 @@ export default function HomePage() {
             <h1 className="max-w-5xl text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
               Asphalt Calculator
               <br />
-              Instant Cost Estimates
+              How Much Asphalt Do I Need?
             </h1>
             <p className="max-w-4xl text-lg leading-8 text-zinc-600">
               Get a quick planning number for driveways, overlays, and small paving jobs. Enter the area, choose a
-              thickness, and compare a regional cost range before you ask for quotes.
+              thickness, and compare tonnage and price before you ask for quotes.
             </p>
             <div className="rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -359,6 +408,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section id="formula" className="scroll-mt-24 border-y border-zinc-200 bg-white px-4 py-14">
+        <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Formula and coverage</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Asphalt formula, tonnage, and coverage</h2>
+            <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
+              People search for this page using phrases like how to calculate asphalt, asphalt formula, blacktop calculator,
+              and how much asphalt in a ton. The planning formula here is area × thickness × density ÷ 2000, with 145 lb/ft³
+              as the base density.
+            </p>
+            <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-600">
+              That means one ton covers about 83 square feet at 2 inches, about 55 square feet at 3 inches, and roughly
+              one cubic yard comes out close to 2 tons before waste and compaction changes the number.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {formulaCards.map((item) => (
+              <Card key={item.title} className="border-zinc-200">
+                <CardContent className="space-y-2">
+                  <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                  <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="how-it-works" className="scroll-mt-24 border-y border-zinc-200 bg-zinc-50 px-4 py-14">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
@@ -369,10 +447,10 @@ export default function HomePage() {
               thickness, standard asphalt density, a waste allowance, and broad regional pricing. The result is a
               planning number, not a final bid.
             </p>
-          </div>
+            </div>
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            {howItWorks.map((item, index) => (
+            <div className="grid gap-4 sm:grid-cols-3">
+              {howItWorks.map((item, index) => (
               <Card key={item.title} className="border-zinc-200">
                 <CardContent className="space-y-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">Step {index + 1}</p>

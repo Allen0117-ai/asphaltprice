@@ -197,6 +197,14 @@ export default function AsphaltContractorGuidePage() {
                   Open asphalt calculator
                   <ArrowRight className="h-4 w-4" />
                 </Link>
+                <Link href="/asphalt-tonnage-calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                  Check tonnage
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/asphalt-prices-by-state" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                  See state pricing
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
                 <Link href="/asphalt-cost-guide" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
                   Read the cost guide
                   <ArrowRight className="h-4 w-4" />

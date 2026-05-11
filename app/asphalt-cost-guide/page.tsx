@@ -13,15 +13,16 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "A practical asphalt cost guide with pricing basics, common asphalt project types, waste allowance tips, and quote-checking advice.";
+  "A practical asphalt cost guide with pricing basics, formula notes, common asphalt project types, waste allowance tips, and quote-checking advice.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Cost Guide | Pricing, Basics, and Quote Tips",
+  title: "Asphalt Cost Guide | Pricing, Formula & Quote Tips",
   description: pageDescription,
   path: "/asphalt-cost-guide"
 });
 
 const quickNav = [
+  { label: "Formula", href: "#formula" },
   { label: "Asphalt basics", href: "#basics" },
   { label: "Common types", href: "#types" },
   { label: "Price factors", href: "#price-factors" },
@@ -50,6 +51,26 @@ const faqs = [
   {
     question: "Should I ask for more than one bid?",
     answer: "Yes. A few quotes make it easier to spot a number that is too high, too low, or missing important work."
+  },
+  {
+    question: "How do I calculate asphalt costs?",
+    answer:
+      "Start with tonnage: area × thickness × density ÷ 2000, then multiply by the price per ton. Add labor, prep, and cleanup for the full project cost."
+  },
+  {
+    question: "What is the asphalt formula for tonnage?",
+    answer:
+      "The planning formula is area × thickness × density ÷ 2000. This site uses 145 lb/ft³ as the base density for quick estimates."
+  },
+  {
+    question: "How much does asphalt cost per ton?",
+    answer:
+      "The price changes by region and project scope, but the tonnage calculator and state pricing page give you a better planning range than a single national average."
+  },
+  {
+    question: "Is blacktop the same as asphalt?",
+    answer:
+      "Yes. Blacktop is another common name for asphalt, so the same formula and pricing logic apply to both."
   }
 ];
 
@@ -70,6 +91,24 @@ const asphaltBasics = [
     title: "Installed price includes more than material",
     text:
       "Material-only pricing is just the asphalt. Installed pricing also reflects labor, equipment, haul distance, setup time, edges, cleanup, and local demand."
+  }
+] as const;
+
+const formulaCards = [
+  {
+    title: "How to calculate asphalt",
+    text:
+      "Start with area and thickness, then use the density-based tonnage formula. That gives you a planning number before you compare quotes."
+  },
+  {
+    title: "Blacktop calculator",
+    text:
+      "Blacktop is just another name for asphalt, so the same calculator and pricing logic work for both terms."
+  },
+  {
+    title: "Tons per cubic yard",
+    text:
+      "At the base planning density, one cubic yard of asphalt is close to 2 tons. Mix and compaction will move the real number a bit."
   }
 ] as const;
 
@@ -99,6 +138,11 @@ const priceFactors = [
 ] as const;
 
 const relatedPages = [
+  {
+    href: "/#calculator",
+    title: "Main asphalt calculator",
+    text: "Go back to the main estimate page for tonnage and pricing together."
+  },
   {
     href: "/asphalt-tonnage-calculator",
     title: "Asphalt tonnage calculator",
@@ -146,12 +190,37 @@ export default function AsphaltCostGuidePage() {
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Cost Guide</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              This guide explains the rough price bands behind the calculator so the result feels easier to read and
-              easier to compare with real bids.
+              This guide explains the rough price bands behind the calculator, plus the formula and terms people
+              search for when they want to know how much asphalt they need.
             </p>
           </div>
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
+
+          <section id="formula" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                <Scale className="h-4 w-4" />
+                Formula and terms
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">How to calculate asphalt and read coverage</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                People search for this topic using phrases like asphalt formula, blacktop calculator, and tons per
+                cubic yard. The planning formula here is area × thickness × density ÷ 2000, with 145 lb/ft³ as the
+                base density.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {formulaCards.map((item) => (
+                <Card key={item.title} className="border-zinc-200">
+                  <CardContent className="space-y-2">
+                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
 
           <div className="grid gap-4 lg:grid-cols-3">
             {[
@@ -308,6 +377,11 @@ export default function AsphaltCostGuidePage() {
                 <p>
                   If a supplier sends a quote in tonnes, ask whether they mean metric tonnes and have them convert the
                   order before you compare it with a contractor bid written in tons.
+                </p>
+                <p>
+                  At the planning density used here, one cubic yard of asphalt is roughly 2 tons. That is a useful
+                  shortcut when you are checking coverage or comparing a blacktop calculator result with a supplier
+                  quote.
                 </p>
               </div>
             </div>

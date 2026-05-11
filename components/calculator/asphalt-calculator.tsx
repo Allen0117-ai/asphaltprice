@@ -49,7 +49,7 @@ const modeCopy: Record<
   }
 > = {
   asphalt: {
-    intro: "Use area or length × width to estimate asphalt material and installed cost for a basic project.",
+    intro: "Use area or length × width to answer how much asphalt you need and estimate material and installed cost for a basic project.",
     ctaLabel: "Copy estimate",
     ctaHint: "Paste these numbers into a message when you ask a local paving contractor for a quote.",
     ctaTitle: "Ready to ask for a quote?"
@@ -454,7 +454,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
 
           <div className="grid gap-3 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Input mode</Label>
+              <p className="text-sm font-medium text-zinc-700">Input mode</p>
               <div className="inline-flex rounded-lg border border-zinc-200 bg-zinc-100 p-1">
                 <Button
                   variant={inputMode === "area" ? "default" : "ghost"}
@@ -482,7 +482,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             </div>
 
             <div className="space-y-2">
-              <Label>Units</Label>
+              <p className="text-sm font-medium text-zinc-700">Units</p>
               <div className="inline-flex rounded-lg border border-zinc-200 bg-zinc-100 p-1">
                 <Button
                   variant={unitSystem === "imperial" ? "default" : "ghost"}
@@ -590,6 +590,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                 <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
                 <select
                   id="region"
+                  autoComplete="off"
                   value={region}
                   onChange={(event) => setRegion(event.target.value as RegionKey)}
                   className="h-10 w-full rounded-md border border-zinc-200 bg-white pl-9 pr-3 text-sm text-zinc-950 outline-none focus:border-zinc-950"

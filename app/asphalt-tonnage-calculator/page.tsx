@@ -13,10 +13,10 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Calculate how many tons of asphalt you need, how much extra to buy, and how tons differ from tonnes in plain language.";
+  "Calculate how much asphalt you need, how many tons to buy, and how tons differ from tonnes in plain language.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Tonnage Calculator | Tons, Coverage, and Waste",
+  title: "Asphalt Tonnage Calculator | How Much Asphalt Do I Need?",
   description: pageDescription,
   path: "/asphalt-tonnage-calculator"
 });
@@ -48,6 +48,21 @@ const faqs = [
   {
     question: "What is the difference between tons and tonnes?",
     answer: "In the U.S., quotes usually use tons. Some suppliers use tonnes, so keep the unit consistent before you order."
+  },
+  {
+    question: "How much asphalt is in a ton?",
+    answer:
+      "At the planning density used on this site, one ton covers about 83 square feet at 2 inches or about 55 square feet at 3 inches before waste."
+  },
+  {
+    question: "What is tons per cubic yard for asphalt?",
+    answer:
+      "One cubic yard is roughly 2 tons at this planning density, though the exact weight changes with the mix and compaction."
+  },
+  {
+    question: "Can I use this as a blacktop calculator?",
+    answer:
+      "Yes. Blacktop is another common name for asphalt, so the same tonnage formula works for both terms."
   }
 ];
 
@@ -75,6 +90,11 @@ const planningTips = [
 ] as const;
 
 const relatedPages = [
+  {
+    href: "/#calculator",
+    title: "Main asphalt calculator",
+    text: "Go back to the main page for tonnage and pricing together."
+  },
   {
     href: "/asphalt-cost-guide",
     title: "Asphalt cost guide",
@@ -122,8 +142,8 @@ export default function AsphaltTonnagePage() {
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Tonnage Calculator</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this page when you only need the tonnage number. It still shows the coverage and the waste buffer so
-              the result is easier to trust.
+              Use this page when you only need the tonnage number or want to answer how much asphalt you need. It
+              still shows the coverage and the waste buffer so the result is easier to trust.
             </p>
           </div>
 
@@ -236,6 +256,10 @@ export default function AsphaltTonnagePage() {
                 <p>
                   If you are not sure which unit a supplier used, ask them to write it out plainly before you place an
                   order.
+                </p>
+                <p>
+                  At the planning density used here, one cubic yard of asphalt is roughly 2 tons, so tonnage and
+                  coverage are worth checking before you order. This is the quick tons per cubic yard shortcut.
                 </p>
               </div>
             </div>

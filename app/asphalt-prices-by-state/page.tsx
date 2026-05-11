@@ -14,10 +14,10 @@ import { formatCurrency } from "@/lib/calculator/formulas";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Broad asphalt price bands by state group with simple notes on regional cost differences, quote checks, and related calculators.";
+  "Broad asphalt price bands by state group with simple notes on regional cost differences, quote checks, tonnage, and related calculators.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Prices by State | Regional Cost Bands",
+  title: "Asphalt Prices by State | Regional Pricing Guide",
   description: pageDescription,
   path: "/asphalt-prices-by-state"
 });
@@ -48,6 +48,16 @@ const faqs = [
   {
     question: "Should I use state prices or the calculator first?",
     answer: "Use both. The state page gives a regional band, and the calculator turns your actual area into tonnage and cost."
+  },
+  {
+    question: "How do I calculate total cost for my state?",
+    answer:
+      "First calculate tonnage with the main calculator or the tonnage page. Then multiply by your state group's price per ton and add labor or prep if you need a full project budget."
+  },
+  {
+    question: "Can I use this with a blacktop calculator?",
+    answer:
+      "Yes. Blacktop is another common name for asphalt, so the same regional pricing logic applies."
   }
 ];
 
@@ -77,6 +87,11 @@ const whyPricesVary = [
 ] as const;
 
 const relatedPages = [
+  {
+    href: "/#calculator",
+    title: "Main asphalt calculator",
+    text: "Go back to the main page for tonnage and pricing together."
+  },
   {
     href: "/asphalt-driveway-cost-calculator",
     title: "Asphalt driveway cost calculator",
@@ -122,10 +137,13 @@ export default function AsphaltPricesByStatePage() {
               <MapPinned className="h-3.5 w-3.5" />
               Broad state-level bands
             </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Prices by State</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
+              Asphalt Prices by State
+            </h1>
             <p className="text-lg leading-8 text-zinc-600">
               This page groups states into practical pricing bands so you can start with a realistic range before you
-              get into a real local bid.
+              get into a real local bid. Use it with the main calculator when you want to know how much asphalt you
+              need and what the project might cost.
             </p>
           </div>
 
@@ -217,7 +235,10 @@ export default function AsphaltPricesByStatePage() {
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">How to use these bands</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
-                <p>Use the state group as a starting point, then enter your actual square footage in the calculator.</p>
+                <p>
+                  Use the state group as a starting point, then enter your actual square footage in the main
+                  calculator or tonnage page.
+                </p>
                 <p>When you compare bids, keep thickness, prep scope, and cleanup assumptions the same.</p>
                 <p>
                   If a quote is far outside the band, do not reject it immediately. Ask what is included. The difference
