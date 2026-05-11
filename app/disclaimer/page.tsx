@@ -4,7 +4,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Disclaimer",
-  description: "Disclaimer for Asphalt Price Calculator.",
+  description: "Disclaimer for Asphalt Calculator.",
   path: "/disclaimer"
 });
 

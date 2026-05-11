@@ -1,36 +1,125 @@
 import Link from "next/link";
+import type { Route } from "next";
 
-import { ArrowRight, CircleDollarSign, TriangleAlert } from "lucide-react";
+import { ArrowRight, BookOpen, CircleDollarSign, Layers3, Scale, TriangleAlert } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { FaqAccordion } from "@/components/content/faq-accordion";
+import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
 import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
+const pageDescription =
+  "A practical asphalt cost guide with pricing basics, common asphalt project types, waste allowance tips, and quote-checking advice.";
+
 export const metadata = buildMetadata({
-  title: "Asphalt Cost Guide",
-  description: "A practical guide to asphalt costs, pricing ranges, and the main things that change a bid.",
+  title: "Asphalt Cost Guide | Pricing, Basics, and Quote Tips",
+  description: pageDescription,
   path: "/asphalt-cost-guide"
 });
+
+const quickNav = [
+  { label: "Asphalt basics", href: "#basics" },
+  { label: "Common types", href: "#types" },
+  { label: "Price factors", href: "#price-factors" },
+  { label: "Estimate check", href: "#estimator" },
+  { label: "Extra to buy", href: "#extra" },
+  { label: "Ton vs tonne", href: "#units" },
+  { label: "Related tools", href: "#related-tools" },
+  { label: "FAQ", href: "#faq" }
+] as const;
+
+const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.label }));
 
 const faqs = [
   {
     question: "Why does asphalt pricing vary so much?",
-    answer: "Site access, prep work, haul distance, and local labor can all shift the final number."
+    answer: "Site access, prep work, haul distance, local labor, and the thickness of the asphalt all change the final number."
   },
   {
     question: "Is a low estimate bad?",
-    answer: "Not always. It can be fine for early planning, but a contractor still needs to inspect the site."
+    answer: "Not always. It can be fine for early planning, but check whether the quote includes base repair, cleanup, and the right thickness."
+  },
+  {
+    question: "How much extra asphalt should I plan for?",
+    answer: "A small waste allowance is smart. Straightforward jobs often use a modest buffer, while irregular shapes and tight edges need more room."
   },
   {
     question: "Should I ask for more than one bid?",
-    answer: "Yes. A few quotes make it easier to spot a number that is too high or too low."
+    answer: "Yes. A few quotes make it easier to spot a number that is too high, too low, or missing important work."
   }
 ];
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Asphalt Cost Guide", href: "/asphalt-cost-guide" }];
+
+const asphaltBasics = [
+  {
+    title: "Asphalt is the surface, not the whole job",
+    text:
+      "The blacktop layer matters, but the base underneath usually decides how long the driveway holds up. Soft base, poor drainage, or bad grading can make a cheap surface fail early."
+  },
+  {
+    title: "Thickness changes material fast",
+    text:
+      "A thicker surface uses more tons over the same square footage. That is why a small change from 2 inches to 3 inches can move the estimate noticeably."
+  },
+  {
+    title: "Installed price includes more than material",
+    text:
+      "Material-only pricing is just the asphalt. Installed pricing also reflects labor, equipment, haul distance, setup time, edges, cleanup, and local demand."
+  }
+] as const;
+
+const asphaltTypes = [
+  {
+    title: "New driveway",
+    text:
+      "A new install usually includes grading, compacted base, and a fresh asphalt layer. This is the cleanest scope to price, but site prep can still change the bid."
+  },
+  {
+    title: "Overlay or resurfacing",
+    text:
+      "An overlay adds asphalt over an existing surface. It can be cost-effective when the base is still sound, but it should not hide drainage or structural problems."
+  },
+  {
+    title: "Repair before paving",
+    text:
+      "Some projects need soft spots cut out, cracks handled, or edges rebuilt before the final layer goes down. Those repairs belong in the quote."
+  }
+] as const;
+
+const priceFactors = [
+  "Compacted thickness and total square footage",
+  "Base repair, grading, drainage, or old surface removal",
+  "Truck access, staging room, haul distance, and cleanup",
+  "Local labor rates, seasonality, and asphalt plant availability"
+] as const;
+
+const relatedPages = [
+  {
+    href: "/asphalt-tonnage-calculator",
+    title: "Asphalt tonnage calculator",
+    text: "Use this when you only need the material quantity before pricing the job."
+  },
+  {
+    href: "/asphalt-driveway-cost-calculator",
+    title: "Asphalt driveway cost calculator",
+    text: "Turn driveway size, thickness, waste, and region into a rough installed range."
+  },
+  {
+    href: "/asphalt-prices-by-state",
+    title: "Asphalt prices by state",
+    text: "Check broad regional price bands before comparing local bids."
+  },
+  {
+    href: "/asphalt-contractor-guide",
+    title: "Asphalt contractor guide",
+    text: "Use this after the estimate to compare quote scope and red flags."
+  }
+] as const;
 
 export default function AsphaltCostGuidePage() {
   return (
@@ -40,7 +129,7 @@ export default function AsphaltCostGuidePage() {
           breadcrumbSchema(breadcrumbs),
           webAppSchema({
             name: "Asphalt Cost Guide",
-            description: siteConfig.description,
+            description: pageDescription,
             url: `${siteConfig.url}/asphalt-cost-guide`
           }),
           faqSchema(faqs)
@@ -62,7 +151,7 @@ export default function AsphaltCostGuidePage() {
             </p>
           </div>
 
-          <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 700, thicknessInches: 3, wastePercent: 7, region: "national" }} />
+          <StickySectionNav sections={quickNavSections} className="mt-2" />
 
           <div className="grid gap-4 lg:grid-cols-3">
             {[
@@ -72,7 +161,7 @@ export default function AsphaltCostGuidePage() {
               ],
               [
                 "What to watch for",
-                "A price that looks too neat can miss base repair, access issues, or cleanup work."
+                "A price that looks too neat can miss base repair, access issues, cleanup, or a thinner asphalt layer."
               ],
               ["Best use of this page", "Get a quick range, then compare it with one or two real contractor quotes."]
             ].map(([title, text]) => (
@@ -85,27 +174,181 @@ export default function AsphaltCostGuidePage() {
             ))}
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+          <section id="basics" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                <BookOpen className="h-4 w-4" />
+                Asphalt basics
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">What an asphalt price is really covering</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                Asphalt pricing starts with the amount of material, but the job is bigger than the black surface you
+                see at the end. A useful estimate should connect area, thickness, base condition, region, waste, and
+                installation scope.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {asphaltBasics.map((item) => (
+                <Card key={item.title} className="border-zinc-200">
+                  <CardContent className="space-y-2">
+                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          <section id="types" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                <Layers3 className="h-4 w-4" />
+                Common project types
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">Not every asphalt job should be priced the same way</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                Two projects can have the same square footage and still need different budgets. New work, overlays,
+                and repairs use different prep assumptions, so compare quotes by scope before comparing the total.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {asphaltTypes.map((item) => (
+                <Card key={item.title} className="border-zinc-200">
+                  <CardContent className="space-y-2">
+                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          <section id="price-factors" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">What changes the quote</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
-                <p>Thickness has the biggest effect because it directly changes the tonnage.</p>
-                <p>Base repair can add a surprising amount to the final number if the old surface is failing.</p>
-                <p>Driveways with tight access or long haul distance can cost more than the same size pad in an easy location.</p>
+                <p>
+                  Thickness has the biggest effect because it directly changes the tonnage. A small driveway with a
+                  thick build can use more asphalt than a larger, thin overlay.
+                </p>
+                <p>
+                  Base repair can add a surprising amount if the old surface is failing. Driveways with tight access
+                  or long haul distance can also cost more than the same size pad in an easy location.
+                </p>
               </div>
+              <ul className="grid gap-2 text-sm leading-6 text-zinc-600 sm:grid-cols-2">
+                {priceFactors.map((item) => (
+                  <li key={item} className="rounded-lg border border-zinc-200 bg-white p-3">
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
                 <TriangleAlert className="h-5 w-5 text-amber-600" />
                 <p className="text-base font-medium text-zinc-950">Keep the estimate honest</p>
                 <p className="text-sm leading-6 text-zinc-600">
-                  The calculator is meant for planning. If the site needs heavy prep, the real price can move well above the first pass.
+                  The calculator is meant for planning. If the site needs heavy prep, drainage correction, or removal
+                  work, the real price can move well above the first pass.
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </section>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+          <section id="estimator" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Check a project after you understand the cost drivers</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                The guide above explains why asphalt prices move. Use the calculator here as a quick check after you
+                know the area, thickness, waste allowance, and region you want to compare.
+              </p>
+            </div>
+            <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 700, thicknessInches: 3, wastePercent: 7, region: "national" }} />
+          </section>
+
+          <section id="extra" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">How much extra asphalt to buy</h2>
+              <div className="space-y-3 text-sm leading-7 text-zinc-600">
+                <p>
+                  Do not plan an asphalt order down to the last pound. A waste allowance covers small measuring errors,
+                  curved edges, trimming around drains, material left in the truck, and handling loss during placement.
+                </p>
+                <p>
+                  Simple rectangular jobs can often use a modest buffer. Irregular driveways, narrow sections, or work
+                  with many edges usually deserve more room because the crew has less margin for exact placement.
+                </p>
+              </div>
+            </div>
+            <Card className="border-zinc-200">
+              <CardContent className="space-y-3">
+                <p className="text-base font-medium text-zinc-950">Practical rule</p>
+                <p className="text-sm leading-6 text-zinc-600">
+                  Use the waste field in the calculator as a planning buffer, then ask the contractor or supplier how
+                  they round orders for your local plant and truck size.
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section id="units" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                <Scale className="h-4 w-4" />
+                Units
+              </div>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Ton vs tonne in asphalt estimates</h2>
+              <div className="space-y-3 text-sm leading-7 text-zinc-600">
+                <p>
+                  In the United States, most asphalt quotes use tons. Some spec sheets, suppliers, or non-US references
+                  use tonnes. The words are close, but they are not the same unit, so do not mix them when comparing
+                  paperwork.
+                </p>
+                <p>
+                  If a supplier sends a quote in tonnes, ask whether they mean metric tonnes and have them convert the
+                  order before you compare it with a contractor bid written in tons.
+                </p>
+              </div>
+            </div>
+            <Card className="border-zinc-200">
+              <CardContent className="space-y-3">
+                <p className="text-base font-medium text-zinc-950">Quick check</p>
+                <p className="text-sm leading-6 text-zinc-600">
+                  Keep the unit consistent from the calculator result to the supplier quote. That one check prevents
+                  many early budgeting mistakes.
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section id="related-tools" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use this guide with these tools</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                The guide explains what can move the number. The related pages help you turn that explanation into a
+                quantity, a driveway budget, a regional check, or a contractor conversation.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {relatedPages.map((item) => (
+                <Link key={item.href} href={item.href as Route}>
+                  <Card className="h-full border-zinc-200 transition-colors hover:border-zinc-300 hover:bg-zinc-50">
+                    <CardContent className="space-y-3">
+                      <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                      <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                        Open page
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
+          </section>
+
+          <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">What a good quote should spell out</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
@@ -135,23 +378,14 @@ export default function AsphaltCostGuidePage() {
                 </ul>
               </CardContent>
             </Card>
-          </div>
+          </section>
 
-          <div className="space-y-4">
+          <section id="faq" className="scroll-mt-24 space-y-4">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Common questions</h2>
-            <div className="grid gap-4 md:grid-cols-3">
-              {faqs.map((item) => (
-                <Card key={item.question} className="border-zinc-200">
-                  <CardContent className="space-y-2">
-                    <p className="text-base font-medium text-zinc-950">{item.question}</p>
-                    <p className="text-sm leading-6 text-zinc-600">{item.answer}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </div>
+            <FaqAccordion items={faqs} defaultOpenIndex={0} />
+          </section>
 
-          <Link href="/asphalt-vs-concrete-driveway-cost-calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+          <Link href={"/asphalt-vs-concrete-driveway-cost-calculator" as Route} className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
             Compare against concrete
             <ArrowRight className="h-4 w-4" />
           </Link>

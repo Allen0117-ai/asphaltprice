@@ -1,6 +1,6 @@
 export const siteConfig = {
-  name: "Asphalt Price Calculator",
+  name: "Asphalt Calculator",
   shortName: "Asphalt Calculator",
-  url: "https://asphaltprice.com",
+  url: "https://www.asphaltprice.com",
   description: "Free asphalt calculator to estimate tonnage, cost, and driveway pricing."
 };

@@ -1,8 +1,12 @@
 import Link from "next/link";
+import type { Route } from "next";
 
 import { ArrowRight, Sparkles } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { FaqAccordion } from "@/components/content/faq-accordion";
+import { FeatureGrid } from "@/components/content/feature-grid";
+import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
 import {
@@ -53,34 +57,56 @@ const faqs = [
   }
 ];
 
-const relatedCalculators = [
-  {
-    href: "/asphalt-driveway-cost-calculator",
-    title: "Asphalt driveway cost calculator",
-    text: "Price out a standard driveway with tons and installed cost."
-  },
-  {
-    href: "/asphalt-tonnage-calculator",
-    title: "Asphalt tonnage calculator",
-    text: "Focus only on material quantity and coverage per ton."
-  },
-  {
-    href: "/asphalt-vs-concrete-driveway-cost-calculator",
-    title: "Asphalt vs concrete",
-    text: "See the rough cost gap between the two materials."
-  },
-  {
-    href: "/driveway-cost-calculator",
-    title: "Driveway cost calculator",
-    text: "Compare asphalt, concrete, and gravel in one place."
-  }
-] as const;
-
 const specPoints = [
   "145 lb/ft³ density",
   "7% waste default",
   "Region-based pricing",
   "Copyable estimate link"
+] as const;
+
+const quickNav = [
+  { label: "How it works", href: "#how-it-works" },
+  { label: "Cost factors", href: "#cost-factors" },
+  { label: "Regional pricing", href: "#regional-pricing" },
+  { label: "Common mistakes", href: "#mistakes" },
+  { label: "Examples", href: "#examples" },
+  { label: "Related calculators", href: "#related-calculators" },
+  { label: "FAQ", href: "#faq" }
+] as const;
+
+const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.label }));
+
+const relatedCalculatorFeatureItems = [
+  {
+    href: "/asphalt-driveway-cost-calculator" as Route,
+    title: "Asphalt driveway cost calculator",
+    text: "Price out a standard driveway with tons and installed cost.",
+    iconName: "Home" as const
+  },
+  {
+    href: "/asphalt-tonnage-calculator" as Route,
+    title: "Asphalt tonnage calculator",
+    text: "Focus only on material quantity and coverage per ton.",
+    iconName: "Scale" as const
+  },
+  {
+    href: "/how-much-asphalt-do-i-need" as Route,
+    title: "How much asphalt do I need?",
+    text: "Walk through area, thickness, waste, and tons in plain language.",
+    iconName: "Ruler" as const
+  },
+  {
+    href: "/asphalt-vs-concrete-driveway-cost-calculator" as Route,
+    title: "Asphalt vs concrete",
+    text: "See the rough cost gap between the two materials.",
+    iconName: "Layers3" as const
+  },
+  {
+    href: "/driveway-cost-calculator" as Route,
+    title: "Driveway cost calculator",
+    text: "Compare asphalt, concrete, and gravel in one place.",
+    iconName: "Calculator" as const
+  }
 ] as const;
 
 const howItWorks = [
@@ -299,9 +325,8 @@ export default function HomePage() {
               Asphalt Calculator
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-zinc-600">
-              Estimate asphalt tonnage, material cost, and installed cost for a driveway, pad, or small paving job
-              without waiting for a quote. Enter the area, choose a thickness, select a region, and use the result as
-              a practical starting point before you talk with local contractors.
+              Get a quick planning number for driveways, overlays, and small paving jobs. Enter the area, choose a
+              thickness, and compare a regional cost range before you ask for quotes.
             </p>
             <div className="max-w-5xl rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -316,18 +341,20 @@ export default function HomePage() {
           </div>
 
           <AsphaltCalculator mode="asphalt" />
+
+          <StickySectionNav sections={quickNavSections} className="mt-2" />
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14">
+      <section id="how-it-works" className="scroll-mt-24 border-y border-zinc-200 bg-zinc-50 px-4 py-14">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">How it works</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Build the estimate from three inputs</h2>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Turn a few inputs into a planning number</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
               The calculator turns simple project details into a rough asphalt budget. It uses square footage,
-              thickness, standard asphalt density, a waste allowance, and broad regional pricing. The result is not a
-              final bid, but it gives you a clear number to use when planning, comparing options, or reviewing quotes.
+              thickness, standard asphalt density, a waste allowance, and broad regional pricing. The result is a
+              planning number, not a final bid.
             </p>
           </div>
 
@@ -345,7 +372,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-14">
+      <section id="cost-factors" className="scroll-mt-24 px-4 py-14">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
             <div>
@@ -379,7 +406,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14">
+      <section id="regional-pricing" className="scroll-mt-24 border-y border-zinc-200 bg-zinc-50 px-4 py-14">
         <div className="mx-auto max-w-6xl space-y-8">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Regional pricing</p>
@@ -423,7 +450,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-14">
+      <section id="mistakes" className="scroll-mt-24 px-4 py-14">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Avoid budget misses</p>
@@ -455,7 +482,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-zinc-200 bg-zinc-50 px-4 py-14">
+      <section id="related-calculators" className="scroll-mt-24 border-y border-zinc-200 bg-zinc-50 px-4 py-14">
         <div className="mx-auto max-w-6xl space-y-8">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Why use this tool</p>
@@ -480,7 +507,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="px-4 py-14">
+      <section id="examples" className="scroll-mt-24 px-4 py-14">
         <div className="mx-auto max-w-6xl space-y-8">
           <div className="max-w-3xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Examples</p>
@@ -525,26 +552,17 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {relatedCalculators.map((item) => (
-              <Link key={item.href} href={item.href}>
-                <Card className="h-full border-zinc-200 transition-colors hover:border-zinc-300 hover:bg-white">
-                  <CardContent className="space-y-3">
-                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
-                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
-                    <span className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
-                      Open calculator
-                      <ArrowRight className="h-4 w-4" />
-                    </span>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
+          <FeatureGrid
+            className="mt-8"
+            columns={4}
+            gridClassName="xl:grid-cols-5"
+            items={relatedCalculatorFeatureItems}
+            ctaLabel="Open calculator"
+          />
         </div>
       </section>
 
-      <section className="px-4 py-14">
+      <section id="faq" className="scroll-mt-24 px-4 py-14">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
             <div>
@@ -555,16 +573,7 @@ export default function HomePage() {
                 They are meant to keep the estimate practical and easy to use.
               </p>
             </div>
-            <div className="space-y-4">
-              {faqs.map((item) => (
-                <Card key={item.question} className="border-zinc-200">
-                  <CardContent className="space-y-2">
-                    <p className="text-base font-medium text-zinc-950">{item.question}</p>
-                    <p className="text-sm leading-6 text-zinc-600">{item.answer}</p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+            <FaqAccordion items={faqs} defaultOpenIndex={0} />
           </div>
         </div>
       </section>
@@ -583,7 +592,7 @@ export default function HomePage() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {nextSteps.map((item) => (
-              <Link key={item.href} href={item.href}>
+              <Link key={item.href} href={item.href as Route}>
                 <Card className="h-full border-zinc-200 transition-colors hover:border-zinc-300 hover:bg-white">
                   <CardContent className="space-y-3">
                     <p className="text-base font-medium text-zinc-950">{item.title}</p>

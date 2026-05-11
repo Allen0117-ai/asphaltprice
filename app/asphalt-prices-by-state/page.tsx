@@ -1,7 +1,10 @@
 import Link from "next/link";
+import type { Route } from "next";
 
-import { MapPinned, ArrowRight } from "lucide-react";
+import { ArrowRight, BookOpen, MapPinned } from "lucide-react";
 
+import { FaqAccordion } from "@/components/content/faq-accordion";
+import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
@@ -10,11 +13,24 @@ import { regionPricing, stateBuckets } from "@/lib/calculator/regional-prices";
 import { formatCurrency } from "@/lib/calculator/formulas";
 import { siteConfig } from "@/lib/site";
 
+const pageDescription =
+  "Broad asphalt price bands by state group with simple notes on regional cost differences, quote checks, and related calculators.";
+
 export const metadata = buildMetadata({
-  title: "Asphalt Prices by State",
-  description: "Broad asphalt price bands by state group for a first-pass estimate.",
+  title: "Asphalt Prices by State | Regional Cost Bands",
+  description: pageDescription,
   path: "/asphalt-prices-by-state"
 });
+
+const quickNav = [
+  { label: "State bands", href: "#state-bands" },
+  { label: "Why prices vary", href: "#why-vary" },
+  { label: "How to use", href: "#how-to-use" },
+  { label: "Related tools", href: "#related-tools" },
+  { label: "FAQ", href: "#faq" }
+] as const;
+
+const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.label }));
 
 const faqs = [
   {
@@ -28,10 +44,60 @@ const faqs = [
   {
     question: "When should I get a real quote?",
     answer: "Once the project size and surface type are known, ask a local contractor to inspect the site."
+  },
+  {
+    question: "Should I use state prices or the calculator first?",
+    answer: "Use both. The state page gives a regional band, and the calculator turns your actual area into tonnage and cost."
   }
 ];
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Asphalt Prices by State", href: "/asphalt-prices-by-state" }];
+
+const whyPricesVary = [
+  {
+    title: "Labor and season",
+    text:
+      "Short paving seasons and busy local markets can raise bids because crews have less flexible scheduling."
+  },
+  {
+    title: "Haul distance",
+    text:
+      "Asphalt is time-sensitive. The farther the plant is from the project, the more delivery and timing can affect price."
+  },
+  {
+    title: "Base and drainage",
+    text:
+      "A state price band cannot see your driveway. Soft base, poor drainage, and removal work can move the final quote."
+  },
+  {
+    title: "Access",
+    text:
+      "Easy suburban access is different from a tight city driveway, long rural lane, or steep site with limited staging room."
+  }
+] as const;
+
+const relatedPages = [
+  {
+    href: "/asphalt-driveway-cost-calculator",
+    title: "Asphalt driveway cost calculator",
+    text: "Turn your actual square footage into tonnage and a rough installed range."
+  },
+  {
+    href: "/asphalt-tonnage-calculator",
+    title: "Asphalt tonnage calculator",
+    text: "Check the material quantity before you compare regional prices."
+  },
+  {
+    href: "/asphalt-cost-guide",
+    title: "Asphalt cost guide",
+    text: "Understand the price factors that state averages cannot see."
+  },
+  {
+    href: "/asphalt-contractor-guide",
+    title: "Asphalt contractor guide",
+    text: "Use the regional band to ask better questions when bids come in."
+  }
+] as const;
 
 export default function AsphaltPricesByStatePage() {
   return (
@@ -41,7 +107,7 @@ export default function AsphaltPricesByStatePage() {
           breadcrumbSchema(breadcrumbs),
           webAppSchema({
             name: "Asphalt Prices by State",
-            description: siteConfig.description,
+            description: pageDescription,
             url: `${siteConfig.url}/asphalt-prices-by-state`
           }),
           faqSchema(faqs)
@@ -63,39 +129,54 @@ export default function AsphaltPricesByStatePage() {
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {stateBuckets.map((bucket) => {
-              const pricing = regionPricing[bucket.region];
+          <StickySectionNav sections={quickNavSections} className="mt-2" />
 
-              return (
-                <Card key={bucket.label} className="border-zinc-200">
-                  <CardContent className="space-y-4">
-                    <div>
-                      <p className="text-lg font-semibold text-zinc-950">{bucket.label}</p>
-                      <p className="mt-1 text-sm leading-6 text-zinc-600">{pricing.note}</p>
-                    </div>
+          <section id="state-bands" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                <BookOpen className="h-4 w-4" />
+                State bands
+              </div>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">Use your state group as a starting point</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                These are broad planning ranges, not live local quotes. They are useful when you want to know whether
+                your first estimate is in the right neighborhood before you call local contractors.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+              {stateBuckets.map((bucket) => {
+                const pricing = regionPricing[bucket.region];
 
-                    <div className="space-y-2 text-sm text-zinc-600">
-                      <p>
-                        Material: {formatCurrency(pricing.asphaltMaterialLow)} - {formatCurrency(pricing.asphaltMaterialHigh)} per ton
-                      </p>
-                      <p>
-                        Installed: {formatCurrency(pricing.asphaltInstalledLow)} - {formatCurrency(pricing.asphaltInstalledHigh)} per ton
-                      </p>
-                    </div>
+                return (
+                  <Card key={bucket.label} className="border-zinc-200">
+                    <CardContent className="space-y-4">
+                      <div>
+                        <p className="text-lg font-semibold text-zinc-950">{bucket.label}</p>
+                        <p className="mt-1 text-sm leading-6 text-zinc-600">{pricing.note}</p>
+                      </div>
 
-                    <div className="flex flex-wrap gap-2">
-                      {bucket.states.map((state) => (
-                        <span key={state} className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-700">
-                          {state}
-                        </span>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+                      <div className="space-y-2 text-sm text-zinc-600">
+                        <p>
+                          Material: {formatCurrency(pricing.asphaltMaterialLow)} - {formatCurrency(pricing.asphaltMaterialHigh)} per ton
+                        </p>
+                        <p>
+                          Installed: {formatCurrency(pricing.asphaltInstalledLow)} - {formatCurrency(pricing.asphaltInstalledHigh)} per ton
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2">
+                        {bucket.states.map((state) => (
+                          <span key={state} className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-700">
+                            {state}
+                          </span>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </section>
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
@@ -112,12 +193,36 @@ export default function AsphaltPricesByStatePage() {
             ))}
           </div>
 
-          <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
+          <section id="why-vary" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Why asphalt prices vary by state</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                State-level pricing changes because paving is local. Plant access, labor rates, weather windows,
+                delivery distance, and site prep all affect the number before the asphalt even reaches the driveway.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {whyPricesVary.map((item) => (
+                <Card key={item.title} className="border-zinc-200">
+                  <CardContent className="space-y-2">
+                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
+          <section id="how-to-use" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">How to use these bands</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
                 <p>Use the state group as a starting point, then enter your actual square footage in the calculator.</p>
                 <p>When you compare bids, keep thickness, prep scope, and cleanup assumptions the same.</p>
+                <p>
+                  If a quote is far outside the band, do not reject it immediately. Ask what is included. The difference
+                  may be removal, base repair, drainage, access, or a thicker asphalt section.
+                </p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/asphalt-driveway-cost-calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
@@ -140,21 +245,38 @@ export default function AsphaltPricesByStatePage() {
                 </p>
               </CardContent>
             </Card>
-          </div>
+          </section>
 
-          <div className="space-y-4">
-            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Common questions</h2>
-            <div className="grid gap-4 md:grid-cols-3">
-              {faqs.map((item) => (
-                <Card key={item.question} className="border-zinc-200">
-                  <CardContent className="space-y-2">
-                    <p className="text-base font-medium text-zinc-950">{item.question}</p>
-                    <p className="text-sm leading-6 text-zinc-600">{item.answer}</p>
-                  </CardContent>
-                </Card>
+          <section id="related-tools" className="scroll-mt-24 space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use state prices with these tools</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                The state band is only one piece. These pages help you calculate quantity, estimate driveway cost, and
+                compare written quotes.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {relatedPages.map((item) => (
+                <Link key={item.href} href={item.href as Route}>
+                  <Card className="h-full border-zinc-200 transition-colors hover:border-zinc-300 hover:bg-zinc-50">
+                    <CardContent className="space-y-3">
+                      <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                      <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                        Open page
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
               ))}
             </div>
-          </div>
+          </section>
+
+          <section id="faq" className="scroll-mt-24 space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Common questions</h2>
+            <FaqAccordion items={faqs} defaultOpenIndex={0} />
+          </section>
 
           <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
             Back to the calculator

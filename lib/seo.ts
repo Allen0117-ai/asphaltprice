@@ -84,7 +84,7 @@ export function organizationSchema({
   };
 }
 
-export function breadcrumbSchema(items: Array<{ label: string; href: string }>) {
+export function breadcrumbSchema(items: ReadonlyArray<{ label: string; href: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -97,7 +97,7 @@ export function breadcrumbSchema(items: Array<{ label: string; href: string }>) 
   };
 }
 
-export function faqSchema(items: Array<{ question: string; answer: string }>) {
+export function faqSchema(items: ReadonlyArray<{ question: string; answer: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",

@@ -49,7 +49,7 @@ export default function OpenGraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 22, maxWidth: 860 }}>
-          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>Asphalt Calculator</div>
+          <div style={{ fontSize: 76, fontWeight: 700, lineHeight: 1.05 }}>{siteConfig.name}</div>
           <div style={{ fontSize: 28, lineHeight: 1.35, color: "#52525b" }}>
             Estimate tonnage, material cost, and installed cost for asphalt projects in seconds.
           </div>
@@ -75,4 +75,3 @@ export default function OpenGraphImage() {
     size
   );
 }
-

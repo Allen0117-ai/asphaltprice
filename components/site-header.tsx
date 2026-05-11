@@ -1,6 +1,10 @@
 import Link from "next/link";
+import type { Route } from "next";
 
 import { Calculator } from "lucide-react";
+
+import { SiteSearch } from "@/components/search/site-search";
+import { siteConfig } from "@/lib/site";
 
 const navItems = [
   { href: "/asphalt-driveway-cost-calculator", label: "Driveway cost" },
@@ -18,17 +22,18 @@ export function SiteHeader() {
             <Calculator className="h-4 w-4" />
           </span>
           <span className="leading-tight">
-            <span className="block text-sm font-semibold">{`Asphalt Price Calculator`}</span>
+            <span className="block text-sm font-semibold">{siteConfig.name}</span>
             <span className="block text-xs text-zinc-500">Driveways, overlays, and small paving jobs</span>
           </span>
         </Link>
 
         <nav aria-label="Primary" className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-zinc-600">
           {navItems.map((item) => (
-            <Link key={item.href} href={item.href} className="transition-colors hover:text-zinc-950">
+            <Link key={item.href} href={item.href as Route} className="transition-colors hover:text-zinc-950">
               {item.label}
             </Link>
           ))}
+          <SiteSearch />
           <Link
             href="/#calculator"
             className="inline-flex h-10 items-center justify-center rounded-md bg-zinc-950 px-4 text-sm font-medium text-white transition-colors hover:bg-zinc-800"

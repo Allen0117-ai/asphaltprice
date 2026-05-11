@@ -4,7 +4,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Terms of Use",
-  description: "Terms of use for Asphalt Price Calculator.",
+  description: "Terms of use for Asphalt Calculator.",
   path: "/terms"
 });
 
