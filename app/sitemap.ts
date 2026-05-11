@@ -4,6 +4,7 @@ import { siteConfig } from "@/lib/site";
 
 const routes = [
   "/",
+  "/asphalt-contractor-guide",
   "/asphalt-driveway-cost-calculator",
   "/asphalt-tonnage-calculator",
   "/asphalt-vs-concrete-driveway-cost-calculator",
