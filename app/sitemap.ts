@@ -2,8 +2,6 @@ import type { MetadataRoute } from "next";
 
 import { siteConfig } from "@/lib/site";
 
-const lastModified = "2026-05-11";
-
 const routes = [
   "/",
   "/asphalt-contractor-guide",
@@ -22,7 +20,6 @@ const routes = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
-    url: `${siteConfig.url}${route}`,
-    lastModified
+    url: `${siteConfig.url}${route}`
   }));
 }

@@ -96,7 +96,11 @@ function getFocusableElements(container: HTMLElement) {
   ).filter((element) => element.tabIndex >= 0);
 }
 
-export function SiteSearch() {
+type SiteSearchProps = {
+  compact?: boolean;
+};
+
+export function SiteSearch({ compact = false }: SiteSearchProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -208,7 +212,8 @@ export function SiteSearch() {
         ref={triggerRef}
         type="button"
         className={cn(
-          "inline-flex h-10 w-full items-center justify-start gap-2 rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-950 transition-colors hover:border-zinc-300 hover:bg-zinc-50 sm:w-auto"
+          "inline-flex h-10 items-center gap-2 rounded-md border border-zinc-200 bg-white px-3 text-sm font-medium text-zinc-950 transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 focus-visible:ring-offset-2",
+          compact ? "w-10 justify-center px-0 sm:w-auto sm:justify-start sm:px-3" : "w-full justify-start sm:w-auto"
         )}
         onClick={() => setIsOpen(true)}
         aria-haspopup="dialog"
@@ -216,7 +221,7 @@ export function SiteSearch() {
         aria-label="Open site search"
       >
         <Search className="h-4 w-4" />
-        <span>Search</span>
+        <span className={cn(compact && "hidden sm:inline")}>Search</span>
       </button>
 
       {isOpen ? (

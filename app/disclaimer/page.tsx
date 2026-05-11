@@ -4,7 +4,7 @@ import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
 
 export const metadata = buildMetadata({
   title: "Disclaimer",
-  description: "Disclaimer for Asphalt Calculator.",
+  description: "Disclaimer for Asphalt Calculator, including estimate limits, price data, and affiliate disclosure.",
   path: "/disclaimer"
 });
 
@@ -18,13 +18,39 @@ export default function DisclaimerPage() {
         <div className="mx-auto max-w-3xl space-y-6">
           <Breadcrumbs items={breadcrumbs} />
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">Disclaimer</h1>
-          <p className="text-base leading-7 text-zinc-600">
-            All numbers on this site are estimates. The real price may change because of site access, materials,
-            preparation work, labor, and local market conditions.
-          </p>
-          <p className="text-base leading-7 text-zinc-600">
-            Use the result as a planning tool, not as a final bid or contract price.
-          </p>
+          <p className="text-sm text-zinc-500">Last updated: May 11, 2026</p>
+
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Estimate limits</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              All numbers on this site are estimates only. The real price can change because of site access, materials,
+              prep work, labor, waste, haul distance, and local market conditions.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Price data</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              Regional price ranges are meant for planning and comparison. They may not match every local quote, and they
+              should not be treated as a final bid or contract price.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Not contractor advice</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              This site does not provide contractor, legal, or engineering advice. Always confirm the final scope,
+              materials, and installation plan with a qualified local professional before starting work.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Affiliate disclosure</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              If affiliate links, sponsored placements, or other paid referrals are added later, this page will be updated
+              with a clear disclosure before those links go live.
+            </p>
+          </div>
         </div>
       </section>
     </>

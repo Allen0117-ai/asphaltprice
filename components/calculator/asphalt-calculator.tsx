@@ -39,6 +39,41 @@ type AsphaltCalculatorProps = {
   className?: string;
 };
 
+const modeCopy: Record<
+  CalculatorMode,
+  {
+    intro: string;
+    ctaLabel: string;
+    ctaHint: string;
+    ctaTitle: string;
+  }
+> = {
+  asphalt: {
+    intro: "Use area or length × width to estimate asphalt material and installed cost for a basic project.",
+    ctaLabel: "Copy estimate",
+    ctaHint: "Paste these numbers into a message when you ask a local paving contractor for a quote.",
+    ctaTitle: "Ready to ask for a quote?"
+  },
+  tonnage: {
+    intro: "Enter the project size to see how many tons to order, with waste already built in.",
+    ctaLabel: "Copy tonnage",
+    ctaHint: "Copy the quantity, thickness, and waste allowance before you check prices with a supplier or contractor.",
+    ctaTitle: "Need to share the numbers?"
+  },
+  comparison: {
+    intro: "Use one project size to compare asphalt, concrete, and gravel side by side.",
+    ctaLabel: "Copy comparison",
+    ctaHint: "Save the comparison so each quote can be checked against the same project size.",
+    ctaTitle: "Comparing options?"
+  },
+  driveway: {
+    intro: "Size a driveway by area or length × width, then check rough material and installed cost.",
+    ctaLabel: "Copy estimate",
+    ctaHint: "Paste these numbers into a message when you ask a local paving contractor for a quote.",
+    ctaTitle: "Ready to ask for a quote?"
+  }
+};
+
 function rangeLabel(low: number, high: number) {
   return `${formatCurrency(low)} - ${formatCurrency(high)}`;
 }
@@ -57,10 +92,10 @@ function ResultBlock({
   hint: string;
 }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/5 p-4">
-      <p className="text-xs uppercase tracking-[0.16em] text-zinc-400">{label}</p>
-      <p className="mt-2 text-lg font-semibold text-white">{value}</p>
-      <p className="mt-1 text-sm leading-6 text-zinc-300">{hint}</p>
+    <div className="rounded-lg border border-white/10 bg-white/5 p-3.5">
+      <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">{label}</p>
+      <p className="mt-1.5 text-base font-semibold text-white sm:text-lg">{value}</p>
+      <p className="mt-1 text-xs leading-5 text-zinc-300 sm:text-sm sm:leading-6">{hint}</p>
     </div>
   );
 }
@@ -83,6 +118,7 @@ function thicknessValue(valueInInches: number, unitSystem: UnitSystem, fractionD
 }
 
 export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCalculatorProps) {
+  const pageCopy = modeCopy[mode];
   const defaultUnitSystem = defaultValues?.unitSystem ?? "imperial";
   const defaultInputMode = defaultValues?.inputMode ?? "area";
 
@@ -136,6 +172,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
       : ""
   );
   const [copyLabel, setCopyLabel] = useState("Copy link");
+  const [estimateCopyLabel, setEstimateCopyLabel] = useState(pageCopy.ctaLabel);
   const [resultAnnouncement, setResultAnnouncement] = useState("");
 
   useEffect(() => {
@@ -343,6 +380,32 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
     window.setTimeout(() => setCopyLabel("Copy link"), 1400);
   };
 
+  const copyEstimateSummary = async () => {
+    const lines = [
+      "Asphalt project estimate",
+      `Region: ${regionLabel}`,
+      `Area: ${areaValue(projectAreaSqFt, unitSystem, unitSystem === "metric" ? 1 : 0)} ${areaLabel}`,
+      inputMode === "dimensions"
+        ? `Size: ${dimensionValue(displayLength, unitSystem, 1)} x ${dimensionValue(displayWidth, unitSystem, 1)} ${lengthLabel}`
+        : null,
+      `Thickness: ${thicknessValue(displayThickness, unitSystem, unitSystem === "metric" ? 0 : 1)} ${thicknessLabel}`,
+      `Waste allowance: ${wastePercent}%`,
+      `Asphalt needed: ${formatDecimal(estimate.tons, 1)} tons / ${formatDecimal(estimate.tonnes, 1)} tonnes`,
+      `Volume: ${formatDecimal(estimate.cubicYards, 1)} yd3 / ${formatDecimal(estimate.cubicMeters, 1)} m3`,
+      customMaterialPricePerTon
+        ? `Material estimate: ${formatCurrency(estimate.customMaterialCost ?? 0)} at ${formatCurrency(customMaterialPricePerTon)} / ton`
+        : `Material cost range: ${rangeLabel(estimate.materialLow, estimate.materialHigh)}`,
+      mode === "tonnage" ? null : `Installed asphalt range: ${rangeLabel(estimate.installedLow, estimate.installedHigh)}`,
+      mode === "comparison" ? `Concrete installed range: ${rangeLabel(comparison.concrete.low, comparison.concrete.high)}` : null,
+      mode === "comparison" ? `Gravel installed range: ${rangeLabel(comparison.gravel.low, comparison.gravel.high)}` : null,
+      "Note: Planning estimate only. Final quote depends on site inspection."
+    ].filter(Boolean);
+
+    await navigator.clipboard.writeText(lines.join("\n"));
+    setEstimateCopyLabel("Copied");
+    window.setTimeout(() => setEstimateCopyLabel(pageCopy.ctaLabel), 1400);
+  };
+
   const areaLabel = resultUnitLabel(unitSystem, "sq ft", "sq m");
   const lengthLabel = resultUnitLabel(unitSystem, "ft", "m");
   const thicknessLabel = resultUnitLabel(unitSystem, "in", "mm");
@@ -366,17 +429,18 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
   }, [comparison.asphalt.installedHigh, comparison.asphalt.installedLow, estimate.installedHigh, estimate.installedLow, estimate.tons, mode]);
 
   return (
-    <section id="calculator" className={cn("grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]", className)}>
-      <Card className="border-zinc-200 shadow-soft">
-        <CardContent className="space-y-6">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <section id="calculator" className={cn("scroll-mt-24 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]", className)}>
+      <Card className="relative overflow-hidden border-zinc-200 shadow-soft">
+        <div className="absolute inset-x-0 top-0 h-1 bg-amber-500" />
+        <CardContent className="space-y-5 pt-6">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-700">
                 <Calculator className="h-3.5 w-3.5" />
                 Project inputs
               </div>
-              <p className="mt-3 max-w-md text-sm leading-6 text-zinc-500">
-                Switch between area or length and width, then use imperial or metric units. The calculator turns that into tonnage and price ranges.
+              <p className="mt-2.5 max-w-md text-sm leading-6 text-zinc-500">
+                {pageCopy.intro}
               </p>
             </div>
 
@@ -388,7 +452,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2">
             <div className="space-y-2">
               <Label>Input mode</Label>
               <div className="inline-flex rounded-lg border border-zinc-200 bg-zinc-100 p-1">
@@ -482,7 +546,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             </div>
           )}
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2">
             <RangeField
               id="thickness"
               label={`Thickness (${thicknessLabel})`}
@@ -541,18 +605,19 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             </div>
           </div>
 
-          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-sm text-zinc-600">
+          <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-sm leading-6 text-zinc-600">
             Formula: area × thickness × density ÷ 2000, then add waste. The calculator converts metric input for you and uses 145 lb/ft³ for the base estimate.
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-zinc-950 bg-zinc-950 shadow-soft">
-        <CardContent className="space-y-5">
+      <Card className="relative overflow-hidden border-zinc-950 bg-zinc-950 shadow-soft">
+        <div className="absolute inset-x-0 top-0 h-1 bg-amber-500" />
+        <CardContent className="space-y-4 pt-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] text-zinc-400">Quote range</p>
-              <h2 className="mt-2 text-2xl font-semibold text-white">Project estimate</h2>
+              <h2 className="mt-2 text-xl font-semibold text-white sm:text-2xl">Project estimate</h2>
             </div>
             <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-xs text-zinc-200">
               <CircleDollarSign className="h-3.5 w-3.5" />
@@ -564,7 +629,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             {resultAnnouncement}
           </div>
 
-          <div className="rounded-lg border border-white/10 bg-white/5 p-4 text-sm text-zinc-300">
+          <div className="rounded-lg border border-white/10 bg-white/5 p-3 text-sm text-zinc-300">
             <div className="flex flex-wrap gap-x-4 gap-y-1">
               <span>Area: {areaValue(projectAreaSqFt, unitSystem, unitSystem === "metric" ? 1 : 0)} {areaLabel}</span>
               {inputMode === "dimensions" && (
@@ -583,8 +648,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
           </div>
 
           {mode === "tonnage" && (
-            <div className="grid gap-3">
-              <p className="text-xs text-zinc-400">Results update automatically as you edit.</p>
+            <div className="grid gap-3 md:grid-cols-2">
+              <p className="text-xs text-zinc-400 md:col-span-2">Results update automatically as you edit.</p>
               <ResultBlock
                 label="Asphalt needed"
                 value={`${formatDecimal(estimate.tons)} tons / ${formatDecimal(estimate.tonnes)} tonnes`}
@@ -609,8 +674,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
           )}
 
           {mode === "asphalt" && (
-            <div className="grid gap-3">
-              <p className="text-xs text-zinc-400">Results update automatically as you edit.</p>
+            <div className="grid gap-3 md:grid-cols-2">
+              <p className="text-xs text-zinc-400 md:col-span-2">Results update automatically as you edit.</p>
               <ResultBlock
                 label="Asphalt needed"
                 value={`${formatDecimal(estimate.tons)} tons / ${formatDecimal(estimate.tonnes)} tonnes`}
@@ -638,8 +703,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
           )}
 
           {(mode === "comparison" || mode === "driveway") && (
-            <div className="grid gap-3">
-              <p className="text-xs text-zinc-400">Results update automatically as you edit.</p>
+            <div className="grid gap-3 md:grid-cols-2">
+              <p className="text-xs text-zinc-400 md:col-span-2">Results update automatically as you edit.</p>
               <ResultBlock
                 label="Asphalt quantity"
                 value={`${formatDecimal(comparison.asphalt.tons)} tons / ${formatDecimal(comparison.asphalt.tonnes)} tonnes`}
@@ -670,14 +735,31 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             </div>
           )}
 
-          <div className="rounded-md border border-white/10 bg-white/5 p-4 text-sm leading-6 text-zinc-300">
-            <div className="flex items-center gap-2 font-medium text-white">
-              <TriangleAlert className="h-4 w-4 text-amber-300" />
-              Estimate only
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-md border border-white/10 bg-white/5 p-3 text-sm leading-6 text-zinc-300">
+              <div className="flex items-center gap-2 font-medium text-white">
+                <TriangleAlert className="h-4 w-4 text-amber-300" />
+                Estimate only
+              </div>
+              <p className="mt-2">
+                Final pricing depends on access, prep work, base condition, grading, haul distance, and local crew rates.
+              </p>
             </div>
-            <p className="mt-2">
-              Final pricing depends on access, prep work, base condition, grading, haul distance, and local crew rates.
-            </p>
+
+            <div className="flex flex-col justify-between gap-3 rounded-lg border border-white/10 bg-white/5 p-3">
+              <div className="space-y-1">
+                <p className="text-sm font-medium text-white">{pageCopy.ctaTitle}</p>
+                <p className="text-sm leading-6 text-zinc-300">{pageCopy.ctaHint}</p>
+              </div>
+              <button
+                type="button"
+                onClick={copyEstimateSummary}
+                className="inline-flex items-center justify-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-zinc-950 transition-colors hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              >
+                <Copy className="h-4 w-4" />
+                {estimateCopyLabel}
+              </button>
+            </div>
           </div>
 
           <div className="text-xs leading-5 text-zinc-400">

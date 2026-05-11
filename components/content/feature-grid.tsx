@@ -156,12 +156,12 @@ export function FeatureGrid({
               <Card
                 key={index}
                 className={cn(
-                  "group h-full border-zinc-200 bg-white transition-colors duration-200 hover:border-zinc-300 hover:bg-zinc-50/80",
+                  "group flex min-h-[280px] h-full flex-col border-zinc-200 bg-white transition-colors duration-200 hover:border-zinc-300 hover:bg-zinc-50/80 sm:min-h-[300px]",
                   itemClassName
                 )}
               >
-                <CardContent className="space-y-4">
-                  <div className="flex items-start gap-3">
+                <CardContent className="flex h-full flex-col gap-4">
+                  <div className="flex flex-1 items-start gap-3">
                     <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 text-zinc-700">
                       {Icon ? <Icon className="h-4 w-4" /> : <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />}
                     </span>
@@ -184,12 +184,12 @@ export function FeatureGrid({
             >
               <Card
                 className={cn(
-                  "group h-full border-zinc-200 bg-white transition-colors duration-200 hover:border-zinc-300 hover:bg-zinc-50/80",
+                  "group flex min-h-[280px] h-full flex-col border-zinc-200 bg-white transition-colors duration-200 hover:border-zinc-300 hover:bg-zinc-50/80 sm:min-h-[300px]",
                   itemClassName
                 )}
               >
-                <CardContent className="space-y-4">
-                  <div className="flex items-start gap-3">
+                <CardContent className="flex h-full flex-col gap-4">
+                  <div className="flex flex-1 items-start gap-3">
                     <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-zinc-200 bg-zinc-50 text-zinc-700">
                       {Icon ? <Icon className="h-4 w-4" /> : <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />}
                     </span>
@@ -200,7 +200,7 @@ export function FeatureGrid({
                     </div>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 text-sm font-medium text-amber-700">
+                  <span className="mt-auto inline-flex items-center gap-1 text-sm font-medium text-amber-700">
                     {item.ctaLabel ?? ctaLabel}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </span>

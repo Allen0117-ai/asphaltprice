@@ -20,8 +20,9 @@ import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webSiteSche
 import { siteConfig } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Calculator - Estimate Costs & Coverage",
-  description: "Free asphalt calculator to estimate costs and coverage. Get quick pricing for driveway, parking lot, and road projects in seconds.",
+  title: "Asphalt Calculator - Estimate Costs by Region & Material",
+  description:
+    "Free asphalt calculator to estimate driveway, parking lot, and road costs by region. Calculate material needs, coverage, and pricing in seconds.",
   path: "/"
 });
 
@@ -54,6 +55,11 @@ const faqs = [
   {
     question: "Can I share the result?",
     answer: "Yes. Use the share link button in the calculator to copy a URL with your current inputs."
+  },
+  {
+    question: "Why doesn't this calculator use ZIP code pricing?",
+    answer:
+      "Asphalt pricing varies by region and local market conditions beyond location alone. Our regional estimates provide a solid planning baseline. For precise local pricing, compare quotes from contractors in your area."
   }
 ];
 
@@ -303,7 +309,7 @@ export default function HomePage() {
           organizationSchema({
             name: siteConfig.name,
             url: siteConfig.url,
-            logo: `${siteConfig.url}/icon`
+            logo: `${siteConfig.url}${siteConfig.icon}`
           }),
           webAppSchema({
             name: siteConfig.name,
@@ -314,21 +320,23 @@ export default function HomePage() {
         ]}
       />
 
-      <section className="px-4 pb-14 pt-10 sm:pb-16 sm:pt-14 lg:pt-20">
-        <div className="mx-auto max-w-6xl space-y-8">
-          <div className="max-w-4xl space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700">
+      <section className="px-4 pb-12 pt-4 sm:pb-14 sm:pt-6 lg:pt-8">
+        <div className="mx-auto max-w-6xl space-y-7">
+          <div className="max-w-6xl space-y-5">
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700 shadow-sm">
               <Sparkles className="h-3.5 w-3.5 text-amber-600" />
               For driveways, overlays, and small lots
             </div>
-            <h1 className="max-w-3xl text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
+            <h1 className="max-w-5xl text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
               Asphalt Calculator
+              <br />
+              Instant Cost Estimates
             </h1>
-            <p className="max-w-2xl text-lg leading-8 text-zinc-600">
+            <p className="max-w-4xl text-lg leading-8 text-zinc-600">
               Get a quick planning number for driveways, overlays, and small paving jobs. Enter the area, choose a
               thickness, and compare a regional cost range before you ask for quotes.
             </p>
-            <div className="max-w-5xl rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
+            <div className="rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {specPoints.map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm text-zinc-600">
@@ -341,6 +349,11 @@ export default function HomePage() {
           </div>
 
           <AsphaltCalculator mode="asphalt" />
+
+          <div className="rounded-lg border-l-4 border-blue-600 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
+            <strong>How This Calculator Works:</strong> This calculator estimates asphalt pricing by broad U.S.
+            region, not exact ZIP code. For exact local pricing, compare quotes from 2 to 3 local contractors.
+          </div>
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
         </div>

@@ -91,7 +91,7 @@ export function RangeField({
           aria-describedby={descriptionId}
           onChange={(event) => commitValue(Number(event.target.value))}
           className={cn(
-            "h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-200 accent-zinc-950 outline-none focus-visible:ring-2 focus-visible:ring-zinc-950/20 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
+            "h-2 w-full cursor-pointer appearance-none rounded-full bg-zinc-200 accent-amber-500 outline-none focus-visible:ring-2 focus-visible:ring-amber-400/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60",
             sliderClassName
           )}
         />
