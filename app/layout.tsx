@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description
+  },
+  other: {
+    "msvalidate.01": "960C876F79F33F87F44D3B09D2E5E910"
   }
 };
 
