@@ -27,6 +27,11 @@ export default function TermsPage() {
               rough project costs, and review general paving guidance. Do not use it as a substitute for a contractor
               quote, engineering advice, or legal advice.
             </p>
+            <p className="text-base leading-7 text-zinc-600">
+              You receive a limited, non-exclusive, non-transferable license to use the site for personal or internal
+              planning purposes. You may not misuse the site, interfere with its operation, scrape it at scale, or present
+              its estimates as guaranteed pricing.
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -58,8 +63,9 @@ export default function TermsPage() {
           <div className="space-y-3">
             <h2 className="text-xl font-semibold text-zinc-950">Applicable law</h2>
             <p className="text-base leading-7 text-zinc-600">
-              These terms are written for a U.S.-focused website. They are intended to be governed by the laws that apply
-              to the site operator, except where local consumer law requires a different result.
+              These terms are written for a U.S.-focused website. Unless local consumer law requires a different result,
+              they are intended to be governed by the laws of the United States and the state where the site operator is
+              established, without regard to conflict of law rules.
             </p>
           </div>
         </div>

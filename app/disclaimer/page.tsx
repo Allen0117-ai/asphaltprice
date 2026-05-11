@@ -26,6 +26,10 @@ export default function DisclaimerPage() {
               All numbers on this site are estimates only. The real price can change because of site access, materials,
               prep work, labor, waste, haul distance, and local market conditions.
             </p>
+            <p className="text-base leading-7 text-zinc-600">
+              The calculator is meant to help you prepare for conversations with suppliers or contractors. It does not
+              create a quote, bid, warranty, or promise that any contractor will perform work at the displayed price.
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -34,6 +38,11 @@ export default function DisclaimerPage() {
               Regional price ranges are meant for planning and comparison. They may not match every local quote, and they
               should not be treated as a final bid or contract price.
             </p>
+            <p className="text-base leading-7 text-zinc-600">
+              The ranges use broad regional assumptions, standard asphalt density, typical waste allowances, and general
+              material and installed-cost bands. Local plant pricing, fuel costs, minimum job charges, disposal fees,
+              permits, seasonality, and base repairs can move your final number up or down.
+            </p>
           </div>
 
           <div className="space-y-3">
@@ -41,6 +50,10 @@ export default function DisclaimerPage() {
             <p className="text-base leading-7 text-zinc-600">
               This site does not provide contractor, legal, or engineering advice. Always confirm the final scope,
               materials, and installation plan with a qualified local professional before starting work.
+            </p>
+            <p className="text-base leading-7 text-zinc-600">
+              If your project involves drainage problems, public access, commercial traffic, permits, or structural
+              concerns, ask a licensed professional to review the site before relying on any budget estimate.
             </p>
           </div>
 

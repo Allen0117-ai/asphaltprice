@@ -70,6 +70,10 @@ export default function PrivacyPage() {
               personal information we hold about you. You may also ask us not to use your contact information for future
               replies, unless we need to keep limited records for security, legal, or operational reasons.
             </p>
+            <p className="text-base leading-7 text-zinc-600">
+              If privacy laws such as the California Consumer Privacy Act, the GDPR, or similar local rules apply to
+              your request, we will handle it according to those requirements after verifying the request as needed.
+            </p>
           </div>
 
           <div className="space-y-3">
