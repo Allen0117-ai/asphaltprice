@@ -13,10 +13,10 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Calculate how much asphalt you need, how many tons to buy, and how tons differ from tonnes in plain language.";
+  "Calculate asphalt or tarmac in tons and tonnes. Use imperial or metric units to estimate material needed, coverage, and waste.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Tonnage Calculator | How Much Asphalt Do I Need?",
+  title: "Asphalt & Tarmac Tonnage Calculator - Tons & Tonnes",
   description: pageDescription,
   path: "/asphalt-tonnage-calculator"
 });
@@ -47,7 +47,7 @@ const faqs = [
   },
   {
     question: "What is the difference between tons and tonnes?",
-    answer: "In the U.S., quotes usually use tons. Some suppliers use tonnes, so keep the unit consistent before you order."
+    answer: "A U.S. ton is 2,000 lb. A metric tonne is 1,000 kg, about 2,204 lb. Use the unit your supplier or contractor quotes."
   },
   {
     question: "How much asphalt is in a ton?",
@@ -63,6 +63,11 @@ const faqs = [
     question: "Can I use this as a blacktop calculator?",
     answer:
       "Yes. Blacktop is another common name for asphalt, so the same tonnage formula works for both terms."
+  },
+  {
+    question: "Can I use this as a tarmac calculator?",
+    answer:
+      "Yes. Tarmac is a common term in the UK and other markets. Use Metric for tonnes or Imperial for tons, then compare the result with your local supplier quote."
   }
 ];
 
@@ -140,10 +145,10 @@ export default function AsphaltTonnagePage() {
               <Scale className="h-3.5 w-3.5" />
               Tonnage first
             </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Tonnage Calculator</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt & Tarmac Tonnage Calculator</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this page when you only need the tonnage number or want to answer how much asphalt you need. It
-              still shows the coverage and the waste buffer so the result is easier to trust.
+              Use this page when you only need the material quantity for asphalt or tarmac. It works with imperial
+              tons and metric tonnes, and shows coverage plus waste so the result is easier to trust.
             </p>
           </div>
 
@@ -249,9 +254,9 @@ export default function AsphaltTonnagePage() {
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Ton vs tonne</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
                 <p>
-                  Most U.S. asphalt work is discussed in tons. Some suppliers and outside references use tonnes. Keep
-                  the unit consistent when you compare a calculator result with a quote so you do not read the number
-                  too high or too low.
+                  Most U.S. asphalt work is discussed in tons. Metric markets often use tonnes for asphalt or tarmac.
+                  Keep the unit consistent when you compare a calculator result with a quote so you do not read the
+                  number too high or too low.
                 </p>
                 <p>
                   If you are not sure which unit a supplier used, ask them to write it out plainly before you place an

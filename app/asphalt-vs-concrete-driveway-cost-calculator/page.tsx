@@ -12,7 +12,7 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Compare asphalt and concrete driveway costs with practical notes on upfront price, maintenance, climate, and quote scope.";
+  "Asphalt vs concrete driveway cost calculator. Compare material, installed price, lifespan, and maintenance tradeoffs with one set of measurements.";
 
 export const metadata = buildMetadata({
   title: "Asphalt vs Concrete Driveway Cost Calculator",

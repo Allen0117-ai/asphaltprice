@@ -14,6 +14,7 @@ export type CalculatorInput = {
   wastePercent: number;
   region: RegionKey;
   customMaterialPricePerTon?: number | null;
+  customMaterialPriceUnit?: "ton" | "tonne";
 };
 
 const SQFT_PER_SQM = 10.763910416709722;
@@ -114,6 +115,15 @@ export function coveragePerTon(thicknessInches: number, density = 145) {
   return cubicFeetPerTon / (thicknessInches / 12);
 }
 
+export function coveragePerTonne(thicknessInches: number, density = 145) {
+  if (thicknessInches <= 0) {
+    return 0;
+  }
+
+  const cubicFeetPerTonne = POUNDS_PER_TONNE / density;
+  return cubicFeetPerTonne / (thicknessInches / 12);
+}
+
 export function computeAsphaltEstimate(input: CalculatorInput) {
   const pricing = regionPricing[input.region];
   const areaSqFt = resolveAreaSqFt(input);
@@ -129,7 +139,11 @@ export function computeAsphaltEstimate(input: CalculatorInput) {
   const installedLow = tons * pricing.asphaltInstalledLow;
   const installedHigh = tons * pricing.asphaltInstalledHigh;
   const customMaterialPricePerTon = input.customMaterialPricePerTon && input.customMaterialPricePerTon > 0 ? input.customMaterialPricePerTon : null;
-  const customMaterialCost = customMaterialPricePerTon ? tons * customMaterialPricePerTon : null;
+  const customMaterialPriceUnit = input.customMaterialPriceUnit ?? "ton";
+  const customMaterialQuantity = customMaterialPriceUnit === "tonne" ? tonnes : tons;
+  const customMaterialCost = customMaterialPricePerTon ? customMaterialQuantity * customMaterialPricePerTon : null;
+  const coverageSqFtPerTon = coveragePerTon(thicknessInches);
+  const coverageSqFtPerTonne = coveragePerTonne(thicknessInches);
 
   return {
     areaSqFt,
@@ -142,8 +156,10 @@ export function computeAsphaltEstimate(input: CalculatorInput) {
     pounds,
     tons,
     tonnes,
-    coverageSqFtPerTon: coveragePerTon(thicknessInches),
-    coverageSqMPerTon: squareFeetToSquareMeters(coveragePerTon(thicknessInches)),
+    coverageSqFtPerTon,
+    coverageSqMPerTon: squareFeetToSquareMeters(coverageSqFtPerTon),
+    coverageSqFtPerTonne,
+    coverageSqMPerTonne: squareFeetToSquareMeters(coverageSqFtPerTonne),
     materialLow,
     materialHigh,
     installedLow,
@@ -153,6 +169,7 @@ export function computeAsphaltEstimate(input: CalculatorInput) {
     installedPerSqFtLow: areaSqFt > 0 ? installedLow / areaSqFt : 0,
     installedPerSqFtHigh: areaSqFt > 0 ? installedHigh / areaSqFt : 0,
     customMaterialPricePerTon,
+    customMaterialPriceUnit,
     customMaterialCost,
     customMaterialPerSqFt: customMaterialCost && areaSqFt > 0 ? customMaterialCost / areaSqFt : null,
     pricing

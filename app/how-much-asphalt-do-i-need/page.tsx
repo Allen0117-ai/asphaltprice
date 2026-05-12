@@ -12,10 +12,10 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "A beginner-friendly guide to measuring, calculating, adding waste, and ordering asphalt.";
+  "How much asphalt do I need? Calculate tons from area and thickness with a simple formula, waste allowance tips, and real project examples.";
 
 export const metadata = buildMetadata({
-  title: "How Much Asphalt Do I Need?",
+  title: "How Much Asphalt Do I Need? | Formula & Calculator",
   description: pageDescription,
   path: "/how-much-asphalt-do-i-need"
 });

@@ -20,9 +20,9 @@ import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webSiteSche
 import { siteConfig } from "@/lib/site";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Calculator - How Much Asphalt Do I Need? Tonnage & Price",
+  title: "Asphalt & Tarmac Calculator - Tons, Tonnes & Cost",
   description:
-    "Free asphalt calculator to answer how much asphalt you need, estimate tonnage, and compare pricing by region in seconds.",
+    "Free asphalt and tarmac calculator. Estimate tons, tonnes, and costs with imperial or metric units, U.S. pricing, or your local price.",
   path: "/"
 });
 
@@ -82,6 +82,16 @@ const faqs = [
       "Yes. Blacktop is another common name for asphalt, so the same calculator and formula apply to both terms."
   },
   {
+    question: "Can I use this calculator outside the U.S.?",
+    answer:
+      "Yes. The quantity calculator works worldwide with imperial or metric units. The default price ranges are U.S.-based, so outside the U.S. you should enter your local price per ton or tonne."
+  },
+  {
+    question: "Can I use this as a tarmac calculator?",
+    answer:
+      "Yes. Asphalt, tarmac, and blacktop are regional names for similar paving material, so the same tonnage calculator works for planning."
+  },
+  {
     question: "Why doesn't this calculator use ZIP code pricing?",
     answer:
       "Asphalt pricing varies by region and local market conditions beyond location alone. Our regional estimates provide a solid planning baseline. For precise local pricing, compare quotes from contractors in your area."
@@ -90,8 +100,8 @@ const faqs = [
 
 const specPoints = [
   "145 lb/ft³ density",
-  "7% waste default",
-  "Tonnage + pricing",
+  "Tons + tonnes",
+  "Imperial + metric",
   "Copyable estimate link"
 ] as const;
 
@@ -382,8 +392,8 @@ export default function HomePage() {
               How Much Asphalt Do I Need?
             </h1>
             <p className="max-w-4xl text-lg leading-8 text-zinc-600">
-              Get a quick planning number for driveways, overlays, and small paving jobs. Enter the area, choose a
-              thickness, and compare tonnage and price before you ask for quotes.
+              Get a quick planning number for asphalt or tarmac projects. Enter the area, choose imperial or metric
+              units, and compare tons, tonnes, and cost before you ask for quotes.
             </p>
             <div className="rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -400,8 +410,8 @@ export default function HomePage() {
           <AsphaltCalculator mode="asphalt" />
 
           <div className="rounded-lg border-l-4 border-blue-600 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
-            <strong>How This Calculator Works:</strong> This calculator estimates asphalt pricing by broad U.S.
-            region, not exact ZIP code. For exact local pricing, compare quotes from 2 to 3 local contractors.
+            <strong>How This Calculator Works:</strong> Quantity estimates work worldwide. Default price ranges use
+            broad U.S. regions, but you can enter your local price per ton or tonne for a better local estimate.
           </div>
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
@@ -414,9 +424,9 @@ export default function HomePage() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Formula and coverage</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Asphalt formula, tonnage, and coverage</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
-              People search for this page using phrases like how to calculate asphalt, asphalt formula, blacktop calculator,
-              and how much asphalt in a ton. The planning formula here is area × thickness × density ÷ 2000, with 145 lb/ft³
-              as the base density.
+              People search for this page using phrases like how to calculate asphalt, tarmac calculator, blacktop
+              calculator, and how much asphalt in a ton or tonne. The planning formula uses area, thickness, density,
+              and waste with 145 lb/ft³ as the base density.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-600">
               That means one ton covers about 83 square feet at 2 inches, about 55 square feet at 3 inches, and roughly

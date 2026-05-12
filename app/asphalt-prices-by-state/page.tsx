@@ -14,10 +14,10 @@ import { formatCurrency } from "@/lib/calculator/formulas";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Broad asphalt price bands by state group with simple notes on regional cost differences, quote checks, tonnage, and related calculators.";
+  "U.S. asphalt prices by state group, with regional cost bands, quote checks, tonnage tips, and links to related calculators.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Prices by State | Regional Pricing Guide",
+  title: "U.S. Asphalt Prices by State | Regional Pricing Guide",
   description: pageDescription,
   path: "/asphalt-prices-by-state"
 });
@@ -61,7 +61,7 @@ const faqs = [
   }
 ];
 
-const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Asphalt Prices by State", href: "/asphalt-prices-by-state" }];
+const breadcrumbs = [{ label: "Home", href: "/" }, { label: "U.S. Asphalt Prices by State", href: "/asphalt-prices-by-state" }];
 
 const whyPricesVary = [
   {
@@ -138,12 +138,11 @@ export default function AsphaltPricesByStatePage() {
               Broad state-level bands
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
-              Asphalt Prices by State
+              U.S. Asphalt Prices by State
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              This page groups states into practical pricing bands so you can start with a realistic range before you
-              get into a real local bid. Use it with the main calculator when you want to know how much asphalt you
-              need and what the project might cost.
+              This page groups U.S. states into practical pricing bands so you can start with a realistic range before
+              a local bid. Outside the U.S., use the tonnage calculator and enter your local price per ton or tonne.
             </p>
           </div>
 

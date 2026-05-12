@@ -12,10 +12,10 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Estimate driveway cost for asphalt, concrete, and gravel, then compare material tradeoffs before asking for quotes.";
+  "Driveway cost calculator comparing asphalt, concrete, and gravel installed price ranges. Free tool with U.S. regional pricing and planning notes.";
 
 export const metadata = buildMetadata({
-  title: "Driveway Cost Calculator",
+  title: "Driveway Cost Calculator | Asphalt, Concrete & Gravel",
   description: pageDescription,
   path: "/driveway-cost-calculator"
 });

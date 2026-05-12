@@ -13,7 +13,7 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "A practical asphalt cost guide with pricing basics, formula notes, common asphalt project types, waste allowance tips, and quote-checking advice.";
+  "Asphalt cost guide with U.S. pricing notes, formulas, waste tips, quote checks, and advice for using local ton or tonne prices.";
 
 export const metadata = buildMetadata({
   title: "Asphalt Cost Guide | Pricing, Formula & Quote Tips",
@@ -55,7 +55,7 @@ const faqs = [
   {
     question: "How do I calculate asphalt costs?",
     answer:
-      "Start with tonnage: area × thickness × density ÷ 2000, then multiply by the price per ton. Add labor, prep, and cleanup for the full project cost."
+      "Start with tonnage, then multiply by the price per ton or tonne. Add labor, prep, and cleanup for the full project cost."
   },
   {
     question: "What is the asphalt formula for tonnage?",
@@ -71,6 +71,11 @@ const faqs = [
     question: "Is blacktop the same as asphalt?",
     answer:
       "Yes. Blacktop is another common name for asphalt, so the same formula and pricing logic apply to both."
+  },
+  {
+    question: "Can I use this cost guide outside the U.S.?",
+    answer:
+      "Yes for quantity planning. The default price ranges are U.S.-based, so outside the U.S. use the calculator with your local price per ton or tonne."
   }
 ];
 
@@ -192,6 +197,10 @@ export default function AsphaltCostGuidePage() {
             <p className="text-lg leading-8 text-zinc-600">
               This guide explains the rough price bands behind the calculator, plus the formula and terms people
               search for when they want to know how much asphalt they need.
+            </p>
+            <p className="text-sm leading-6 text-zinc-600">
+              Default price examples are U.S.-based. For Canada, the UK, or other markets, use the calculator with
+              Metric if needed and enter your local supplier price per ton or tonne.
             </p>
           </div>
 

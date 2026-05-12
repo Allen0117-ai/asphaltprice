@@ -78,6 +78,12 @@ function rangeLabel(low: number, high: number) {
   return `${formatCurrency(low)} - ${formatCurrency(high)}`;
 }
 
+function customPriceLabel(value: number) {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0
+  }).format(Math.round(value));
+}
+
 function resultUnitLabel(unitSystem: UnitSystem, imperialLabel: string, metricLabel: string) {
   return unitSystem === "metric" ? metricLabel : imperialLabel;
 }
@@ -244,19 +250,25 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               thicknessInches,
               wastePercent,
               region,
-              customMaterialPricePerTon
+              customMaterialPricePerTon,
+              customMaterialPriceUnit: unitSystem === "metric" ? "tonne" : "ton"
             }
           : {
               areaSqFt,
               thicknessInches,
               wastePercent,
               region,
-              customMaterialPricePerTon
+              customMaterialPricePerTon,
+              customMaterialPriceUnit: unitSystem === "metric" ? "tonne" : "ton"
             }
       ),
-    [areaSqFt, customMaterialPricePerTon, inputMode, lengthFt, region, thicknessInches, wastePercent, widthFt]
+    [areaSqFt, customMaterialPricePerTon, inputMode, lengthFt, region, thicknessInches, unitSystem, wastePercent, widthFt]
   );
 
+  const customMaterialPriceUnit = unitSystem === "metric" ? "tonne" : "ton";
+  const customMaterialQuantity = unitSystem === "metric" ? estimate.tonnes : estimate.tons;
+  const coverageSqFtPerCustomUnit = unitSystem === "metric" ? estimate.coverageSqFtPerTonne : estimate.coverageSqFtPerTon;
+  const coverageSqMPerCustomUnit = unitSystem === "metric" ? estimate.coverageSqMPerTonne : estimate.coverageSqMPerTon;
   const comparison = useMemo(
     () =>
       computeDrivewayComparison(
@@ -268,17 +280,19 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               thicknessInches,
               wastePercent,
               region,
-              customMaterialPricePerTon
+              customMaterialPricePerTon,
+              customMaterialPriceUnit: unitSystem === "metric" ? "tonne" : "ton"
             }
           : {
               areaSqFt,
               thicknessInches,
               wastePercent,
               region,
-              customMaterialPricePerTon
+              customMaterialPricePerTon,
+              customMaterialPriceUnit: unitSystem === "metric" ? "tonne" : "ton"
             }
       ),
-    [areaSqFt, customMaterialPricePerTon, inputMode, lengthFt, region, thicknessInches, wastePercent, widthFt]
+    [areaSqFt, customMaterialPricePerTon, inputMode, lengthFt, region, thicknessInches, unitSystem, wastePercent, widthFt]
   );
 
   const regionLabel = regionPricing[region].label;
@@ -393,7 +407,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
       `Asphalt needed: ${formatDecimal(estimate.tons, 1)} tons / ${formatDecimal(estimate.tonnes, 1)} tonnes`,
       `Volume: ${formatDecimal(estimate.cubicYards, 1)} yd3 / ${formatDecimal(estimate.cubicMeters, 1)} m3`,
       customMaterialPricePerTon
-        ? `Material estimate: ${formatCurrency(estimate.customMaterialCost ?? 0)} at ${formatCurrency(customMaterialPricePerTon)} / ton`
+        ? `Material estimate: ${customPriceLabel(estimate.customMaterialCost ?? 0)} at ${customPriceLabel(customMaterialPricePerTon)} / ${customMaterialPriceUnit}`
         : `Material cost range: ${rangeLabel(estimate.materialLow, estimate.materialHigh)}`,
       mode === "tonnage" ? null : `Installed asphalt range: ${rangeLabel(estimate.installedLow, estimate.installedHigh)}`,
       mode === "comparison" ? `Concrete installed range: ${rangeLabel(comparison.concrete.low, comparison.concrete.high)}` : null,
@@ -503,7 +517,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                   Metric
                 </Button>
               </div>
-              <p className="text-xs text-zinc-500">Selected: {unitSystem === "imperial" ? "Imperial" : "Metric"}</p>
+              <p className="text-xs text-zinc-500">Selected: {unitSystem === "imperial" ? "Imperial (tons)" : "Metric (tonnes)"}</p>
             </div>
           </div>
 
@@ -559,13 +573,13 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             />
 
             <div className="space-y-2">
-              <Label htmlFor="price">Custom material price per ton (optional)</Label>
+              <Label htmlFor="price">Custom material price per {customMaterialPriceUnit} (optional)</Label>
               <Input
                 id="price"
                 type="number"
                 min={0}
                 step={5}
-                placeholder="Use region pricing if blank"
+                placeholder={unitSystem === "metric" ? "Enter local price per tonne" : "Use region pricing if blank"}
                 value={customMaterialPriceInput}
                 onChange={(event) => setCustomMaterialPriceInput(event.target.value)}
               />
@@ -662,9 +676,9 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                 hint="Handy for checking the amount before ordering."
               />
               <ResultBlock
-                label="Coverage per ton"
-                value={`${formatDecimal(estimate.coverageSqFtPerTon, 0)} sq ft / ${formatDecimal(estimate.coverageSqMPerTon, 1)} sq m`}
-                hint={`At ${thicknessValue(displayThickness, unitSystem, unitSystem === "metric" ? 0 : 1)} ${thicknessLabel}, one ton covers about this much.`}
+                label={`Coverage per ${customMaterialPriceUnit}`}
+                value={`${formatDecimal(coverageSqFtPerCustomUnit, 0)} sq ft / ${formatDecimal(coverageSqMPerCustomUnit, 1)} sq m`}
+                hint={`At ${thicknessValue(displayThickness, unitSystem, unitSystem === "metric" ? 0 : 1)} ${thicknessLabel}, one ${customMaterialPriceUnit} covers about this much.`}
               />
               <ResultBlock
                 label="Waste added"
@@ -685,8 +699,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               {customMaterialPricePerTon ? (
                 <ResultBlock
                   label="Custom material price"
-                  value={`${formatCurrency(customMaterialPricePerTon)} / ton`}
-                  hint={`Estimated material total: ${formatCurrency(estimate.customMaterialCost ?? 0)}. Regional reference: ${rangeLabel(estimate.materialLow, estimate.materialHigh)}.`}
+                  value={`${customPriceLabel(customMaterialPricePerTon)} / ${customMaterialPriceUnit}`}
+                  hint={`Estimated material total: ${customPriceLabel(estimate.customMaterialCost ?? 0)} in the same currency you entered, based on ${formatDecimal(customMaterialQuantity, 1)} ${customMaterialPriceUnit}s. Regional reference: ${rangeLabel(estimate.materialLow, estimate.materialHigh)}.`}
                 />
               ) : (
                 <ResultBlock
@@ -714,8 +728,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               {customMaterialPricePerTon && (
                 <ResultBlock
                   label="Custom material price"
-                  value={`${formatCurrency(customMaterialPricePerTon)} / ton`}
-                  hint={`Estimated material total: ${formatCurrency(estimate.customMaterialCost ?? 0)}.`}
+                  value={`${customPriceLabel(customMaterialPricePerTon)} / ${customMaterialPriceUnit}`}
+                  hint={`Estimated material total: ${customPriceLabel(estimate.customMaterialCost ?? 0)} in the same currency you entered.`}
                 />
               )}
               <ResultBlock

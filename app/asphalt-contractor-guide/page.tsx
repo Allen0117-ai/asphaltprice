@@ -10,10 +10,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
-const pageDescription = "Learn how to compare asphalt contractor quotes, spot red flags, and ask better paving questions.";
+const pageDescription =
+  "Learn how to compare asphalt contractor quotes, spot red flags, and ask better paving questions before you sign a driveway or parking lot bid.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Contractor Guide",
+  title: "Asphalt Contractor Guide | Quotes, Red Flags & Questions",
   description: pageDescription,
   path: "/asphalt-contractor-guide"
 });

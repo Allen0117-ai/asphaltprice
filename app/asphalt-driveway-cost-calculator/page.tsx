@@ -13,7 +13,7 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Estimate asphalt driveway cost with better context on driveway types, quote scope, and the pages that help you check the number.";
+  "Estimate asphalt driveway cost, tonnage, and installed range with U.S. default pricing or your local price per ton or tonne.";
 
 export const metadata = buildMetadata({
   title: "Asphalt Driveway Cost Calculator | Estimate Installed Cost",
@@ -48,6 +48,11 @@ const faqs = [
   {
     question: "Should I compare it with the tonnage calculator?",
     answer: "Yes. The tonnage page helps you check the material quantity before you compare installed pricing."
+  },
+  {
+    question: "Can I use this driveway calculator outside the U.S.?",
+    answer:
+      "Yes for quantity planning. Default price ranges are U.S.-based, so outside the U.S. enter your local price per ton or tonne."
   }
 ];
 
@@ -145,6 +150,10 @@ export default function AsphaltDrivewayCostPage() {
             <p className="text-lg leading-8 text-zinc-600">
               Enter the size of the driveway, pick a thickness, and get a rough material and installed range you can
               use before asking for a quote.
+            </p>
+            <p className="text-sm leading-6 text-zinc-600">
+              Default pricing uses broad U.S. ranges. If you are outside the U.S., enter your local asphalt or tarmac
+              price per ton or tonne for a better material estimate.
             </p>
             <div className="flex flex-wrap gap-3 text-sm text-zinc-600">
               <span className="inline-flex items-center gap-2 rounded-full bg-zinc-100 px-3 py-1">
