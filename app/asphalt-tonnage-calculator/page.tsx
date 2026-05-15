@@ -34,6 +34,11 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
+    question: "When was this tonnage calculator content last updated?",
+    answer:
+      "The page content was last reviewed in May 2026. The formula is stable, but local supplier units and material mixes can vary."
+  },
+  {
     question: "Why does tonnage matter?",
     answer: "Tonnage helps you order the right amount of material and compare supplier quotes without guessing."
   },
@@ -68,6 +73,16 @@ const faqs = [
     question: "Can I use this as a tarmac calculator?",
     answer:
       "Yes. Tarmac is a common term in the UK and other markets. Use Metric for tonnes or Imperial for tons, then compare the result with your local supplier quote."
+  },
+  {
+    question: "Can Canadian projects use this calculator?",
+    answer:
+      "Yes. Canada may use either tons or metric tonnes depending on the supplier, so match the calculator unit to the written quote."
+  },
+  {
+    question: "Is this a final order quantity?",
+    answer:
+      "No. Treat it as a planning estimate. Ask the supplier or contractor to confirm density, truck load size, waste, and compaction before ordering."
   }
 ];
 
@@ -155,6 +170,21 @@ export default function AsphaltTonnagePage() {
           <AsphaltCalculator mode="tonnage" defaultValues={{ areaSqFt: 600, thicknessInches: 3, wastePercent: 7, region: "national" }} />
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
+
+          <section className="grid gap-4 md:grid-cols-3">
+            {[
+              ["Updated", "Content last reviewed May 2026. Use current supplier pricing before you order."],
+              ["Estimate only", "The calculator uses a planning density. Mix type, compaction, and moisture can change the final load."],
+              ["Unit check", "Use tons for U.S. short tons, tonnes for metric orders, and tarmac wording when that is how local quotes are written."]
+            ].map(([title, text]) => (
+              <Card key={title} className="border-zinc-200 bg-zinc-50">
+                <CardContent className="space-y-2">
+                  <p className="text-base font-medium text-zinc-950">{title}</p>
+                  <p className="text-sm leading-6 text-zinc-600">{text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
@@ -261,6 +291,10 @@ export default function AsphaltTonnagePage() {
                 <p>
                   If you are not sure which unit a supplier used, ask them to write it out plainly before you place an
                   order.
+                </p>
+                <p>
+                  In Canada, quotes can appear in short tons or metric tonnes. In the UK, the same type of project may
+                  be described as tarmac and priced by tonne. Match the wording before comparing numbers.
                 </p>
                 <p>
                   At the planning density used here, one cubic yard of asphalt is roughly 2 tons, so tonnage and

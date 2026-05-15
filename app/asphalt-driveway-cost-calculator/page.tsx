@@ -34,6 +34,11 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
+    question: "When was this calculator content last updated?",
+    answer:
+      "The page content was last reviewed in May 2026. Prices still vary by city, season, fuel cost, and contractor availability."
+  },
+  {
     question: "What does this page estimate?",
     answer: "It estimates material and installed cost for a typical asphalt driveway project using a simple pricing model."
   },
@@ -53,6 +58,16 @@ const faqs = [
     question: "Can I use this driveway calculator outside the U.S.?",
     answer:
       "Yes for quantity planning. Default price ranges are U.S.-based, so outside the U.S. enter your local price per ton or tonne."
+  },
+  {
+    question: "Is asphalt called tarmac in the UK?",
+    answer:
+      "Many UK homeowners say tarmac for a driveway surface. This calculator can still help, but use local tarmac pricing and metric tonnes when you compare quotes."
+  },
+  {
+    question: "What should I ask a contractor before hiring?",
+    answer:
+      "Ask what thickness is included, whether the base will be repaired, how drainage is handled, what unit price is used, and whether cleanup is included."
   }
 ];
 
@@ -171,6 +186,21 @@ export default function AsphaltDrivewayCostPage() {
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
+          <section className="grid gap-4 md:grid-cols-3">
+            {[
+              ["Updated", "Content last reviewed May 2026 for planning clarity and quote-comparison language."],
+              ["Estimate only", "Use this as a budget starting point. A contractor still needs to inspect the base, drainage, and access."],
+              ["US, Canada, UK", "U.S. quotes often use tons, Canada may use tons or tonnes, and UK quotes often say tarmac and tonnes."]
+            ].map(([title, text]) => (
+              <Card key={title} className="border-zinc-200 bg-zinc-50">
+                <CardContent className="space-y-2">
+                  <p className="text-base font-medium text-zinc-950">{title}</p>
+                  <p className="text-sm leading-6 text-zinc-600">{text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
           <div className="grid gap-4 md:grid-cols-3">
             {[
               ["Use it for", "Driveways, access pads, small lots, and resurfacing planning."],
@@ -263,6 +293,10 @@ export default function AsphaltDrivewayCostPage() {
                 <p>
                   If one bid is far lower than the others, check whether it skipped repair work or used a thinner build-up. The
                   cheapest number is not always the most complete one.
+                </p>
+                <p>
+                  For a cleaner comparison, ask every contractor to quote the same area, same thickness, same base
+                  repair assumptions, and the same material unit: ton, tonne, asphalt, or tarmac.
                 </p>
               </div>
               <div className="flex flex-wrap gap-3">

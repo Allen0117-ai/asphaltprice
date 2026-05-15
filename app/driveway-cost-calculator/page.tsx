@@ -65,6 +65,11 @@ const planningFactors = [
 
 const faqs = [
   {
+    question: "When was this calculator content last updated?",
+    answer:
+      "The page content was last reviewed in May 2026. Use it for planning, then confirm current local prices with contractors."
+  },
+  {
     question: "What does this page cover?",
     answer: "It compares common driveway material options so you can see a rough budget band before asking for quotes."
   },
@@ -79,6 +84,16 @@ const faqs = [
   {
     question: "What should I compare in real bids?",
     answer: "Compare thickness, base work, drainage, cleanup, warranty, and access assumptions before comparing only the total."
+  },
+  {
+    question: "Can I use this in Canada or the UK?",
+    answer:
+      "Yes as a planning tool. For Canada, check whether quotes use tons or tonnes. For the UK, asphalt driveway quotes may be described as tarmac."
+  },
+  {
+    question: "What can make the final driveway quote higher?",
+    answer:
+      "Old surface removal, weak base, drainage repair, tight access, thicker material, edging, and busy-season labor can all increase the final price."
   }
 ];
 
@@ -118,6 +133,21 @@ export default function DrivewayCostPage() {
             <AsphaltCalculator mode="driveway" defaultValues={{ areaSqFt: 800, thicknessInches: 3, wastePercent: 7, region: "national" }} />
           </div>
 
+          <section className="grid gap-4 md:grid-cols-3">
+            {[
+              ["Updated", "Content last reviewed May 2026 for driveway planning and contractor quote comparison."],
+              ["Estimate only", "This is not a final bid. A contractor needs to inspect base condition, drainage, access, and removal work."],
+              ["Regional terms", "U.S. quotes often say asphalt, Canada may use tons or tonnes, and UK quotes often use tarmac and tonnes."]
+            ].map(([title, text]) => (
+              <Card key={title} className="border-zinc-200 bg-zinc-50">
+                <CardContent className="space-y-2">
+                  <p className="text-base font-medium text-zinc-950">{title}</p>
+                  <p className="text-sm leading-6 text-zinc-600">{text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
           <section id="materials" className="scroll-mt-24 grid gap-4 md:grid-cols-3">
             {materials.map((item) => (
               <Card key={item.title} className="border-zinc-200">
@@ -155,6 +185,10 @@ export default function DrivewayCostPage() {
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
                 <p>Ask each contractor to price the same area, thickness, base prep, and cleanup scope.</p>
                 <p>A lower number is not always better if it skips base repair, drainage, or edge work.</p>
+                <p>
+                  Ask whether the bid includes removal, grading, base stone, edge restraints, disposal, warranty, and
+                  the exact unit used for asphalt or tarmac material.
+                </p>
               </div>
               <div className="flex flex-wrap gap-3">
                 <Link href="/asphalt-cost-guide" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">

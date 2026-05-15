@@ -35,6 +35,11 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
+    question: "When was this comparison content last updated?",
+    answer:
+      "The page content was last reviewed in May 2026. Use it as a planning comparison, then confirm current local bids."
+  },
+  {
     question: "Is asphalt always cheaper?",
     answer: "Usually yes for a first-pass driveway estimate, but the gap depends on region, site conditions, and prep work."
   },
@@ -49,6 +54,16 @@ const faqs = [
   {
     question: "Should I compare only upfront cost?",
     answer: "No. Also compare maintenance, drainage, repairs, and how long you plan to keep the driveway."
+  },
+  {
+    question: "Can I use this comparison in Canada or the UK?",
+    answer:
+      "Yes for a rough comparison. In Canada, confirm whether asphalt is quoted in tons or tonnes. In the UK, asphalt driveway work may be quoted as tarmac by the tonne."
+  },
+  {
+    question: "What should contractor quotes include?",
+    answer:
+      "Ask for the same area, thickness, base prep, drainage work, removal, cleanup, warranty, and material unit before comparing asphalt and concrete totals."
   }
 ];
 
@@ -168,6 +183,21 @@ export default function AsphaltVsConcretePage() {
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
+          <section className="grid gap-4 md:grid-cols-3">
+            {[
+              ["Updated", "Content last reviewed May 2026 for driveway material comparison and quote planning."],
+              ["Estimate only", "The calculator gives a starting range. Real bids depend on site inspection, base work, drainage, and local labor."],
+              ["Terms to match", "Compare asphalt, concrete, gravel, tarmac, tons, and tonnes exactly as they appear in contractor quotes."]
+            ].map(([title, text]) => (
+              <Card key={title} className="border-zinc-200 bg-zinc-50">
+                <CardContent className="space-y-2">
+                  <p className="text-base font-medium text-zinc-950">{title}</p>
+                  <p className="text-sm leading-6 text-zinc-600">{text}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </section>
+
           <div className="grid gap-4 md:grid-cols-3">
             {[
               ["How to use it", "Keep the same area and compare the cost bands side by side."],
@@ -198,6 +228,10 @@ export default function AsphaltVsConcretePage() {
                 <p>
                   If you collect contractor bids later, ask each contractor to quote the same driveway size, prep scope,
                   drainage assumptions, and cleanup. Otherwise the material comparison gets muddy fast.
+                </p>
+                <p>
+                  For international comparisons, keep the terms clear: asphalt in the U.S., tarmac in many UK quotes,
+                  and tons or tonnes depending on the supplier.
                 </p>
               </div>
             </div>
