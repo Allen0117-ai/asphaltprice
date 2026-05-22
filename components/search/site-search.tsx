@@ -52,10 +52,40 @@ const searchPages: readonly SearchPage[] = [
     keywords: ["driveway", "calculator", "compare", "gravel"]
   },
   {
+    href: "/parking-lot-paving-cost-calculator" as Route,
+    title: "Parking lot paving cost calculator",
+    description: "Estimate asphalt parking lot cost with tonnage, thickness, and quote scope.",
+    keywords: ["parking lot", "paving", "commercial", "asphalt"]
+  },
+  {
+    href: "/blacktop-driveway-cost-estimator" as Route,
+    title: "Blacktop driveway cost estimator",
+    description: "Estimate blacktop driveway cost with area, thickness, and installed pricing.",
+    keywords: ["blacktop", "driveway", "estimate", "asphalt"]
+  },
+  {
+    href: "/tar-and-chip-driveway-cost-calculator" as Route,
+    title: "Tar and chip driveway cost calculator",
+    description: "Estimate tar and chip driveway cost by square footage and quote scope.",
+    keywords: ["tar and chip", "chip seal", "driveway", "cost"]
+  },
+  {
     href: "/asphalt-cost-guide" as Route,
     title: "Asphalt cost guide",
     description: "Learn what changes an asphalt quote and the price it covers.",
     keywords: ["pricing", "guide", "quote", "cost"]
+  },
+  {
+    href: "/asphalt-cost-per-square-foot" as Route,
+    title: "Asphalt cost per square foot",
+    description: "Connect square-foot paving prices with tonnage and installed quote scope.",
+    keywords: ["square foot", "sq ft", "pricing", "asphalt"]
+  },
+  {
+    href: "/hot-mix-asphalt-cost-per-ton" as Route,
+    title: "Hot mix asphalt cost per ton",
+    description: "Understand hot mix per-ton pricing, delivery, and installed quote differences.",
+    keywords: ["hot mix", "per ton", "material", "price"]
   },
   {
     href: "/asphalt-contractor-guide" as Route,

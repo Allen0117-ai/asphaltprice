@@ -6,15 +6,20 @@ import { siteConfig } from "@/lib/site";
 const toolLinks = [
   { href: "/asphalt-driveway-cost-calculator", label: "Driveway cost" },
   { href: "/asphalt-tonnage-calculator", label: "Tonnage" },
+  { href: "/parking-lot-paving-cost-calculator", label: "Parking lot cost" },
+  { href: "/blacktop-driveway-cost-estimator", label: "Blacktop cost" },
   { href: "/tarmac-driveway-cost-calculator", label: "Tarmac cost" },
   { href: "/asphalt-vs-concrete-driveway-cost-calculator", label: "Asphalt vs concrete" }
 ] as const;
 
 const guideLinks = [
   { href: "/asphalt-cost-guide", label: "Cost guide" },
+  { href: "/asphalt-cost-per-square-foot", label: "Cost per sq ft" },
+  { href: "/hot-mix-asphalt-cost-per-ton", label: "Hot mix per ton" },
   { href: "/asphalt-prices-by-state", label: "State pricing" },
   { href: "/asphalt-price-per-ton-near-me", label: "Price per ton near me" },
   { href: "/asphalt-driveway-cost-by-state", label: "Driveway cost by state" },
+  { href: "/tar-and-chip-driveway-cost-calculator", label: "Tar and chip cost" },
   { href: "/how-much-asphalt-do-i-need", label: "How much asphalt" },
   { href: "/asphalt-contractor-guide", label: "Contractor guide" }
 ] as const;

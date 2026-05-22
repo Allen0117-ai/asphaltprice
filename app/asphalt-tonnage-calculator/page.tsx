@@ -134,6 +134,16 @@ const relatedPages = [
     href: "/asphalt-prices-by-state",
     title: "Asphalt prices by state",
     text: "Check broad regional price bands after you know your quantity."
+  },
+  {
+    href: "/hot-mix-asphalt-cost-per-ton",
+    title: "Hot mix asphalt cost per ton",
+    text: "Use the tonnage result with a material price quote."
+  },
+  {
+    href: "/asphalt-cost-per-square-foot",
+    title: "Asphalt cost per square foot",
+    text: "Convert material and installed estimates into a square-foot view."
   }
 ] as const;
 

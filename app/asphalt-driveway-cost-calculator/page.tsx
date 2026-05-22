@@ -133,6 +133,21 @@ const relatedPages = [
     href: "/asphalt-contractor-guide",
     title: "Asphalt contractor guide",
     text: "Compare quote scope and ask better questions before you hire."
+  },
+  {
+    href: "/blacktop-driveway-cost-estimator",
+    title: "Blacktop driveway cost estimator",
+    text: "Use the same estimator with the wording many homeowners search."
+  },
+  {
+    href: "/asphalt-cost-per-square-foot",
+    title: "Asphalt cost per square foot",
+    text: "Translate the installed range into a square-foot comparison."
+  },
+  {
+    href: "/tar-and-chip-driveway-cost-calculator",
+    title: "Tar and chip driveway cost",
+    text: "Compare asphalt with a chip seal driveway option."
   }
 ] as const;
 

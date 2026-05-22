@@ -1,6 +1,7 @@
 import Link from "next/link";
+import type { Route } from "next";
 
-import { MapPin, PhoneCall } from "lucide-react";
+import { ArrowRight, MapPin, PhoneCall } from "lucide-react";
 
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
@@ -51,6 +52,29 @@ const quoteChecks = [
   "Confirm the asphalt mix, compacted thickness, and minimum load charge.",
   "Ask if base repair, grading, drainage, removal, and cleanup are included.",
   "Get the quote date because asphalt and fuel prices can move quickly."
+] as const;
+
+const relatedPages = [
+  {
+    href: "/hot-mix-asphalt-cost-per-ton",
+    title: "Hot mix asphalt cost per ton",
+    text: "Understand the material unit behind local per-ton quotes."
+  },
+  {
+    href: "/asphalt-tonnage-calculator",
+    title: "Asphalt tonnage calculator",
+    text: "Calculate how many tons you need before calling suppliers."
+  },
+  {
+    href: "/asphalt-cost-per-square-foot",
+    title: "Asphalt cost per square foot",
+    text: "Compare installed quotes in a more homeowner-friendly unit."
+  },
+  {
+    href: "/parking-lot-paving-cost-calculator",
+    title: "Parking lot paving cost",
+    text: "Use local per-ton pricing inside a full lot estimate."
+  }
 ] as const;
 
 export default function AsphaltPricePerTonNearMePage() {
@@ -129,6 +153,31 @@ export default function AsphaltPricePerTonNearMePage() {
           <section id="faq" className="space-y-4">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">FAQ</h2>
             <FaqAccordion items={faqs} />
+          </section>
+
+          <section className="space-y-5">
+            <div className="max-w-3xl">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use local per-ton prices with these pages</h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                After you have a local price, these pages help you check quantity, square-foot cost, and full paving scope.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {relatedPages.map((item) => (
+                <Link key={item.href} href={item.href as Route}>
+                  <Card className="h-full border-zinc-200 transition-colors hover:border-zinc-300 hover:bg-zinc-50">
+                    <CardContent className="space-y-3">
+                      <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                      <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                      <span className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
+                        Open page
+                        <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))}
+            </div>
           </section>
         </div>
       </section>

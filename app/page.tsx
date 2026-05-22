@@ -148,6 +148,36 @@ const relatedCalculatorFeatureItems = [
     title: "Driveway cost calculator",
     text: "Compare asphalt, concrete, and gravel in one place.",
     iconName: "Calculator" as const
+  },
+  {
+    href: "/parking-lot-paving-cost-calculator" as Route,
+    title: "Parking lot paving cost calculator",
+    text: "Estimate small lot paving cost with tonnage and quote scope.",
+    iconName: "Building2" as const
+  },
+  {
+    href: "/blacktop-driveway-cost-estimator" as Route,
+    title: "Blacktop driveway cost estimator",
+    text: "Use blacktop wording for residential driveway estimates.",
+    iconName: "Home" as const
+  },
+  {
+    href: "/asphalt-cost-per-square-foot" as Route,
+    title: "Asphalt cost per square foot",
+    text: "Compare installed quotes using square-foot pricing.",
+    iconName: "CircleDollarSign" as const
+  },
+  {
+    href: "/hot-mix-asphalt-cost-per-ton" as Route,
+    title: "Hot mix asphalt cost per ton",
+    text: "Check material unit pricing before comparing bids.",
+    iconName: "Truck" as const
+  },
+  {
+    href: "/tar-and-chip-driveway-cost-calculator" as Route,
+    title: "Tar and chip driveway cost calculator",
+    text: "Estimate chip seal by square footage and scope.",
+    iconName: "Layers3" as const
   }
 ] as const;
 
