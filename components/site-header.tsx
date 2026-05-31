@@ -7,6 +7,7 @@ import { siteConfig } from "@/lib/site";
 
 const primaryNavItems = [
   { href: "/#calculator", label: "Calculator" },
+  { href: "/asphalt-cost-calculator", label: "Cost calculator" },
   { href: "/asphalt-driveway-cost-calculator", label: "Driveway cost" },
   { href: "/asphalt-tonnage-calculator", label: "Tonnage" },
   { href: "/asphalt-prices-by-state", label: "State pricing" },

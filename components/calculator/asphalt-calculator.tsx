@@ -28,9 +28,11 @@ import { regionOptions, regionPricing, type RegionKey } from "@/lib/calculator/r
 import { cn } from "@/lib/utils";
 
 export type CalculatorMode = "asphalt" | "tonnage" | "comparison" | "driveway";
+type ProjectScope = "new-install" | "overlay" | "replacement";
 
 type CalculatorDefaults = Partial<CalculatorInput> & {
   inputMode?: InputMode;
+  projectScope?: ProjectScope;
 };
 
 type AsphaltCalculatorProps = {
@@ -73,6 +75,27 @@ const modeCopy: Record<
     ctaTitle: "Ready to ask for a quote?"
   }
 };
+
+const projectScopeOptions: Array<{ key: ProjectScope; label: string; note: string; multiplier: number }> = [
+  {
+    key: "new-install",
+    label: "New installation",
+    note: "Fresh asphalt over prepared base.",
+    multiplier: 1
+  },
+  {
+    key: "overlay",
+    label: "Overlay / resurface",
+    note: "Lower cost when the existing base is sound.",
+    multiplier: 0.72
+  },
+  {
+    key: "replacement",
+    label: "Full replacement",
+    note: "Higher cost when old pavement must be removed.",
+    multiplier: 1.25
+  }
+];
 
 function rangeLabel(low: number, high: number) {
   return `${formatCurrency(low)} - ${formatCurrency(high)}`;
@@ -172,6 +195,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
   });
   const [wastePercent, setWastePercent] = useState(() => clampNumber(defaultValues?.wastePercent ?? 7, 0, 25));
   const [region, setRegion] = useState<RegionKey>(defaultValues?.region ?? "national");
+  const [projectScope, setProjectScope] = useState<ProjectScope>(defaultValues?.projectScope ?? "new-install");
   const [customMaterialPriceInput, setCustomMaterialPriceInput] = useState(() =>
     typeof defaultValues?.customMaterialPricePerTon === "number" && defaultValues.customMaterialPricePerTon > 0
       ? String(defaultValues.customMaterialPricePerTon)
@@ -189,6 +213,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
     const thicknessParam = params.get("thickness");
     const wasteParam = params.get("waste");
     const regionValue = params.get("region");
+    const scopeValue = params.get("scope");
     const inputModeValue = params.get("input");
     const unitValue = params.get("units");
     const priceValue = params.get("price");
@@ -229,6 +254,10 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
 
     if (regionValue && regionOptions.some((item) => item.key === regionValue)) {
       setRegion(regionValue as RegionKey);
+    }
+
+    if (scopeValue && projectScopeOptions.some((item) => item.key === scopeValue)) {
+      setProjectScope(scopeValue as ProjectScope);
     }
 
     if (priceValue !== null && Number.isFinite(customPrice) && customPrice > 0) {
@@ -297,6 +326,13 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
 
   const regionLabel = regionPricing[region].label;
   const regionNote = regionPricing[region].note;
+  const selectedScope = projectScopeOptions.find((item) => item.key === projectScope) ?? projectScopeOptions[0];
+  const scopedInstalledLow = estimate.installedLow * selectedScope.multiplier;
+  const scopedInstalledHigh = estimate.installedHigh * selectedScope.multiplier;
+  const scopedAsphaltInstalledLow = comparison.asphalt.installedLow * selectedScope.multiplier;
+  const scopedAsphaltInstalledHigh = comparison.asphalt.installedHigh * selectedScope.multiplier;
+  const scopedInstalledPerSqFtLow = projectAreaSqFt > 0 ? scopedInstalledLow / projectAreaSqFt : 0;
+  const scopedInstalledPerSqFtHigh = projectAreaSqFt > 0 ? scopedInstalledHigh / projectAreaSqFt : 0;
   const displayAreaSqFt = inputMode === "dimensions" ? projectAreaSqFt : areaSqFt;
   const displayLength = lengthFt;
   const displayWidth = widthFt;
@@ -376,6 +412,10 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
       region
     });
 
+    if (mode !== "tonnage") {
+      params.set("scope", projectScope);
+    }
+
     if (inputMode === "dimensions") {
       params.set("length", String(unitSystem === "metric" ? feetToMeters(displayLength) : displayLength));
       params.set("width", String(unitSystem === "metric" ? feetToMeters(displayWidth) : displayWidth));
@@ -404,12 +444,13 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
         : null,
       `Thickness: ${thicknessValue(displayThickness, unitSystem, unitSystem === "metric" ? 0 : 1)} ${thicknessLabel}`,
       `Waste allowance: ${wastePercent}%`,
+      mode === "tonnage" ? null : `Project scope: ${selectedScope.label}`,
       `Asphalt needed: ${formatDecimal(estimate.tons, 1)} tons / ${formatDecimal(estimate.tonnes, 1)} tonnes`,
       `Volume: ${formatDecimal(estimate.cubicYards, 1)} yd3 / ${formatDecimal(estimate.cubicMeters, 1)} m3`,
       customMaterialPricePerTon
         ? `Material estimate: ${customPriceLabel(estimate.customMaterialCost ?? 0)} at ${customPriceLabel(customMaterialPricePerTon)} / ${customMaterialPriceUnit}`
         : `Material cost range: ${rangeLabel(estimate.materialLow, estimate.materialHigh)}`,
-      mode === "tonnage" ? null : `Installed asphalt range: ${rangeLabel(estimate.installedLow, estimate.installedHigh)}`,
+      mode === "tonnage" ? null : `Installed asphalt range: ${rangeLabel(scopedInstalledLow, scopedInstalledHigh)}`,
       mode === "comparison" ? `Concrete installed range: ${rangeLabel(comparison.concrete.low, comparison.concrete.high)}` : null,
       mode === "comparison" ? `Gravel installed range: ${rangeLabel(comparison.gravel.low, comparison.gravel.high)}` : null,
       "Note: Planning estimate only. Final quote depends on site inspection."
@@ -432,15 +473,15 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
       }
 
       if (mode === "asphalt") {
-        setResultAnnouncement(`Results updated. Installed cost ${rangeLabel(estimate.installedLow, estimate.installedHigh)}.`);
+        setResultAnnouncement(`Results updated. Installed cost ${rangeLabel(scopedInstalledLow, scopedInstalledHigh)}.`);
         return;
       }
 
-      setResultAnnouncement(`Results updated. Asphalt installed ${rangeLabel(comparison.asphalt.installedLow, comparison.asphalt.installedHigh)}.`);
+      setResultAnnouncement(`Results updated. Asphalt installed ${rangeLabel(scopedAsphaltInstalledLow, scopedAsphaltInstalledHigh)}.`);
     }, 250);
 
     return () => window.clearTimeout(timer);
-  }, [comparison.asphalt.installedHigh, comparison.asphalt.installedLow, estimate.installedHigh, estimate.installedLow, estimate.tons, mode]);
+  }, [estimate.tons, mode, scopedAsphaltInstalledHigh, scopedAsphaltInstalledLow, scopedInstalledHigh, scopedInstalledLow]);
 
   return (
     <section id="calculator" className={cn("scroll-mt-24 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(320px,0.95fr)]", className)}>
@@ -561,6 +602,26 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
           )}
 
           <div className="grid gap-3 sm:grid-cols-2">
+            {mode !== "tonnage" && (
+              <div className="space-y-2 sm:col-span-2">
+                <Label htmlFor="scope">Project type</Label>
+                <select
+                  id="scope"
+                  autoComplete="off"
+                  value={projectScope}
+                  onChange={(event) => setProjectScope(event.target.value as ProjectScope)}
+                  className="h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-950 outline-none focus:border-zinc-950"
+                >
+                  {projectScopeOptions.map((item) => (
+                    <option key={item.key} value={item.key}>
+                      {item.label}
+                    </option>
+                  ))}
+                </select>
+                <p className="text-xs text-zinc-500">{selectedScope.note}</p>
+              </div>
+            )}
+
             <RangeField
               id="thickness"
               label={`Thickness (${thicknessLabel})`}
@@ -711,8 +772,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               )}
               <ResultBlock
                 label="Installed cost"
-                value={rangeLabel(estimate.installedLow, estimate.installedHigh)}
-                hint={`About ${formatCurrency(estimate.installedPerSqFtLow)} - ${formatCurrency(estimate.installedPerSqFtHigh)} per sq ft.`}
+                value={rangeLabel(scopedInstalledLow, scopedInstalledHigh)}
+                hint={`About ${formatCurrency(scopedInstalledPerSqFtLow)} - ${formatCurrency(scopedInstalledPerSqFtHigh)} per sq ft for ${selectedScope.label.toLowerCase()}.`}
               />
             </div>
           )}
@@ -734,8 +795,8 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               )}
               <ResultBlock
                 label="Asphalt installed"
-                value={rangeLabel(comparison.asphalt.installedLow, comparison.asphalt.installedHigh)}
-                hint="Typical driveway range in this estimate model."
+                value={rangeLabel(scopedAsphaltInstalledLow, scopedAsphaltInstalledHigh)}
+                hint={`Typical ${selectedScope.label.toLowerCase()} range in this estimate model.`}
               />
               <ResultBlock
                 label="Concrete installed"

@@ -113,7 +113,53 @@ const priceDrivers = [
   }
 ] as const;
 
+const projectScopeCards = [
+  {
+    title: "New installation",
+    text:
+      "Use this when the driveway needs a prepared base before asphalt is installed. This is the cleanest scope for a new-build estimate."
+  },
+  {
+    title: "Overlay or resurfacing",
+    text:
+      "Use this only when the existing driveway and base are still sound. It is usually cheaper, but it should not hide drainage or base problems."
+  },
+  {
+    title: "Full replacement",
+    text:
+      "Use this when old asphalt must be removed or the base needs rebuilding. Removal and disposal can push the quote higher."
+  }
+] as const;
+
+const drivewayEstimateRows = [
+  {
+    size: "Small one-car driveway",
+    area: "200-400 sq ft",
+    use: "Good for a minimum-charge check"
+  },
+  {
+    size: "Standard two-car driveway",
+    area: "600-800 sq ft",
+    use: "Common homeowner planning size"
+  },
+  {
+    size: "Large driveway or parking pad",
+    area: "1,000+ sq ft",
+    use: "Compare per-ton and per-sq-ft pricing"
+  }
+] as const;
+
 const relatedPages = [
+  {
+    href: "/asphalt-driveway-estimate",
+    title: "Asphalt driveway estimate",
+    text: "Use a simpler estimate page focused on homeowner quote checks."
+  },
+  {
+    href: "/asphalt-cost-calculator",
+    title: "Asphalt cost calculator",
+    text: "Estimate material and installed cost with project type included."
+  },
   {
     href: "/asphalt-cost-guide",
     title: "Asphalt cost guide",
@@ -198,6 +244,69 @@ export default function AsphaltDrivewayCostPage() {
           </div>
 
           <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 800, thicknessInches: 3, wastePercent: 7, region: "national" }} />
+
+          <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
+            <div className="space-y-5">
+              <div className="max-w-3xl">
+                <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
+                  <BookOpen className="h-4 w-4" />
+                  Project type
+                </div>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+                  Driveway estimates change when the scope changes
+                </h2>
+                <p className="mt-3 text-sm leading-7 text-zinc-600">
+                  A new driveway, overlay, and full replacement are not the same job. Use the project type control in
+                  the calculator so the installed range better matches the quote you expect.
+                </p>
+              </div>
+              <div className="grid gap-4 md:grid-cols-3">
+                {projectScopeCards.map((item) => (
+                  <Card key={item.title} className="border-zinc-200">
+                    <CardContent className="space-y-2">
+                      <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                      <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <Card className="border-zinc-950 bg-zinc-950">
+              <CardContent className="space-y-3">
+                <p className="text-sm font-medium text-amber-300">Quick answer</p>
+                <h2 className="text-2xl font-semibold tracking-tight text-white">Most driveway estimates need size, thickness, and scope.</h2>
+                <p className="text-sm leading-6 text-zinc-300">
+                  If a contractor only gives one total, ask what thickness, base work, removal, drainage, and cleanup
+                  are included before comparing it with another bid.
+                </p>
+              </CardContent>
+            </Card>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Common driveway estimate sizes</h2>
+            <div className="overflow-hidden rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[640px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Driveway size</th>
+                    <th className="px-4 py-3 font-medium">Typical area</th>
+                    <th className="px-4 py-3 font-medium">Best use</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {drivewayEstimateRows.map((row) => (
+                    <tr key={row.size}>
+                      <td className="px-4 py-3 font-medium text-zinc-950">{row.size}</td>
+                      <td className="px-4 py-3 text-zinc-600">{row.area}</td>
+                      <td className="px-4 py-3 text-zinc-600">{row.use}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 

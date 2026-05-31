@@ -4,10 +4,15 @@ import type { Route } from "next";
 import { siteConfig } from "@/lib/site";
 
 const toolLinks = [
+  { href: "/asphalt-cost-calculator", label: "Asphalt cost calculator" },
   { href: "/asphalt-driveway-cost-calculator", label: "Driveway cost" },
+  { href: "/asphalt-driveway-estimate", label: "Driveway estimate" },
   { href: "/asphalt-tonnage-calculator", label: "Tonnage" },
+  { href: "/asphalt-paving-cost-calculator", label: "Paving cost" },
   { href: "/parking-lot-paving-cost-calculator", label: "Parking lot cost" },
   { href: "/blacktop-driveway-cost-estimator", label: "Blacktop cost" },
+  { href: "/blacktop-cost-per-ton", label: "Blacktop per ton" },
+  { href: "/tarmac-calculator", label: "Tarmac calculator" },
   { href: "/tarmac-driveway-cost-calculator", label: "Tarmac cost" },
   { href: "/asphalt-vs-concrete-driveway-cost-calculator", label: "Asphalt vs concrete" }
 ] as const;

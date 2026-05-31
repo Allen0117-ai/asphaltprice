@@ -34,6 +34,18 @@ const searchPages: readonly SearchPage[] = [
     keywords: ["driveway", "calculator", "installed cost", "asphalt"]
   },
   {
+    href: "/asphalt-cost-calculator" as Route,
+    title: "Asphalt cost calculator",
+    description: "Estimate material and installed asphalt cost by project type.",
+    keywords: ["cost calculator", "material cost", "installed cost", "price"]
+  },
+  {
+    href: "/asphalt-driveway-estimate" as Route,
+    title: "Asphalt driveway estimate",
+    description: "Get a driveway estimate with project type, tonnage, and quote checks.",
+    keywords: ["driveway estimate", "asphalt estimate", "resurfacing", "replacement"]
+  },
+  {
     href: "/asphalt-tonnage-calculator" as Route,
     title: "Asphalt tonnage calculator",
     description: "See how many tons you need and how waste changes the order.",
@@ -58,10 +70,22 @@ const searchPages: readonly SearchPage[] = [
     keywords: ["parking lot", "paving", "commercial", "asphalt"]
   },
   {
+    href: "/asphalt-paving-cost-calculator" as Route,
+    title: "Asphalt paving cost calculator",
+    description: "Estimate paving cost for driveways, pads, and small lots.",
+    keywords: ["paving", "parking pad", "small lot", "asphalt"]
+  },
+  {
     href: "/blacktop-driveway-cost-estimator" as Route,
     title: "Blacktop driveway cost estimator",
     description: "Estimate blacktop driveway cost with area, thickness, and installed pricing.",
     keywords: ["blacktop", "driveway", "estimate", "asphalt"]
+  },
+  {
+    href: "/blacktop-cost-per-ton" as Route,
+    title: "Blacktop cost per ton",
+    description: "Check blacktop material cost per ton and installed quote scope.",
+    keywords: ["blacktop", "per ton", "material price", "driveway"]
   },
   {
     href: "/tar-and-chip-driveway-cost-calculator" as Route,
@@ -98,6 +122,12 @@ const searchPages: readonly SearchPage[] = [
     title: "Asphalt prices by state",
     description: "Check regional asphalt price bands and what moves them.",
     keywords: ["state", "regional", "price bands", "pricing"]
+  },
+  {
+    href: "/tarmac-calculator" as Route,
+    title: "Tarmac calculator",
+    description: "Calculate tarmac tonnes, metric area, thickness, and cost.",
+    keywords: ["tarmac", "tonnes", "metric", "uk"]
   },
   {
     href: "/how-much-asphalt-do-i-need" as Route,

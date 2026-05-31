@@ -131,6 +131,21 @@ const priceNotes = [
   }
 ] as const;
 
+const localPriceSteps = [
+  {
+    title: "Start with your state band",
+    text: "Use the region card to get a rough material and installed price range before you call anyone."
+  },
+  {
+    title: "Calculate tons needed",
+    text: "Use your actual area, thickness, and waste allowance so the price is tied to a real quantity."
+  },
+  {
+    title: "Call nearby suppliers",
+    text: "Ask for material-only, delivered, and installed pricing because each number means something different."
+  }
+] as const;
+
 const contractorQuestions = [
   "Is this quote for material only, delivered asphalt, or fully installed asphalt?",
   "What asphalt mix, thickness, and compacted depth are included?",
@@ -140,6 +155,11 @@ const contractorQuestions = [
 ] as const;
 
 const relatedPages = [
+  {
+    href: "/asphalt-cost-calculator",
+    title: "Asphalt cost calculator",
+    text: "Estimate material and installed cost with project type included."
+  },
   {
     href: "/#calculator",
     title: "Main asphalt calculator",
@@ -200,6 +220,32 @@ export default function AsphaltPricesByStatePage() {
             </p>
           </div>
 
+          <section className="grid gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,1fr)]">
+            <Card className="border-zinc-950 bg-zinc-950">
+              <CardContent className="space-y-3">
+                <p className="text-sm font-medium text-amber-300">Quick answer</p>
+                <h2 className="text-2xl font-semibold tracking-tight text-white">
+                  Asphalt price per ton near me usually starts with local material price, then delivery and installation.
+                </h2>
+                <p className="text-sm leading-6 text-zinc-300">
+                  Use the state band as a planning range only. The real local number should come from a nearby asphalt
+                  plant or paving contractor because haul distance, minimum load, season, and site prep can change the quote.
+                </p>
+              </CardContent>
+            </Card>
+
+            <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {localPriceSteps.map((item) => (
+                <Card key={item.title} className="border-zinc-200 bg-zinc-50">
+                  <CardContent className="space-y-2">
+                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
+                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </section>
+
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
           <section id="state-bands" className="scroll-mt-24 space-y-5">
@@ -247,6 +293,36 @@ export default function AsphaltPricesByStatePage() {
                   </Card>
                 );
               })}
+            </div>
+            <div className="overflow-hidden rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[720px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Region</th>
+                    <th className="px-4 py-3 font-medium">Material per ton</th>
+                    <th className="px-4 py-3 font-medium">Installed per ton</th>
+                    <th className="px-4 py-3 font-medium">Use this for</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {stateBuckets.map((bucket) => {
+                    const pricing = regionPricing[bucket.region];
+
+                    return (
+                      <tr key={bucket.label}>
+                        <td className="px-4 py-3 font-medium text-zinc-950">{bucket.label}</td>
+                        <td className="px-4 py-3 text-zinc-600">
+                          {formatCurrency(pricing.asphaltMaterialLow)} - {formatCurrency(pricing.asphaltMaterialHigh)}
+                        </td>
+                        <td className="px-4 py-3 text-zinc-600">
+                          {formatCurrency(pricing.asphaltInstalledLow)} - {formatCurrency(pricing.asphaltInstalledHigh)}
+                        </td>
+                        <td className="px-4 py-3 text-zinc-600">{pricing.note}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
             </div>
           </section>
 
