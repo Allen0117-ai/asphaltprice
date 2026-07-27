@@ -99,7 +99,7 @@ const config: CalculatorLandingPageConfig = {
       text: "Compare hot mix asphalt material pricing."
     },
     {
-      href: "/asphalt-price-per-ton-near-me",
+      href: "/asphalt-prices-by-state",
       title: "Price per ton near me",
       text: "Use local asphalt quote checks."
     },

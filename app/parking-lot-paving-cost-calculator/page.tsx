@@ -162,7 +162,7 @@ export default function ParkingLotPavingCostCalculatorPage() {
                   A lot that sits far from the asphalt plant can cost more because trucks, crew time, and hot-mix
                   timing all matter.
                 </p>
-                <Link href="/asphalt-price-per-ton-near-me" className="inline-flex text-sm font-medium text-amber-700">
+                <Link href="/asphalt-prices-by-state" className="inline-flex text-sm font-medium text-amber-700">
                   Check local price planning
                 </Link>
               </CardContent>

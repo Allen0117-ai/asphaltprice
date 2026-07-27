@@ -62,11 +62,6 @@ const quoteChecks = [
 
 const relatedPages = [
   {
-    href: "/asphalt-price-per-ton-near-me",
-    title: "Asphalt price per ton near me",
-    text: "Compare local quote wording and supplier scope."
-  },
-  {
     href: "/asphalt-tonnage-calculator",
     title: "Asphalt tonnage calculator",
     text: "Calculate the material quantity before pricing it."

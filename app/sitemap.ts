@@ -21,7 +21,6 @@ const routes = [
   "/hot-mix-asphalt-cost-per-ton",
   "/how-much-asphalt-do-i-need",
   "/asphalt-prices-by-state",
-  "/asphalt-price-per-ton-near-me",
   "/asphalt-price-per-yard",
   "/asphalt-driveway-cost-by-state",
   "/tarmac-calculator",

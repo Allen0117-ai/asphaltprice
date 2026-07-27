@@ -65,7 +65,7 @@ const relatedPages = [
     text: "Compare installed quotes in the unit homeowners usually see."
   },
   {
-    href: "/asphalt-price-per-ton-near-me",
+    href: "/asphalt-prices-by-state",
     title: "Asphalt price per ton near me",
     text: "Check local material pricing before calling contractors."
   },

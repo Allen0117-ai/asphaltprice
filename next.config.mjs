@@ -4,6 +4,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/asphalt-price-per-ton-near-me",
+        destination: "https://www.asphaltprice.com/asphalt-prices-by-state",
+        permanent: true
+      },
+      {
         source: "/:path*",
         has: [
           {
