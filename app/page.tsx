@@ -19,10 +19,12 @@ import { regionPricing, type RegionKey } from "@/lib/calculator/regional-prices"
 import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webSiteSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
+const pageDescription =
+  "Free asphalt calculator to estimate how much asphalt you need in tons or tonnes, plus material and installed cost for driveways and paving projects.";
+
 export const metadata = buildMetadata({
-  title: "Asphalt & Tarmac Calculator - Tons, Tonnes & Cost",
-  description:
-    "Free asphalt and tarmac calculator. Estimate tons, tonnes, and costs with imperial or metric units, U.S. pricing, or your local price.",
+  title: "Asphalt Calculator — How Much Asphalt Do I Need?",
+  description: pageDescription,
   path: "/"
 });
 
@@ -401,8 +403,8 @@ export default function HomePage() {
             logo: `${siteConfig.url}${siteConfig.icon}`
           }),
           webAppSchema({
-            name: siteConfig.name,
-            description: siteConfig.description,
+            name: "Free Asphalt Calculator",
+            description: pageDescription,
             url: siteConfig.url
           }),
           faqSchema(faqs)
@@ -417,13 +419,12 @@ export default function HomePage() {
               For driveways, overlays, and small lots
             </div>
             <h1 className="max-w-5xl text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl lg:text-6xl">
-              Asphalt Calculator
-              <br />
-              How Much Asphalt Do I Need?
+              Asphalt Calculator:{" "}
+              <span className="block">How Much Asphalt Do I Need?</span>
             </h1>
             <p className="max-w-4xl text-lg leading-8 text-zinc-600">
-              Get a quick planning number for asphalt or tarmac projects. Enter the area, choose imperial or metric
-              units, and compare tons, tonnes, and cost before you ask for quotes.
+              Estimate how much asphalt you need in tons or tonnes, then check material and installed cost. Enter your
+              area, thickness, and local price to get a free planning estimate before requesting quotes.
             </p>
             <div className="rounded-2xl border border-zinc-200 bg-white px-4 py-4 shadow-sm">
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -454,9 +455,8 @@ export default function HomePage() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Formula and coverage</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Asphalt formula, tonnage, and coverage</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
-              People search for this page using phrases like how to calculate asphalt, tarmac calculator, blacktop
-              calculator, and how much asphalt in a ton or tonne. The planning formula uses area, thickness, density,
-              and waste with 145 lb/ft³ as the base density.
+              The same quantity formula works whether your supplier calls the material asphalt, blacktop, or tarmac.
+              It uses area, thickness, density, and waste with 145 lb/ft³ as the base planning density.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-600">
               That means one ton covers about 83 square feet at 2 inches, about 55 square feet at 3 inches, and roughly

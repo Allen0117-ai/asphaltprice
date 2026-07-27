@@ -10,7 +10,9 @@ type MetadataInput = {
 
 export function buildMetadata({ title, description, path }: MetadataInput): Metadata {
   return {
-    title,
+    title: {
+      absolute: title
+    },
     description,
     alternates: {
       canonical: path

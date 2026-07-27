@@ -33,10 +33,12 @@ const routes = [
   "/contact"
 ];
 
+const lastContentUpdate = new Date("2026-07-27T00:00:00.000Z");
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
     url: `${siteConfig.url}${route}`,
-    lastModified: new Date(),
+    lastModified: lastContentUpdate,
     changeFrequency: route === "/" ? "weekly" : "monthly",
     priority: route === "/" ? 1 : route.includes("privacy") || route.includes("terms") ? 0.2 : 0.7
   }));

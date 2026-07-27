@@ -14,10 +14,10 @@ import { formatCurrency } from "@/lib/calculator/formulas";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Estimate asphalt price per ton near me with U.S. state price bands, California notes, quote checks, tonnage tips, and contractor questions.";
+  "Compare estimated asphalt prices by state with U.S. material and installed price-per-ton bands, regional cost factors, and local quote checks.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Price Per Ton Near Me | U.S. State Pricing Guide",
+  title: "Asphalt Prices by State | U.S. Price Per Ton Guide",
   description: pageDescription,
   path: "/asphalt-prices-by-state"
 });
@@ -36,12 +36,12 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
-    question: "How do I find asphalt price per ton near me?",
+    question: "How do I use asphalt prices by state?",
     answer:
       "Use your state or region in the table as a starting range, then ask two or three nearby asphalt plants or paving contractors for the current material price per ton and delivered or installed price."
   },
   {
-    question: "Is asphalt price per ton near me the same as the installed driveway price?",
+    question: "Is the state price per ton the same as the installed driveway price?",
     answer:
       "No. Material price per ton usually covers asphalt mix only. Installed pricing can include trucking, labor, equipment, base repair, removal, grading, cleanup, and contractor overhead."
   },
@@ -84,7 +84,7 @@ const whyPricesVary = [
   {
     title: "Local plant pricing",
     text:
-      "The closest asphalt plant can change the number quickly. A search for asphalt price per ton near me should always be checked against current plant or contractor pricing."
+      "The closest asphalt plant can change the number quickly. Always check a state planning range against current plant or contractor pricing."
   },
   {
     title: "Labor and season",
@@ -156,6 +156,11 @@ const contractorQuestions = [
 
 const relatedPages = [
   {
+    href: "/asphalt-price-per-ton-near-me",
+    title: "Asphalt price per ton near me",
+    text: "Use the local quote guide when you are ready to contact nearby suppliers."
+  },
+  {
     href: "/asphalt-cost-calculator",
     title: "Asphalt cost calculator",
     text: "Estimate material and installed cost with project type included."
@@ -211,12 +216,11 @@ export default function AsphaltPricesByStatePage() {
               Broad state-level bands
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
-              Asphalt Price Per Ton Near Me by State
+              Asphalt Prices by State
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              This page groups U.S. states into practical pricing bands so you can estimate asphalt price per ton near
-              me before a local bid. Outside the U.S., use the tonnage calculator and enter your local price per ton or
-              tonne. Canada and UK visitors can also use the same method for asphalt, blacktop, or tarmac planning.
+              Compare broad U.S. asphalt material and installed price-per-ton bands by state group before requesting a
+              local bid. Outside the U.S., use the tonnage calculator with your local price per ton or tonne.
             </p>
           </div>
 
@@ -225,7 +229,7 @@ export default function AsphaltPricesByStatePage() {
               <CardContent className="space-y-3">
                 <p className="text-sm font-medium text-amber-300">Quick answer</p>
                 <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  Asphalt price per ton near me usually starts with local material price, then delivery and installation.
+                  State asphalt prices start with material cost, then change with delivery, labor, and site conditions.
                 </h2>
                 <p className="text-sm leading-6 text-zinc-300">
                   Use the state band as a planning range only. The real local number should come from a nearby asphalt
@@ -345,9 +349,8 @@ export default function AsphaltPricesByStatePage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Price update, source, and estimate notes</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                The numbers below are meant for early budgeting, not as a promise of today&apos;s local plant rate. For a
-                true asphalt price per ton near me, confirm the current number with local suppliers or paving
-                contractors.
+                The numbers below are meant for early budgeting, not as a promise of today&apos;s local plant rate.
+                Confirm the current number with local suppliers or paving contractors.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2">

@@ -31,6 +31,17 @@ export const metadata: Metadata = {
     title: siteConfig.name,
     description: siteConfig.description
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1
+    }
+  },
   other: {
     "msvalidate.01": "960C876F79F33F87F44D3B09D2E5E910"
   }

@@ -68,6 +68,19 @@ const formulas = [
   }
 ] as const;
 
+const planningRanges = [
+  {
+    thickness: "2 inches",
+    material: "About $1–$2 / sq ft",
+    installed: "About $2–$3 / sq ft"
+  },
+  {
+    thickness: "3 inches",
+    material: "About $2–$3 / sq ft",
+    installed: "About $3–$4 / sq ft"
+  }
+] as const;
+
 const relatedPages = [
   {
     href: "/asphalt-driveway-cost-calculator",
@@ -124,6 +137,39 @@ export default function AsphaltCostPerSquareFootPage() {
           </div>
 
           <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 1000, thicknessInches: 3, wastePercent: 7, region: "national" }} />
+
+          <section className="space-y-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-5 sm:p-6">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-zinc-500">Quick price range</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
+                Typical asphalt cost per square foot in this planning model
+              </h2>
+              <p className="mt-3 text-sm leading-7 text-zinc-600">
+                These rounded U.S. planning ranges use the calculator&apos;s national price assumptions and a 7% waste
+                allowance. Base repair, removal, drainage, access, and small-job minimums can raise a contractor quote.
+              </p>
+            </div>
+            <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white">
+              <table className="w-full min-w-[560px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Compacted thickness</th>
+                    <th className="px-4 py-3 font-medium">Material only</th>
+                    <th className="px-4 py-3 font-medium">Installed planning range</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200">
+                  {planningRanges.map((row) => (
+                    <tr key={row.thickness}>
+                      <td className="px-4 py-3 font-medium text-zinc-950">{row.thickness}</td>
+                      <td className="px-4 py-3 text-zinc-600">{row.material}</td>
+                      <td className="px-4 py-3 text-zinc-600">{row.installed}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
 
           <section className="grid gap-4 md:grid-cols-3">
             {formulas.map((item) => (

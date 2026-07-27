@@ -3,6 +3,7 @@ import type { Route } from "next";
 
 import { ArrowRight, Calculator, ClipboardCheck, PackageCheck, Ruler, Scale, Truck } from "lucide-react";
 
+import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
@@ -12,10 +13,10 @@ import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "How much asphalt do I need? Calculate tons from area and thickness with a simple formula, waste allowance tips, and real project examples.";
+  "How much asphalt do I need? Use the free tonnage calculator to estimate tons from area and thickness, then add a practical waste allowance.";
 
 export const metadata = buildMetadata({
-  title: "How Much Asphalt Do I Need? | Formula & Calculator",
+  title: "How Much Asphalt Do I Need? Free Tonnage Calculator",
   description: pageDescription,
   path: "/how-much-asphalt-do-i-need"
 });
@@ -38,6 +39,7 @@ const faqs = [
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "How Much Asphalt Do I Need?", href: "/how-much-asphalt-do-i-need" }];
 
 const quickNav = [
+  { label: "Calculator", href: "#calculator" },
   { label: "Quick answer", href: "#quick-answer" },
   { label: "Step guide", href: "#steps" },
   { label: "Waste", href: "#waste" },
@@ -141,6 +143,11 @@ export default function HowMuchAsphaltPage() {
           </div>
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
+
+          <AsphaltCalculator
+            mode="tonnage"
+            defaultValues={{ areaSqFt: 500, thicknessInches: 3, wastePercent: 7, region: "national" }}
+          />
 
           <section id="quick-answer" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,0.6fr)]">
             <div className="space-y-4 rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6">
