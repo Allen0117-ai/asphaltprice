@@ -14,6 +14,9 @@ const config: CalculatorLandingPageConfig = {
   title: "Asphalt Paving Cost Calculator",
   eyebrow: "Driveway and small paving jobs",
   description: pageDescription,
+  directAnswerQuestion: "When should I use the asphalt paving cost calculator?",
+  directAnswer:
+    "Use this asphalt paving cost calculator for parking pads, private lanes, shared drives, and small lots. Enter the paved area, compacted thickness, project type, and waste allowance to estimate asphalt quantity and cost. Traffic load, base depth, drainage, truck access, striping, curbs, and minimum crew or delivery charges can all change the final price. Confirm the pavement design and site conditions with a contractor before work begins.",
   path: "/asphalt-paving-cost-calculator",
   schemaName: "Asphalt Paving Cost Calculator",
   calculatorMode: "asphalt",
@@ -40,19 +43,19 @@ const config: CalculatorLandingPageConfig = {
     {
       title: "When to use this paving calculator",
       text:
-        "Use this page when the project is not just a standard driveway. Parking pads, private lanes, and small paved areas need the same quantity math, but access and prep can change the installed quote.",
+        "Parking pads, private lanes, and small paved areas use the same quantity math as driveways, but access and preparation can change the installed price.",
       items: [
         {
           title: "Driveways",
-          text: "Best for residential paving when you need both tonnage and a rough installed range."
+          text: "Estimate both material quantity and an installed price range for residential paving."
         },
         {
           title: "Parking pads",
-          text: "Useful for checking whether a small parking area needs a minimum job charge."
+          text: "Small parking areas may be affected by minimum job charges."
         },
         {
           title: "Small lots",
-          text: "Good for early planning before a contractor measures and writes a formal bid."
+          text: "Base preparation and drainage become more important as paved area grows."
         }
       ]
     },
@@ -88,6 +91,11 @@ const config: CalculatorLandingPageConfig = {
     "For parking areas, confirm expected vehicle load and compacted thickness."
   ],
   relatedPages: [
+    {
+      href: "/asphalt-road-cost-calculator",
+      title: "Private asphalt road cost",
+      text: "Plan a private road or access lane with road-specific scope checks."
+    },
     {
       href: "/parking-lot-paving-cost-calculator",
       title: "Parking lot paving cost",

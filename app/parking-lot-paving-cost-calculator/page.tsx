@@ -4,15 +4,16 @@ import type { Route } from "next";
 import { ArrowRight, Building2, ClipboardCheck, Truck } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Estimate parking lot paving cost with asphalt tonnage, square footage, thickness, waste, and quote-scope checks.";
+  "Estimate parking lot paving cost per square foot using area, thickness, tonnage, waste, base work, drainage, striping, and quote scope.";
 
 export const metadata = buildMetadata({
   title: "Parking Lot Paving Cost Calculator | Asphalt Estimate",
@@ -45,6 +46,11 @@ const faqs = [
     question: "Should striping be included in the paving quote?",
     answer:
       "Usually yes for a finished parking lot. Ask whether layout, striping, wheel stops, ADA markings, and cleanup are included."
+  },
+  {
+    question: "How should I estimate parking lot striping cost?",
+    answer:
+      "Count standard and ADA spaces, arrows, crosswalks, fire lanes, and total line length. Keep striping as a separate quote line so paving and paint costs are easy to compare."
   },
   {
     question: "Is this a final contractor price?",
@@ -95,6 +101,7 @@ export default function ParkingLotPavingCostCalculatorPage() {
             description: pageDescription,
             url: `${siteConfig.url}/parking-lot-paving-cost-calculator`
           }),
+          webPageSchema({ name: "Parking Lot Paving Cost Calculator", description: pageDescription, path: "/parking-lot-paving-cost-calculator" }),
           faqSchema(faqs)
         ]}
       />
@@ -111,10 +118,12 @@ export default function ParkingLotPavingCostCalculatorPage() {
               Parking Lot Paving Cost Calculator
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Estimate asphalt tonnage and paving cost for a small parking lot, access area, or commercial pad before
-              you ask contractors for bids.
+              Estimate asphalt tonnage and parking lot paving cost per square foot for a small lot, access area, or
+              commercial pad before you ask contractors for bids.
             </p>
           </div>
+
+          <ContentCredentials path="/parking-lot-paving-cost-calculator" />
 
           <AsphaltCalculator
             mode="asphalt"
@@ -123,9 +132,9 @@ export default function ParkingLotPavingCostCalculatorPage() {
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
-              ["Updated", "Content last reviewed May 2026 for parking lot quote planning."],
-              ["Estimate only", "A contractor still needs to inspect base condition, drainage, access, and traffic needs."],
-              ["Best use", "Good for small lots, business parking areas, access pads, and private paved yards."]
+              ["Paving and striping", "Keep asphalt, line striping, ADA markings, and traffic control as separate costs."],
+              ["Traffic and base work", "Traffic loads, drainage, access, and base condition can change the project scope."],
+              ["Compare like-for-like quotes", "Match thickness, prep work, and cleanup before comparing totals."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -134,6 +143,26 @@ export default function ParkingLotPavingCostCalculatorPage() {
                 </CardContent>
               </Card>
             ))}
+          </section>
+
+          <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Keep paving and parking lot striping costs separate</h2>
+              <p className="text-sm leading-7 text-zinc-600">
+                A useful parking lot estimate separates the asphalt surface from line striping, ADA markings,
+                directional arrows, fire lanes, wheel stops, and traffic control. That makes a low paving bid easier
+                to compare because missing paint or layout work stays visible.
+              </p>
+            </div>
+            <Card className="border-zinc-200 bg-zinc-50">
+              <CardContent className="space-y-3">
+                <p className="text-base font-medium text-zinc-950">Striping takeoff</p>
+                <p className="text-sm leading-6 text-zinc-600">
+                  Ask for stall count, lineal feet, paint type, ADA symbols, arrows, crosswalks, mobilization, and
+                  surface preparation as separate line items.
+                </p>
+              </CardContent>
+            </Card>
           </section>
 
           <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
@@ -163,7 +192,7 @@ export default function ParkingLotPavingCostCalculatorPage() {
                   timing all matter.
                 </p>
                 <Link href="/asphalt-prices-by-state" className="inline-flex text-sm font-medium text-amber-700">
-                  Check local price planning
+                  View regional price ranges
                 </Link>
               </CardContent>
             </Card>
@@ -173,7 +202,7 @@ export default function ParkingLotPavingCostCalculatorPage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related parking lot cost pages</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Use these pages to check unit price, tonnage, square-foot cost, and contractor scope before comparing bids.
+                Check unit price, tonnage, square-foot cost, and contractor scope before comparing bids.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

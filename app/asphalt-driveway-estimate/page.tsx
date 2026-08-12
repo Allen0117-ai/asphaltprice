@@ -2,20 +2,23 @@ import { CalculatorLandingPage, type CalculatorLandingPageConfig } from "@/compo
 import { buildMetadata } from "@/lib/seo";
 
 const pageDescription =
-  "Get an asphalt driveway estimate with square footage, thickness, project type, tonnage, waste, and local installed cost range.";
+  "Build a quote-ready asphalt driveway estimate worksheet with measured area, compacted thickness, project type, tonnage, waste, and bid scope.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt Driveway Estimate | Cost & Tonnage",
+  title: "Asphalt Driveway Estimate Worksheet | Bid Planning",
   description: pageDescription,
   path: "/asphalt-driveway-estimate"
 });
 
 const config: CalculatorLandingPageConfig = {
-  title: "Asphalt Driveway Estimate",
-  eyebrow: "Residential driveway estimate",
+  title: "Asphalt Driveway Estimate Worksheet",
+  eyebrow: "Quote-ready residential worksheet",
   description: pageDescription,
+  directAnswerQuestion: "What should an asphalt driveway estimate include?",
+  directAnswer:
+    "A driveway estimate starts with the measured area, compacted asphalt thickness, project type, and waste allowance. The calculator turns those details into an estimated material quantity and price range. New installation, overlay, and replacement are different jobs: drainage, base repairs, removal, truck access, and minimum charges may change the final quote. Ask each contractor what thickness, base work, removal, cleanup, and warranty are included.",
   path: "/asphalt-driveway-estimate",
-  schemaName: "Asphalt Driveway Estimate",
+  schemaName: "Asphalt Driveway Estimate Worksheet",
   calculatorMode: "driveway",
   calculatorDefaults: { areaSqFt: 700, thicknessInches: 3, wastePercent: 7, region: "national" },
   breadcrumbs: [
@@ -32,8 +35,8 @@ const config: CalculatorLandingPageConfig = {
       text: "Switch between new installation, overlay, and full replacement to match the bid you expect."
     },
     {
-      title: "Best use",
-      text: "Treat the result as a planning number, then confirm it with a site visit."
+      title: "Before requesting quotes",
+      text: "Bring the measured area and thickness to the site visit."
     }
   ],
   sections: [
@@ -91,7 +94,7 @@ const config: CalculatorLandingPageConfig = {
     {
       href: "/asphalt-driveway-cost-calculator",
       title: "Driveway cost calculator",
-      text: "Use the main driveway calculator page."
+      text: "Estimate material and installed cost for new paving, an overlay, or replacement."
     },
     {
       href: "/blacktop-driveway-cost-estimator",

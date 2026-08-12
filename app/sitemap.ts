@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { getContentDates } from "@/lib/content-meta";
 import { siteConfig } from "@/lib/site";
 
 const routes = [
@@ -7,13 +8,18 @@ const routes = [
   "/asphalt-contractor-guide",
   "/asphalt-cost-calculator",
   "/asphalt-driveway-cost-calculator",
-  "/asphalt-driveway-estimate",
+  "/asphalt-driveway-replacement-cost-calculator",
+  "/asphalt-driveway-resurfacing-cost-calculator",
+  "/asphalt-driveway-thickness",
   "/asphalt-tonnage-calculator",
   "/asphalt-vs-concrete-driveway-cost-calculator",
   "/driveway-cost-calculator",
   "/asphalt-paving-cost-calculator",
+  "/asphalt-road-cost-calculator",
   "/parking-lot-paving-cost-calculator",
-  "/blacktop-driveway-cost-estimator",
+  "/driveway-sealing-cost-calculator",
+  "/asphalt-millings-calculator",
+  "/asphalt-millings-vs-gravel",
   "/blacktop-cost-per-ton",
   "/tar-and-chip-driveway-cost-calculator",
   "/asphalt-cost-guide",
@@ -26,19 +32,16 @@ const routes = [
   "/tarmac-calculator",
   "/tarmac-driveway-cost-calculator",
   "/about",
+  "/methodology",
   "/privacy",
   "/terms",
   "/disclaimer",
   "/contact"
 ];
 
-const lastContentUpdate = new Date("2026-07-27T00:00:00.000Z");
-
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
     url: `${siteConfig.url}${route}`,
-    lastModified: lastContentUpdate,
-    changeFrequency: route === "/" ? "weekly" : "monthly",
-    priority: route === "/" ? 1 : route.includes("privacy") || route.includes("terms") ? 0.2 : 0.7
+    lastModified: new Date(`${getContentDates(route).modifiedAt}T00:00:00.000Z`)
   }));
 }

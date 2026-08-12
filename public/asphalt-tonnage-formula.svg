@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Asphalt tonnage planning formula</title>
+  <desc id="desc">A four-step diagram: measure area, convert thickness to feet, multiply by a planning density, divide pounds by 2,000, then add waste.</desc>
+  <rect width="1200" height="630" fill="#fafaf9"/>
+  <rect x="48" y="48" width="1104" height="534" rx="28" fill="#18181b"/>
+  <text x="96" y="130" fill="#fbbf24" font-family="Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="2">ASPHALT TONNAGE</text>
+  <text x="96" y="190" fill="#ffffff" font-family="Arial, sans-serif" font-size="46" font-weight="700">Area × thickness × density ÷ 2,000</text>
+  <g font-family="Arial, sans-serif">
+    <rect x="96" y="250" width="220" height="176" rx="20" fill="#27272a" stroke="#52525b"/>
+    <text x="124" y="295" fill="#fbbf24" font-size="20" font-weight="700">1 · AREA</text>
+    <text x="124" y="342" fill="#ffffff" font-size="28" font-weight="700">Length × width</text>
+    <text x="124" y="382" fill="#d4d4d8" font-size="20">Square feet</text>
+    <rect x="356" y="250" width="220" height="176" rx="20" fill="#27272a" stroke="#52525b"/>
+    <text x="384" y="295" fill="#fbbf24" font-size="20" font-weight="700">2 · DEPTH</text>
+    <text x="384" y="342" fill="#ffffff" font-size="28" font-weight="700">Inches ÷ 12</text>
+    <text x="384" y="382" fill="#d4d4d8" font-size="20">Convert to feet</text>
+    <rect x="616" y="250" width="220" height="176" rx="20" fill="#27272a" stroke="#52525b"/>
+    <text x="644" y="295" fill="#fbbf24" font-size="20" font-weight="700">3 · DENSITY</text>
+    <text x="644" y="342" fill="#ffffff" font-size="28" font-weight="700">145 lb/ft³</text>
+    <text x="644" y="382" fill="#d4d4d8" font-size="20">Planning value</text>
+    <rect x="876" y="250" width="220" height="176" rx="20" fill="#27272a" stroke="#52525b"/>
+    <text x="904" y="295" fill="#fbbf24" font-size="20" font-weight="700">4 · WASTE</text>
+    <text x="904" y="342" fill="#ffffff" font-size="28" font-weight="700">Add 5–10%</text>
+    <text x="904" y="382" fill="#d4d4d8" font-size="20">Then confirm locally</text>
+    <text x="96" y="500" fill="#e4e4e7" font-size="22">Example: 500 ft² × 0.25 ft × 145 ÷ 2,000 = 9.1 tons before waste</text>
+    <text x="96" y="542" fill="#a1a1aa" font-size="18">Planning estimate only · Actual density varies by mix and compaction</text>
+  </g>
+</svg>

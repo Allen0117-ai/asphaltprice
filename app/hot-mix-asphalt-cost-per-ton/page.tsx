@@ -3,12 +3,16 @@ import type { Route } from "next";
 
 import { ArrowRight, CircleDollarSign, Scale, Truck } from "lucide-react";
 
+import { AsphaltFormulaFigure } from "@/components/content/asphalt-formula-figure";
+import { ContentCredentials } from "@/components/content/content-credentials";
+import { DirectAnswer } from "@/components/content/direct-answer";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/hot-mix-asphalt-cost-per-ton";
 
 const pageDescription =
   "Understand hot mix asphalt cost per ton, what changes the quote, and how to compare material, delivery, and installed pricing.";
@@ -16,7 +20,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Hot Mix Asphalt Cost Per Ton | Price & Quote Guide",
   description: pageDescription,
-  path: "/hot-mix-asphalt-cost-per-ton"
+  path
 });
 
 const breadcrumbs = [
@@ -48,7 +52,7 @@ const faqs = [
   {
     question: "Is hot mix different from blacktop or tarmac?",
     answer:
-      "The words can overlap in everyday searches. Contractors may say asphalt, hot mix, blacktop, or tarmac depending on region and project type."
+      "These terms can overlap in everyday use. Contractors may say asphalt, hot mix, blacktop, or tarmac depending on region and project type."
   }
 ];
 
@@ -84,11 +88,8 @@ export default function HotMixAsphaltCostPerTonPage() {
       <StructuredData
         data={[
           breadcrumbSchema(breadcrumbs),
-          webAppSchema({
-            name: "Hot Mix Asphalt Cost Per Ton Guide",
-            description: pageDescription,
-            url: `${siteConfig.url}/hot-mix-asphalt-cost-per-ton`
-          }),
+          articleSchema({ name: "Hot Mix Asphalt Cost Per Ton Guide", description: pageDescription, path }),
+          webPageSchema({ name: "Hot Mix Asphalt Cost Per Ton Guide", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -105,16 +106,32 @@ export default function HotMixAsphaltCostPerTonPage() {
               Hot Mix Asphalt Cost Per Ton
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this guide to understand what a hot mix asphalt per-ton quote includes, what can be missing, and how
-              to compare it with a full paving estimate.
+              Understand what a hot mix asphalt per-ton quote includes, what can be missing, and how to compare it
+              with a full paving estimate.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
+
+          <DirectAnswer question="What does hot mix asphalt cost per ton actually include?">
+            <p>
+              Hot mix asphalt cost per ton usually refers to the asphalt mixture before some or all delivery and paving
+              work is added. A plant-pickup price may cover only material; a delivered price may add trucking, fuel, and
+              minimum-load charges; an installed price may also include crew, equipment, placement, compaction, and
+              contractor overhead. Base repair, grading, drainage, removal, permits, striping, curbs, and cleanup may
+              still be separate. Because those scopes differ, two per-ton numbers are not comparable until you ask what
+              each one includes. Calculate the required tons from area and compacted thickness, then multiply by the
+              current quoted rate. Regional ranges can help with early budgeting, but use a current local quote when
+              ordering. Confirm the mix, unit, delivery terms, minimums, tax, and validity period with the supplier or
+              installer.
+            </p>
+          </DirectAnswer>
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
               ["Main unit", "Hot mix asphalt is commonly priced by ton for material planning."],
               ["Scope matters", "Material-only, delivered, and installed prices are different numbers."],
-              ["Updated", "Content last reviewed May 2026 for quote-comparison clarity."]
+              ["Price check", "Confirm whether the quote is material-only, delivered, or installed."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -123,6 +140,40 @@ export default function HotMixAsphaltCostPerTonPage() {
                 </CardContent>
               </Card>
             ))}
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Material, delivered, and installed are different prices</h2>
+            <p className="text-xs text-zinc-500 sm:hidden">Swipe the table left or right to see every column.</p>
+            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[680px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  <tr>
+                    <th className="px-4 py-3 font-medium">Quote type</th>
+                    <th className="px-4 py-3 font-medium">Usually includes</th>
+                    <th className="px-4 py-3 font-medium">Ask about separately</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200 text-zinc-600">
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Plant pickup</td><td className="px-4 py-3">Mix loaded at the plant</td><td className="px-4 py-3">Truck, minimum load, tax, placement</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Delivered</td><td className="px-4 py-3">Material and stated delivery</td><td className="px-4 py-3">Wait time, access, labor, equipment</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Installed</td><td className="px-4 py-3">Stated paving scope</td><td className="px-4 py-3">Base, removal, drainage, striping, permits</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <AsphaltFormulaFigure />
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">How public market data fits</h2>
+            <p className="text-sm leading-7 text-zinc-600">
+              The U.S. Bureau of Labor Statistics tracks producer-price movement for paving mixtures and blocks, while
+              the Energy Information Administration publishes regional diesel prices that help explain trucking
+              pressure. Neither source is a retail hot-mix quote. We use them only as market context and explain the
+              distinction on the <Link href="/methodology" className="font-medium text-amber-800 underline underline-offset-4">data and methodology page</Link>.
+              A current local supplier rate remains the better input.
+            </p>
           </section>
 
           <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
@@ -158,7 +209,7 @@ export default function HotMixAsphaltCostPerTonPage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related per-ton tools</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                These pages help you move from a material unit price to a more complete budget.
+                Continue from the material price to tonnage, installed cost, and contractor scope.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

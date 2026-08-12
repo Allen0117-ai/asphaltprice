@@ -20,7 +20,16 @@ export function SiteHeader() {
       <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3 lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:gap-6 lg:py-4">
         <Link href="/" className="flex min-w-0 items-center gap-3 text-zinc-950">
           <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-zinc-950 shadow-sm">
-            <Image src={siteConfig.icon} alt="" aria-hidden="true" width={40} height={40} className="h-full w-full object-cover" />
+            <Image
+              src={siteConfig.icon}
+              alt=""
+              aria-hidden="true"
+              width={40}
+              height={40}
+              priority
+              sizes="40px"
+              className="h-full w-full object-cover"
+            />
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block text-sm font-semibold">{siteConfig.name}</span>

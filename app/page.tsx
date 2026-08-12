@@ -4,6 +4,9 @@ import type { Route } from "next";
 import { ArrowRight, Sparkles } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { AsphaltFormulaFigure } from "@/components/content/asphalt-formula-figure";
+import { ContentCredentials } from "@/components/content/content-credentials";
+import { DirectAnswer } from "@/components/content/direct-answer";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { FeatureGrid } from "@/components/content/feature-grid";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
@@ -16,7 +19,7 @@ import {
   type CalculatorInput
 } from "@/lib/calculator/formulas";
 import { regionPricing, type RegionKey } from "@/lib/calculator/regional-prices";
-import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webSiteSchema } from "@/lib/seo";
+import { buildMetadata, faqSchema, organizationSchema, webAppSchema, webPageSchema, webSiteSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
@@ -96,7 +99,7 @@ const faqs = [
   {
     question: "Why doesn't this calculator use ZIP code pricing?",
     answer:
-      "Asphalt pricing varies by region and local market conditions beyond location alone. Our regional estimates provide a solid planning baseline. For precise local pricing, compare quotes from contractors in your area."
+      "Asphalt pricing varies by region and local market conditions. The regional ranges give you a rough starting point; compare local contractor quotes for a more precise price."
   }
 ];
 
@@ -158,10 +161,10 @@ const relatedCalculatorFeatureItems = [
     iconName: "Building2" as const
   },
   {
-    href: "/blacktop-driveway-cost-estimator" as Route,
-    title: "Blacktop driveway cost estimator",
-    text: "Use blacktop wording for residential driveway estimates.",
-    iconName: "Home" as const
+    href: "/asphalt-road-cost-calculator" as Route,
+    title: "Private asphalt road cost calculator",
+    text: "Estimate asphalt surface tonnage and cost for private roads and access lanes.",
+    iconName: "Ruler" as const
   },
   {
     href: "/asphalt-cost-per-square-foot" as Route,
@@ -407,6 +410,7 @@ export default function HomePage() {
             description: pageDescription,
             url: siteConfig.url
           }),
+          webPageSchema({ name: "Asphalt Calculator — How Much Asphalt Do I Need?", description: pageDescription, path: "/" }),
           faqSchema(faqs)
         ]}
       />
@@ -438,12 +442,22 @@ export default function HomePage() {
             </div>
           </div>
 
+          <ContentCredentials path="/" />
+
           <AsphaltCalculator mode="asphalt" />
 
-          <div className="rounded-lg border-l-4 border-blue-600 bg-zinc-50 px-4 py-3 text-sm leading-6 text-zinc-700">
-            <strong>How This Calculator Works:</strong> Quantity estimates work worldwide. Default price ranges use
-            broad U.S. regions, but you can enter your local price per ton or tonne for a better local estimate.
-          </div>
+          <DirectAnswer question="How much asphalt do I need?">
+            <p>
+              To estimate how much asphalt you need, measure the finished area, choose the compacted thickness, convert
+              thickness from inches to feet, multiply by a planning density, divide pounds by 2,000 to get short tons,
+              and then add waste. This calculator uses 145 lb/ft³ as a planning density, so 500 square feet at 3 inches
+              is about 9.1 tons before waste and about 9.7 tons with 7% waste. Mix design and compaction can change the
+              actual weight, and curves, hand work, awkward access, or small patches may need more material. Enter a
+              current local price when you have one, then confirm the mix, quantity, delivery, and minimum load with the
+              supplier or installer before ordering.
+            </p>
+          </DirectAnswer>
+
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
         </div>
@@ -455,8 +469,7 @@ export default function HomePage() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Formula and coverage</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Asphalt formula, tonnage, and coverage</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
-              The same quantity formula works whether your supplier calls the material asphalt, blacktop, or tarmac.
-              It uses area, thickness, density, and waste with 145 lb/ft³ as the base planning density.
+              The formula uses area, thickness, density, and waste with 145 lb/ft³ as the base planning density.
             </p>
             <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-600">
               That means one ton covers about 83 square feet at 2 inches, about 55 square feet at 3 inches, and roughly
@@ -474,6 +487,9 @@ export default function HomePage() {
               </Card>
             ))}
           </div>
+          <div className="lg:col-span-2">
+            <AsphaltFormulaFigure />
+          </div>
         </div>
       </section>
 
@@ -481,11 +497,11 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">How it works</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Turn a few inputs into a planning number</h2>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Turn a few inputs into an estimate</h2>
             <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
               The calculator turns simple project details into a rough asphalt budget. It uses square footage,
-              thickness, standard asphalt density, a waste allowance, and broad regional pricing. The result is a
-              planning number, not a final bid.
+              thickness, standard asphalt density, a waste allowance, and regional pricing. Confirm site conditions
+              with a contractor before treating it as a final price.
             </p>
             </div>
 
@@ -700,8 +716,7 @@ export default function HomePage() {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">FAQ</p>
               <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">Frequently asked questions</h2>
               <p className="mt-4 max-w-xl text-base leading-7 text-zinc-600">
-                These answers cover the most common questions people ask before they compare asphalt paving quotes.
-                They are meant to keep the estimate practical and easy to use.
+                Find quick answers about asphalt quantity, coverage, pricing, and ordering.
               </p>
             </div>
             <FaqAccordion items={faqs} defaultOpenIndex={0} />
@@ -715,7 +730,7 @@ export default function HomePage() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-500">Next steps</p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950">What to do after you get an estimate</h2>
             <p className="mt-4 text-base leading-7 text-zinc-600">
-              Once you have a planning number, compare it with local bids and make sure every quote uses the same
+              Compare the estimate with local bids and make sure every quote uses the same
               assumptions. Thickness, base prep, drainage, cleanup, and warranty details matter as much as the total
               price.
             </p>
@@ -741,9 +756,8 @@ export default function HomePage() {
           <div className="rounded-lg border border-zinc-200 bg-white p-5 text-sm leading-6 text-zinc-600">
             <p className="font-semibold uppercase tracking-[0.2em] text-zinc-500">Disclaimer</p>
             <p className="mt-3">
-              This tool gives a planning estimate only. Local market prices, base prep, haul distance, drainage,
-              access, and crew availability can move the real quote up or down. Use the calculator as a starting point,
-              then confirm the final number with a local paving professional.
+              Local market prices, base preparation, haul distance, drainage, access, and crew availability can move a
+              quote up or down. Confirm the final scope and price with a local paving professional.
             </p>
           </div>
         </div>

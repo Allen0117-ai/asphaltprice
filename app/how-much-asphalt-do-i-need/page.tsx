@@ -4,13 +4,16 @@ import type { Route } from "next";
 import { ArrowRight, Calculator, ClipboardCheck, PackageCheck, Ruler, Scale, Truck } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+const path = "/how-much-asphalt-do-i-need";
 
 const pageDescription =
   "How much asphalt do I need? Use the free tonnage calculator to estimate tons from area and thickness, then add a practical waste allowance.";
@@ -18,7 +21,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "How Much Asphalt Do I Need? Free Tonnage Calculator",
   description: pageDescription,
-  path: "/how-much-asphalt-do-i-need"
+  path
 });
 
 const faqs = [
@@ -32,7 +35,7 @@ const faqs = [
   },
   {
     question: "Should I order from the exact calculated tons?",
-    answer: "No. Treat the calculation as a planning number, then confirm the final order with the supplier or contractor before delivery."
+    answer: "No. Use it as a rough order estimate, then confirm the final quantity with the supplier or contractor before delivery."
   }
 ] as const;
 
@@ -123,6 +126,8 @@ export default function HowMuchAsphaltPage() {
             description: pageDescription,
             url: `${siteConfig.url}/how-much-asphalt-do-i-need`
           }),
+          articleSchema({ name: "How Much Asphalt Do I Need?", description: pageDescription, path }),
+          webPageSchema({ name: "How Much Asphalt Do I Need?", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -141,6 +146,8 @@ export default function HowMuchAsphaltPage() {
               the result into a safer asphalt order amount.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 

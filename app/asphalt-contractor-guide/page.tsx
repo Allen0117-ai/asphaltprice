@@ -3,12 +3,14 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ClipboardList, FileQuestion, TriangleAlert } from "lucide-react";
 
 import { ComparisonTable } from "@/components/content/comparison-table";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/asphalt-contractor-guide";
 
 const pageDescription =
   "Learn how to compare asphalt contractor quotes, spot red flags, and ask better paving questions before you sign a driveway or parking lot bid.";
@@ -16,7 +18,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Asphalt Contractor Guide | Quotes, Red Flags & Questions",
   description: pageDescription,
-  path: "/asphalt-contractor-guide"
+  path
 });
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Asphalt Contractor Guide", href: "/asphalt-contractor-guide" }];
@@ -96,6 +98,11 @@ const bidComparisonRows = [
     item: "Payment",
     good: "Uses a written deposit, milestone, or completion schedule.",
     warning: "Requires full payment before work starts."
+  },
+  {
+    item: "Warranty & credentials",
+    good: "Lists written warranty terms and confirms applicable local license and insurance details.",
+    warning: "Warranty, license, or insurance questions are avoided or left vague."
   }
 ] as const;
 
@@ -120,11 +127,8 @@ export default function AsphaltContractorGuidePage() {
       <StructuredData
         data={[
           breadcrumbSchema(breadcrumbs),
-          webAppSchema({
-            name: "Asphalt Contractor Guide",
-            description: pageDescription,
-            url: `${siteConfig.url}/asphalt-contractor-guide`
-          }),
+          articleSchema({ name: "Asphalt Contractor Guide", description: pageDescription, path }),
+          webPageSchema({ name: "Asphalt Contractor Guide", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -144,6 +148,18 @@ export default function AsphaltContractorGuidePage() {
               arrives.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
+
+          <Card className="border-zinc-950 bg-zinc-950 text-white">
+            <CardContent className="space-y-2">
+              <p className="text-sm font-medium text-amber-300">Quick answer</p>
+              <p className="text-lg leading-7 text-zinc-100">
+                Compare compacted thickness, base preparation, drainage, cleanup, warranty, credentials, and payment
+                milestones before comparing the total price.
+              </p>
+            </CardContent>
+          </Card>
 
           <div className="grid gap-4 md:grid-cols-3">
             {hiringStages.map((item, index) => (

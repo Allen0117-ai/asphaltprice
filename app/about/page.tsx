@@ -1,13 +1,20 @@
+import Link from "next/link";
+
 import { BookOpenCheck, CalendarDays, ShieldCheck } from "lucide-react";
 
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
+import { aboutPageSchema, buildMetadata, breadcrumbSchema, organizationSchema } from "@/lib/seo";
+import { siteConfig } from "@/lib/site";
+
+const pageDescription =
+  "Meet the Asphalt Calculator editorial team and learn how we review formulas, regional planning ranges, sources, corrections, and estimate limitations.";
 
 export const metadata = buildMetadata({
-  title: "About Asphalt Calculator",
-  description: "Learn how Asphalt Calculator creates planning estimates, regional price ranges, and asphalt cost guidance.",
+  title: "About the Asphalt Calculator Editorial Team",
+  description: pageDescription,
   path: "/about"
 });
 
@@ -26,7 +33,7 @@ const trustCards = [
   },
   {
     title: "Updated as data improves",
-    text: "Pages are reviewed when calculator assumptions, price notes, or Search Console query patterns show a useful improvement.",
+    text: "Pages are reviewed when formulas, source data, price notes, or documented corrections change.",
     icon: CalendarDays
   }
 ] as const;
@@ -34,7 +41,13 @@ const trustCards = [
 export default function AboutPage() {
   return (
     <>
-      <StructuredData data={breadcrumbSchema(breadcrumbs)} />
+      <StructuredData
+        data={[
+          breadcrumbSchema(breadcrumbs),
+          aboutPageSchema({ name: "About Asphalt Calculator", description: pageDescription, path: "/about" }),
+          organizationSchema({ name: siteConfig.name, url: siteConfig.url, logo: `${siteConfig.url}${siteConfig.icon}` })
+        ]}
+      />
       <section className="px-4 py-12">
         <div className="mx-auto max-w-3xl space-y-8">
           <Breadcrumbs items={breadcrumbs} />
@@ -46,6 +59,8 @@ export default function AboutPage() {
               contractor or supplier quotes.
             </p>
           </div>
+
+          <ContentCredentials path="/about" />
 
           <div className="grid gap-4 md:grid-cols-3">
             {trustCards.map((item) => {
@@ -64,11 +79,31 @@ export default function AboutPage() {
           </div>
 
           <section className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Who writes and reviews the content</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              Pages are prepared and reviewed by the Asphalt Calculator Editorial Team. We are not a licensed engineering
+              firm, paving contractor, or material supplier. We keep formulas consistent, label assumptions clearly,
+              separate material prices from installed prices, and explain the limits of every estimate.
+            </p>
+            <p className="text-base leading-7 text-zinc-600">
+              We link to public sources when a statement relies on an outside fact, and we label broad planning ranges so
+              you can replace them with current local quotes.
+            </p>
+          </section>
+
+          <section className="space-y-3">
             <h2 className="text-xl font-semibold text-zinc-950">How the estimates work</h2>
             <p className="text-base leading-7 text-zinc-600">
               Tonnage estimates use a planning asphalt density and the project dimensions you enter. Cost estimates add
               broad material or installed price ranges. U.S. pages use U.S. defaults, while metric users in Canada, the
               UK, and other markets can enter local prices per tonne where that is how suppliers quote.
+            </p>
+            <p className="text-base leading-7 text-zinc-600">
+              For formula details, source links, and regional-price limits, see the{" "}
+              <Link href="/methodology" className="font-medium text-amber-800 underline underline-offset-4">
+                data and methodology page
+              </Link>
+              .
             </p>
           </section>
 
@@ -79,6 +114,10 @@ export default function AboutPage() {
               because of base repair, drainage, truck access, haul distance, minimum charges, permits, seasonality, and
               local labor.
             </p>
+            <p className="text-base leading-7 text-zinc-600">
+              The site also does not sell leads or rank local contractors. A listed planning range should never be read
+              as an endorsement, guarantee, engineering design, or instruction to skip a site inspection.
+            </p>
           </section>
 
           <section className="space-y-3">
@@ -87,6 +126,10 @@ export default function AboutPage() {
               If you spot a pricing issue, unclear explanation, or calculator problem, send a note through the contact
               page. Useful corrections include location, unit type, whether the price is material-only or installed,
               and what work was included in the quote.
+            </p>
+            <p className="text-base leading-7 text-zinc-600">
+              Every correction is checked for unit type, date, location, and scope before it changes a public assumption.
+              If evidence is incomplete, we may clarify the wording without treating one quote as a regional average.
             </p>
           </section>
         </div>

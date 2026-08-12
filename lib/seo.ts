@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { editorialTeam, getContentDates } from "@/lib/content-meta";
 import { siteConfig } from "@/lib/site";
 
 type MetadataInput = {
@@ -9,6 +10,8 @@ type MetadataInput = {
 };
 
 export function buildMetadata({ title, description, path }: MetadataInput): Metadata {
+  const socialImage = buildSocialImageUrl(title, path);
+
   return {
     title: {
       absolute: title
@@ -22,14 +25,21 @@ export function buildMetadata({ title, description, path }: MetadataInput): Meta
       description,
       url: path,
       siteName: siteConfig.name,
-      type: "website"
+      type: "website",
+      images: [{ url: socialImage, width: 1200, height: 630, alt: title }]
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
+      description,
+      images: [socialImage]
     }
   };
+}
+
+function buildSocialImageUrl(title: string, path: string) {
+  const search = new URLSearchParams({ title, path });
+  return `/og?${search.toString()}`;
 }
 
 export function webAppSchema({
@@ -41,6 +51,9 @@ export function webAppSchema({
   description: string;
   url: string;
 }) {
+  const path = new URL(url).pathname || "/";
+  const dates = getContentDates(path);
+
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
@@ -49,7 +62,12 @@ export function webAppSchema({
     url,
     applicationCategory: "CalculatorApplication",
     operatingSystem: "Web",
+    browserRequirements: "Requires a modern web browser with JavaScript enabled for interactive calculations.",
     isAccessibleForFree: true,
+    datePublished: dates.publishedAt,
+    dateModified: dates.modifiedAt,
+    creator: organizationEntity(),
+    provider: organizationEntity(),
     offers: {
       "@type": "Offer",
       price: "0",
@@ -73,6 +91,16 @@ export function webSiteSchema({
   };
 }
 
+function organizationEntity() {
+  return {
+    "@type": "Organization",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    logo: `${siteConfig.url}${siteConfig.icon}`,
+    email: editorialTeam.email
+  };
+}
+
 export function organizationSchema({
   name,
   url,
@@ -87,8 +115,69 @@ export function organizationSchema({
     "@type": "Organization",
     name,
     url,
-    logo
+    logo,
+    email: editorialTeam.email,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "editorial corrections",
+      email: editorialTeam.email,
+      url: `${siteConfig.url}/contact`,
+      availableLanguage: "English"
+    }
   };
+}
+
+type ContentSchemaInput = {
+  name: string;
+  description: string;
+  path: string;
+};
+
+export function webPageSchema({ name, description, path }: ContentSchemaInput) {
+  const dates = getContentDates(path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name,
+    description,
+    url: `${siteConfig.url}${path}`,
+    datePublished: dates.publishedAt,
+    dateModified: dates.modifiedAt,
+    author: organizationEntity(),
+    reviewedBy: organizationEntity(),
+    publisher: organizationEntity(),
+    image: `${siteConfig.url}${buildSocialImageUrl(name, path)}`
+  };
+}
+
+export function articleSchema({ name, description, path }: ContentSchemaInput) {
+  const dates = getContentDates(path);
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: name,
+    description,
+    url: `${siteConfig.url}${path}`,
+    mainEntityOfPage: `${siteConfig.url}${path}`,
+    datePublished: dates.publishedAt,
+    dateModified: dates.modifiedAt,
+    author: organizationEntity(),
+    reviewedBy: organizationEntity(),
+    publisher: organizationEntity(),
+    image: `${siteConfig.url}${buildSocialImageUrl(name, path)}`
+  };
+}
+
+export function aboutPageSchema({ name, description, path }: ContentSchemaInput) {
+  const page = webPageSchema({ name, description, path });
+  return { ...page, "@type": "AboutPage" };
+}
+
+export function contactPageSchema({ name, description, path }: ContentSchemaInput) {
+  const page = webPageSchema({ name, description, path });
+  return { ...page, "@type": "ContactPage" };
 }
 
 export function breadcrumbSchema(items: ReadonlyArray<{ label: string; href: string }>) {

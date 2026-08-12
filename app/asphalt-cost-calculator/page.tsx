@@ -14,6 +14,9 @@ const config: CalculatorLandingPageConfig = {
   title: "Asphalt Cost Calculator",
   eyebrow: "Material and installed cost",
   description: pageDescription,
+  directAnswerQuestion: "How does an asphalt cost calculator estimate a project?",
+  directAnswer:
+    "Enter the paved area, compacted thickness, and project type to estimate the tons or tonnes needed, then see material and installed cost ranges. Choose new installation, overlay, or replacement because each involves different preparation. Local prices, drainage, base repairs, removal, access, and minimum-load charges can change the final price, so confirm the details with your supplier or contractor before ordering.",
   path: "/asphalt-cost-calculator",
   schemaName: "Asphalt Cost Calculator",
   calculatorMode: "asphalt",
@@ -32,8 +35,8 @@ const config: CalculatorLandingPageConfig = {
       text: "Enter your own price per ton or tonne when you have a plant or supplier number."
     },
     {
-      title: "Updated",
-      text: "Content last reviewed May 2026 for asphalt cost and quote-planning searches."
+      title: "Project scope included",
+      text: "Switch between new installation, overlay, and replacement to match the work being quoted."
     }
   ],
   sections: [
@@ -77,8 +80,8 @@ const config: CalculatorLandingPageConfig = {
     }
   ],
   exampleRows: [
-    { label: "Small driveway", scope: "400 sq ft, 2.5-3 in", estimate: "Use as a minimum-charge check before quotes." },
-    { label: "Standard driveway", scope: "600-800 sq ft, 3 in", estimate: "Best fit for homeowner planning." },
+    { label: "Small driveway", scope: "400 sq ft, 2.5-3 in", estimate: "Minimum crew or delivery charges may affect the price." },
+    { label: "Standard driveway", scope: "600-800 sq ft, 3 in", estimate: "A typical residential driveway size." },
     { label: "Large pad or lane", scope: "1,000+ sq ft", estimate: "Compare per-ton material and installed per-sq-ft pricing." }
   ],
   quoteChecks: [

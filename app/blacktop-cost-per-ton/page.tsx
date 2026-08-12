@@ -14,6 +14,9 @@ const config: CalculatorLandingPageConfig = {
   title: "Blacktop Cost Per Ton",
   eyebrow: "Blacktop material pricing",
   description: pageDescription,
+  directAnswerQuestion: "What does blacktop cost per ton include?",
+  directAnswer:
+    "Blacktop cost per ton usually refers to the asphalt mix, not a finished driveway. Multiply the quantity needed by a current local material rate, then add delivery and site work. Before comparing prices, confirm whether each quote is for plant pickup, delivered material, or installation and whether it uses U.S. short tons or metric tonnes.",
   path: "/blacktop-cost-per-ton",
   schemaName: "Blacktop Cost Per Ton Calculator",
   calculatorMode: "asphalt",
@@ -25,11 +28,11 @@ const config: CalculatorLandingPageConfig = {
   highlights: [
     {
       title: "Same material math",
-      text: "For most homeowner searches, blacktop and asphalt use the same quantity and price method."
+      text: "For most residential driveways, blacktop and asphalt use the same quantity and price method."
     },
     {
       title: "Per-ton focus",
-      text: "Use this page when a supplier or contractor gives you a material price per ton."
+      text: "Useful when a supplier or contractor gives you a material price per ton."
     },
     {
       title: "Installed cost check",
@@ -44,7 +47,7 @@ const config: CalculatorLandingPageConfig = {
       items: [
         {
           title: "Material price",
-          text: "Multiply tons needed by the local blacktop or asphalt price per ton."
+          text: "Estimated tons × your quoted price per ton = material subtotal. Keep delivery and installation separate."
         },
         {
           title: "Delivery",
@@ -89,9 +92,9 @@ const config: CalculatorLandingPageConfig = {
   ],
   relatedPages: [
     {
-      href: "/blacktop-driveway-cost-estimator",
+      href: "/asphalt-driveway-cost-calculator",
       title: "Blacktop driveway cost",
-      text: "Estimate a full blacktop driveway job."
+      text: "Estimate a full asphalt or blacktop driveway job."
     },
     {
       href: "/hot-mix-asphalt-cost-per-ton",
@@ -104,15 +107,15 @@ const config: CalculatorLandingPageConfig = {
       text: "Use local asphalt quote checks."
     },
     {
-      href: "/asphalt-tonnage-calculator",
-      title: "Tonnage calculator",
-      text: "Focus only on quantity and coverage."
+      href: "/asphalt-contractor-guide",
+      title: "Contractor quote guide",
+      text: "Check scope, thickness, base work, and exclusions before choosing a bid."
     }
   ],
   faqs: [
     {
       question: "Is blacktop cost per ton different from asphalt cost per ton?",
-      answer: "For most residential searches, blacktop and asphalt use the same estimating method. Local mix and supplier pricing still matter."
+      answer: "For most residential driveways, blacktop and asphalt use the same estimating method. Local mix and supplier pricing still matter."
     },
     {
       question: "Is per-ton price the final driveway cost?",

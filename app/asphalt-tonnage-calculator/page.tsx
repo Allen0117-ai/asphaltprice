@@ -4,19 +4,21 @@ import type { Route } from "next";
 import { ArrowRight, Scale, BookOpen } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { AsphaltUnitConverter } from "@/components/calculator/asphalt-unit-converter";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Calculate asphalt or tarmac in tons and tonnes. Use imperial or metric units to estimate material needed, coverage, and waste.";
+  "Calculate asphalt tons, tonnes, density, cubic-yard weight, and square-yards-to-tons conversions for paving material planning.";
 
 export const metadata = buildMetadata({
-  title: "Asphalt & Tarmac Tonnage Calculator - Tons & Tonnes",
+  title: "Asphalt Tonnage & Density Calculator | Yards to Tons",
   description: pageDescription,
   path: "/asphalt-tonnage-calculator"
 });
@@ -26,6 +28,7 @@ const quickNav = [
   { label: "Pick thickness", href: "#thickness" },
   { label: "Add waste", href: "#extra" },
   { label: "Ton vs tonne", href: "#units" },
+  { label: "Weight converter", href: "#weight" },
   { label: "Related tools", href: "#related-tools" },
   { label: "FAQ", href: "#faq" }
 ] as const;
@@ -34,9 +37,9 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
-    question: "When was this tonnage calculator content last updated?",
+    question: "How accurate is the tonnage estimate?",
     answer:
-      "The page content was last reviewed in May 2026. The formula is stable, but local supplier units and material mixes can vary."
+      "The calculation is useful for early ordering, but the actual weight can change with the asphalt mix and compaction. Confirm the density and order quantity with the supplier."
   },
   {
     question: "Why does tonnage matter?",
@@ -48,7 +51,7 @@ const faqs = [
   },
   {
     question: "Should I add waste?",
-    answer: "Yes. A small waste allowance gives you a safer planning number for cuts, handling, and small site loss."
+    answer: "Yes. A small waste allowance helps cover cuts, handling, and small site losses."
   },
   {
     question: "What is the difference between tons and tonnes?",
@@ -63,6 +66,16 @@ const faqs = [
     question: "What is tons per cubic yard for asphalt?",
     answer:
       "One cubic yard is roughly 2 tons at this planning density, though the exact weight changes with the mix and compaction."
+  },
+  {
+    question: "How much does a cubic yard of asphalt weigh?",
+    answer:
+      "At the default density of 145 lb/ft³, one cubic yard weighs about 3,915 lb, or 1.96 U.S. short tons. Change the density when your mix design gives a better value."
+  },
+  {
+    question: "How do I convert square yards of asphalt to tons?",
+    answer:
+      "Multiply square yards by 9 to get square feet, multiply by compacted depth in feet and density in lb/ft³, then divide by 2,000. The unit converter uses the same calculation."
   },
   {
     question: "Can I use this as a blacktop calculator?",
@@ -113,7 +126,7 @@ const relatedPages = [
   {
     href: "/#calculator",
     title: "Main asphalt calculator",
-    text: "Go back to the main page for tonnage and pricing together."
+    text: "Calculate tonnage and cost from your actual project dimensions."
   },
   {
     href: "/asphalt-cost-guide",
@@ -141,6 +154,11 @@ const relatedPages = [
     text: "Use the tonnage result with a material price quote."
   },
   {
+    href: "/asphalt-millings-calculator",
+    title: "Asphalt millings calculator",
+    text: "Use a dedicated density range for recycled asphalt pavement and millings."
+  },
+  {
     href: "/asphalt-cost-per-square-foot",
     title: "Asphalt cost per square foot",
     text: "Convert material and installed estimates into a square-foot view."
@@ -158,6 +176,7 @@ export default function AsphaltTonnagePage() {
             description: pageDescription,
             url: `${siteConfig.url}/asphalt-tonnage-calculator`
           }),
+          webPageSchema({ name: "Asphalt Tonnage Calculator", description: pageDescription, path: "/asphalt-tonnage-calculator" }),
           faqSchema(faqs)
         ]}
       />
@@ -170,12 +189,14 @@ export default function AsphaltTonnagePage() {
               <Scale className="h-3.5 w-3.5" />
               Tonnage first
             </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt & Tarmac Tonnage Calculator</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Tonnage & Density Calculator</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this page when you only need the material quantity for asphalt or tarmac. It works with imperial
-              tons and metric tonnes, and shows coverage plus waste so the result is easier to trust.
+              Calculate asphalt or tarmac tons and tonnes, then convert cubic yards or square yards using an editable
+              density. Coverage and waste stay visible so the result is easier to check.
             </p>
           </div>
+
+          <ContentCredentials path="/asphalt-tonnage-calculator" />
 
           <AsphaltCalculator mode="tonnage" defaultValues={{ areaSqFt: 600, thicknessInches: 3, wastePercent: 7, region: "national" }} />
 
@@ -183,9 +204,9 @@ export default function AsphaltTonnagePage() {
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
-              ["Updated", "Content last reviewed May 2026. Use current supplier pricing before you order."],
-              ["Estimate only", "The calculator uses a planning density. Mix type, compaction, and moisture can change the final load."],
-              ["Unit check", "Use tons for U.S. short tons, tonnes for metric orders, and tarmac wording when that is how local quotes are written."]
+              ["Check the mix", "The calculator uses a density estimate. Your supplier can confirm the right value for the mix you are buying."],
+              ["Match the unit", "Use U.S. tons or metric tonnes to match the supplier's order."],
+              ["Allow for waste", "Curves, cuts, and fixed truck loads may require a small allowance."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -198,9 +219,9 @@ export default function AsphaltTonnagePage() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              ["Use case", "Ordering material, checking supplier quotes, or sanity-checking a contractor bid."],
+              ["Use case", "Ordering material or checking a supplier or contractor quote."],
               ["Formula", "Area × thickness × density, then add a waste allowance."],
-              ["Best next step", "Use the same area again on the driveway cost calculator for a pricing range."]
+              ["Next step", "Use the same area in the driveway cost calculator to see a pricing range."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200">
                 <CardContent className="space-y-2">
@@ -231,9 +252,9 @@ export default function AsphaltTonnagePage() {
             </div>
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">Small habit, better result</p>
+                <p className="text-base font-medium text-zinc-950">Measure the paved area</p>
                 <p className="text-sm leading-6 text-zinc-600">
-                  Measuring carefully once saves a lot of back-and-forth later when you compare bids or place an order.
+                  Include parking pads, flares, and other paved sections before placing an order.
                 </p>
               </CardContent>
             </Card>
@@ -276,10 +297,9 @@ export default function AsphaltTonnagePage() {
             </div>
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">Good planning habit</p>
+                <p className="text-base font-medium text-zinc-950">Allow for site conditions</p>
                 <p className="text-sm leading-6 text-zinc-600">
-                  Order the calculator result as a baseline, then round up slightly if the site has odd shapes or the
-                  supplier ships in fixed truck loads.
+                  Add a small allowance for odd shapes or fixed truck loads, then confirm the final quantity with the supplier.
                 </p>
               </CardContent>
             </Card>
@@ -314,7 +334,7 @@ export default function AsphaltTonnagePage() {
             </div>
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">Quick check</p>
+                <p className="text-base font-medium text-zinc-950">Match the quote unit</p>
                 <p className="text-sm leading-6 text-zinc-600">
                   The calculator is only useful if the unit matches the quote. This is the easiest number to double-check before you buy.
                 </p>
@@ -322,12 +342,13 @@ export default function AsphaltTonnagePage() {
             </Card>
           </section>
 
+          <AsphaltUnitConverter />
+
           <section id="related-tools" className="scroll-mt-24 space-y-5">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use this estimate with the rest of the site</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related calculators</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                After you know the tonnage, the next question is usually price, region, or quote scope. These pages
-                keep the same project moving without making you start over.
+                After calculating the tonnage, use these tools to check pricing and compare project costs.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

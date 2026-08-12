@@ -6,11 +6,14 @@ import { siteConfig } from "@/lib/site";
 const toolLinks = [
   { href: "/asphalt-cost-calculator", label: "Asphalt cost calculator" },
   { href: "/asphalt-driveway-cost-calculator", label: "Driveway cost" },
-  { href: "/asphalt-driveway-estimate", label: "Driveway estimate" },
+  { href: "/asphalt-driveway-replacement-cost-calculator", label: "Replacement cost" },
+  { href: "/asphalt-driveway-resurfacing-cost-calculator", label: "Resurfacing cost" },
+  { href: "/driveway-sealing-cost-calculator", label: "Driveway sealing" },
+  { href: "/asphalt-millings-calculator", label: "Asphalt millings" },
   { href: "/asphalt-tonnage-calculator", label: "Tonnage" },
   { href: "/asphalt-paving-cost-calculator", label: "Paving cost" },
+  { href: "/asphalt-road-cost-calculator", label: "Private road cost" },
   { href: "/parking-lot-paving-cost-calculator", label: "Parking lot cost" },
-  { href: "/blacktop-driveway-cost-estimator", label: "Blacktop cost" },
   { href: "/blacktop-cost-per-ton", label: "Blacktop per ton" },
   { href: "/tarmac-calculator", label: "Tarmac calculator" },
   { href: "/tarmac-driveway-cost-calculator", label: "Tarmac cost" },
@@ -19,6 +22,8 @@ const toolLinks = [
 
 const guideLinks = [
   { href: "/asphalt-cost-guide", label: "Cost guide" },
+  { href: "/asphalt-driveway-thickness", label: "Driveway thickness" },
+  { href: "/asphalt-millings-vs-gravel", label: "Millings vs gravel" },
   { href: "/asphalt-cost-per-square-foot", label: "Cost per sq ft" },
   { href: "/hot-mix-asphalt-cost-per-ton", label: "Hot mix per ton" },
   { href: "/asphalt-prices-by-state", label: "Price per ton near me" },
@@ -30,6 +35,7 @@ const guideLinks = [
 
 const footerLinks = [
   { href: "/about", label: "About" },
+  { href: "/methodology", label: "Data & methodology" },
   { href: "/privacy", label: "Privacy" },
   { href: "/terms", label: "Terms" },
   { href: "/disclaimer", label: "Disclaimer" },
@@ -44,8 +50,8 @@ export function SiteFooter() {
           <div className="space-y-3">
             <p className="text-sm font-semibold text-zinc-950">{siteConfig.name}</p>
             <p className="max-w-md text-sm leading-6 text-zinc-600">
-              {siteConfig.description} Planning numbers only. Final pricing still depends on local labor, access,
-              materials, and site conditions.
+              {siteConfig.description} Use the results for early budgeting; final pricing depends on local labor,
+              access, materials, and site conditions.
             </p>
             <p className="text-sm leading-6 text-zinc-500">
               Questions or corrections?{" "}
@@ -55,6 +61,17 @@ export function SiteFooter() {
               >
                 hello@asphaltprice.com
               </a>
+            </p>
+            <p className="text-sm leading-6 text-zinc-500">
+              Reviewed by the{" "}
+              <Link href="/about" className="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4">
+                Asphalt Calculator Editorial Team
+              </Link>
+              . Read our{" "}
+              <Link href="/methodology" className="font-medium text-zinc-700 underline decoration-zinc-300 underline-offset-4">
+                data and methodology
+              </Link>
+              .
             </p>
           </div>
 

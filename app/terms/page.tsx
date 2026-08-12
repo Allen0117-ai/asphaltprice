@@ -1,11 +1,15 @@
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/terms";
+const pageDescription =
+  "Review the Asphalt Calculator terms for permitted website use, estimate limitations, content ownership, updates, and responsibilities before using results.";
 
 export const metadata = buildMetadata({
-  title: "Terms of Use",
-  description: "Terms of use for Asphalt Calculator, including scope, limits, ownership, and updates.",
-  path: "/terms"
+  title: "Asphalt Calculator Terms of Use and Limitations",
+  description: pageDescription,
+  path
 });
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Terms of Use", href: "/terms" }];
@@ -13,12 +17,17 @@ const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Terms of Use", href
 export default function TermsPage() {
   return (
     <>
-      <StructuredData data={breadcrumbSchema(breadcrumbs)} />
+      <StructuredData
+        data={[
+          breadcrumbSchema(breadcrumbs),
+          webPageSchema({ name: "Asphalt Calculator Terms of Use", description: pageDescription, path })
+        ]}
+      />
       <section className="px-4 py-12">
         <div className="mx-auto max-w-3xl space-y-6">
           <Breadcrumbs items={breadcrumbs} />
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">Terms of Use</h1>
-          <p className="text-sm text-zinc-500">Last updated: May 11, 2026</p>
+          <p className="text-sm text-zinc-500">Last updated: August 5, 2026</p>
 
           <div className="space-y-3">
             <h2 className="text-xl font-semibold text-zinc-950">Use of the site</h2>
