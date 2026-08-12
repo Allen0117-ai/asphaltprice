@@ -3,12 +3,13 @@ import Link from "next/link";
 import { ArrowRight, Home, Layers3, Scale } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
@@ -65,9 +66,9 @@ const planningFactors = [
 
 const faqs = [
   {
-    question: "When was this calculator content last updated?",
+    question: "Are the calculator results exact?",
     answer:
-      "The page content was last reviewed in May 2026. Use it for planning, then confirm current local prices with contractors."
+      "No. The calculator gives a quick comparison; a contractor needs to inspect the site before giving a final price."
   },
   {
     question: "What does this page cover?",
@@ -79,7 +80,7 @@ const faqs = [
   },
   {
     question: "Is the estimate final?",
-    answer: "No. It is a planning number. A contractor still needs to inspect the site before giving a final quote."
+    answer: "No. A contractor still needs to inspect the site before giving a final quote."
   },
   {
     question: "What should I compare in real bids?",
@@ -108,6 +109,7 @@ export default function DrivewayCostPage() {
             description: pageDescription,
             url: `${siteConfig.url}/driveway-cost-calculator`
           }),
+          webPageSchema({ name: "Driveway Cost Calculator", description: pageDescription, path: "/driveway-cost-calculator" }),
           faqSchema(faqs)
         ]}
       />
@@ -123,9 +125,11 @@ export default function DrivewayCostPage() {
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Driveway Cost Calculator</h1>
             <p className="text-lg leading-8 text-zinc-600">
               Compare asphalt, concrete, and gravel driveway costs with one set of measurements. Use the range as a
-              planning baseline before you talk to local contractors.
+              quick comparison before you talk to local contractors.
             </p>
           </div>
+
+          <ContentCredentials path="/driveway-cost-calculator" />
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
@@ -135,9 +139,9 @@ export default function DrivewayCostPage() {
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
-              ["Updated", "Content last reviewed May 2026 for driveway planning and contractor quote comparison."],
-              ["Estimate only", "This is not a final bid. A contractor needs to inspect base condition, drainage, access, and removal work."],
-              ["Regional terms", "U.S. quotes often say asphalt, Canada may use tons or tonnes, and UK quotes often use tarmac and tonnes."]
+              ["Compare the whole job", "Use the same driveway size, thickness, and site work for each material."],
+              ["Expect site differences", "Base condition, drainage, access, and removal work can change the installed price."],
+              ["Get a detailed quote", "Ask contractors to list the material, base work, cleanup, and warranty before you compare totals."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">

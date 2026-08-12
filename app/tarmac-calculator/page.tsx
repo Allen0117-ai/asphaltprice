@@ -2,7 +2,7 @@ import { CalculatorLandingPage, type CalculatorLandingPageConfig } from "@/compo
 import { buildMetadata } from "@/lib/seo";
 
 const pageDescription =
-  "Tarmac calculator for tonnes, square metres, driveway size, thickness, waste, and local price per tonne.";
+  "Estimate tarmac tonnes and cost from square metres, compacted thickness, waste, and a local price per tonne, with metric driveway planning guidance.";
 
 export const metadata = buildMetadata({
   title: "Tarmac Calculator | Tonnes, Area & Cost",
@@ -14,6 +14,9 @@ const config: CalculatorLandingPageConfig = {
   title: "Tarmac Calculator",
   eyebrow: "Metric tarmac planning",
   description: pageDescription,
+  directAnswerQuestion: "How do I calculate tonnes of tarmac?",
+  directAnswer:
+    "Measure the finished area in square metres and enter the compacted depth in millimetres. The calculator converts the volume to metric tonnes and includes a waste allowance for the project shape and access. Use a current local price per tonne, then confirm the material, delivery, base work, drainage, and cleanup included in the quote.",
   path: "/tarmac-calculator",
   schemaName: "Tarmac Calculator",
   calculatorMode: "asphalt",
@@ -29,7 +32,7 @@ const config: CalculatorLandingPageConfig = {
     },
     {
       title: "UK wording",
-      text: "Many UK searches use tarmac even when the estimating method is similar to asphalt."
+      text: "In the UK, tarmac is a common name for this type of surfacing."
     },
     {
       title: "Local price ready",
@@ -59,7 +62,7 @@ const config: CalculatorLandingPageConfig = {
     {
       title: "Tarmac quote differences",
       text:
-        "A tarmac quote can mean material, delivery, or a full installed job. Always check the unit and what work is included before comparing prices.",
+        "A tarmac quote can mean material, delivery, or a full installed job. Compare material prices per tonne, and compare installed work per square metre or as a complete job. Always check the unit and included work before comparing prices.",
       items: [
         {
           title: "Material only",
@@ -91,7 +94,7 @@ const config: CalculatorLandingPageConfig = {
     {
       href: "/tarmac-driveway-cost-calculator",
       title: "Tarmac driveway cost",
-      text: "Use the driveway-specific tarmac page."
+      text: "Estimate tarmac installation cost for a driveway."
     },
     {
       href: "/asphalt-tonnage-calculator",
@@ -112,7 +115,7 @@ const config: CalculatorLandingPageConfig = {
   faqs: [
     {
       question: "Is tarmac the same as asphalt?",
-      answer: "In many driveway searches, tarmac and asphalt are used for similar surfacing work. Use the wording your local contractor uses."
+      answer: "Tarmac and asphalt are often used for similar driveway surfacing work. Use the wording in your local quote."
     },
     {
       question: "How do I calculate tonnes of tarmac?",

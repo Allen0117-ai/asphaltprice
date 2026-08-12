@@ -122,7 +122,7 @@ function ResultBlock({
 }) {
   return (
     <div className="rounded-lg border border-white/10 bg-white/5 p-3.5">
-      <p className="text-[11px] uppercase tracking-[0.16em] text-zinc-400">{label}</p>
+      <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">{label}</p>
       <p className="mt-1.5 text-base font-semibold text-white sm:text-lg">{value}</p>
       <p className="mt-1 text-xs leading-5 text-zinc-300 sm:text-sm sm:leading-6">{hint}</p>
     </div>
@@ -144,6 +144,10 @@ function areaValue(valueInSqFt: number, unitSystem: UnitSystem, fractionDigits =
 
 function thicknessValue(valueInInches: number, unitSystem: UnitSystem, fractionDigits = 1) {
   return unitSystem === "metric" ? formatDecimal(inchesToMillimeters(valueInInches), fractionDigits) : formatDecimal(valueInInches, fractionDigits);
+}
+
+function editableInputValue(value: number) {
+  return Number(value.toFixed(3));
 }
 
 export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCalculatorProps) {
@@ -417,10 +421,10 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
     }
 
     if (inputMode === "dimensions") {
-      params.set("length", String(unitSystem === "metric" ? feetToMeters(displayLength) : displayLength));
-      params.set("width", String(unitSystem === "metric" ? feetToMeters(displayWidth) : displayWidth));
+      params.set("length", String(unitSystem === "metric" ? editableInputValue(feetToMeters(displayLength)) : displayLength));
+      params.set("width", String(unitSystem === "metric" ? editableInputValue(feetToMeters(displayWidth)) : displayWidth));
     } else {
-      params.set("area", String(unitSystem === "metric" ? squareFeetToSquareMeters(displayAreaSqFt) : displayAreaSqFt));
+      params.set("area", String(unitSystem === "metric" ? editableInputValue(squareFeetToSquareMeters(displayAreaSqFt)) : displayAreaSqFt));
     }
 
     if (customMaterialPricePerTon) {
@@ -453,7 +457,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
       mode === "tonnage" ? null : `Installed asphalt range: ${rangeLabel(scopedInstalledLow, scopedInstalledHigh)}`,
       mode === "comparison" ? `Concrete installed range: ${rangeLabel(comparison.concrete.low, comparison.concrete.high)}` : null,
       mode === "comparison" ? `Gravel installed range: ${rangeLabel(comparison.gravel.low, comparison.gravel.high)}` : null,
-      "Note: Planning estimate only. Final quote depends on site inspection."
+      "Note: Confirm the final price and scope after a site inspection."
     ].filter(Boolean);
 
     await navigator.clipboard.writeText(lines.join("\n"));
@@ -570,7 +574,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                 type="number"
                 min={0}
                 step="any"
-                value={unitSystem === "metric" ? squareFeetToSquareMeters(displayAreaSqFt) : displayAreaSqFt}
+                value={unitSystem === "metric" ? editableInputValue(squareFeetToSquareMeters(displayAreaSqFt)) : displayAreaSqFt}
                 onChange={(event) => setAreaFromInput(event.target.value)}
               />
             </div>
@@ -583,7 +587,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                   type="number"
                   min={0}
                   step="any"
-                  value={unitSystem === "metric" ? feetToMeters(displayLength) : displayLength}
+                  value={unitSystem === "metric" ? editableInputValue(feetToMeters(displayLength)) : displayLength}
                   onChange={(event) => setLengthFromInput(event.target.value)}
                 />
               </div>
@@ -594,7 +598,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
                   type="number"
                   min={0}
                   step="any"
-                  value={unitSystem === "metric" ? feetToMeters(displayWidth) : displayWidth}
+                  value={unitSystem === "metric" ? editableInputValue(feetToMeters(displayWidth)) : displayWidth}
                   onChange={(event) => setWidthFromInput(event.target.value)}
                 />
               </div>
@@ -796,7 +800,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
               <ResultBlock
                 label="Asphalt installed"
                 value={rangeLabel(scopedAsphaltInstalledLow, scopedAsphaltInstalledHigh)}
-                hint={`Typical ${selectedScope.label.toLowerCase()} range in this estimate model.`}
+                hint={`Typical ${selectedScope.label.toLowerCase()} range based on the current inputs.`}
               />
               <ResultBlock
                 label="Concrete installed"
@@ -815,7 +819,7 @@ export function AsphaltCalculator({ mode, defaultValues, className }: AsphaltCal
             <div className="rounded-md border border-white/10 bg-white/5 p-3 text-sm leading-6 text-zinc-300">
               <div className="flex items-center gap-2 font-medium text-white">
                 <TriangleAlert className="h-4 w-4 text-amber-300" />
-                Estimate only
+                Check the final scope
               </div>
               <p className="mt-2">
                 Final pricing depends on access, prep work, base condition, grading, haul distance, and local crew rates.

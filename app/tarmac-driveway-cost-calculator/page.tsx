@@ -3,18 +3,19 @@ import Link from "next/link";
 import { Calculator, MapPinned } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
-  "Tarmac driveway cost calculator for metric tonnes, local tarmac pricing, and rough driveway planning in the UK and other markets.";
+  "Compare tarmac driveway prices with a cost calculator for metric tonnes, square metres, local rates, and installed driveway planning.";
 
 export const metadata = buildMetadata({
-  title: "Tarmac Driveway Cost Calculator | Tonnes & Local Price",
+  title: "Tarmac Driveway Prices & Cost Calculator | Tonnes",
   description: pageDescription,
   path: "/tarmac-driveway-cost-calculator"
 });
@@ -28,7 +29,7 @@ const faqs = [
   {
     question: "Is tarmac the same as asphalt?",
     answer:
-      "In everyday UK driveway searches, tarmac is often used for asphalt-style surfacing. Local contractors may use either term, so match the wording in your quote."
+      "In the UK, tarmac often refers to asphalt-style driveway surfacing. Local contractors may use either term, so match the wording in your quote."
   },
   {
     question: "Should I use tons or tonnes?",
@@ -41,11 +42,19 @@ const faqs = [
       "No. It gives a planning estimate. A real quote still needs site access, base condition, drainage, edging, and local labor."
   },
   {
-    question: "Can Canadian users use this page?",
+    question: "Can Canadian users use these estimates?",
     answer:
       "Yes. Canada may use tons or tonnes depending on the supplier, so check the quote unit and enter the local material price."
   }
 ];
+
+const relatedPages = [
+  { href: "/tarmac-calculator", label: "Calculate tarmac tonnes" },
+  { href: "/asphalt-tonnage-calculator", label: "Check tarmac tonnes" },
+  { href: "/asphalt-cost-guide", label: "Read the asphalt cost guide" },
+  { href: "/asphalt-driveway-replacement-cost-calculator", label: "Price a full driveway replacement" },
+  { href: "/asphalt-driveway-resurfacing-cost-calculator", label: "Price a tarmac-style overlay" }
+] as const;
 
 export default function TarmacDrivewayCostCalculatorPage() {
   return (
@@ -58,6 +67,7 @@ export default function TarmacDrivewayCostCalculatorPage() {
             description: pageDescription,
             url: `${siteConfig.url}/tarmac-driveway-cost-calculator`
           }),
+          webPageSchema({ name: "Tarmac Driveway Cost Calculator", description: pageDescription, path: "/tarmac-driveway-cost-calculator" }),
           faqSchema(faqs)
         ]}
       />
@@ -70,20 +80,25 @@ export default function TarmacDrivewayCostCalculatorPage() {
               <Calculator className="h-3.5 w-3.5" />
               Tarmac and tonnes
             </div>
-            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Tarmac Driveway Cost Calculator</h1>
+            <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Tarmac Driveway Prices & Cost Calculator</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this calculator for tarmac or asphalt driveway planning when your local quote uses metric tonnes or
-              local installed pricing. It is useful for UK, Canada, and other non-U.S. comparisons.
+              Compare tarmac driveway prices when your quote uses metric tonnes, square metres, or a full installed
+              rate. It is useful for UK, Canada, and other non-U.S. driveway planning.
             </p>
           </div>
 
-          <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 650, thicknessInches: 2.5, wastePercent: 7, region: "national" }} />
+          <ContentCredentials path="/tarmac-driveway-cost-calculator" />
+
+          <AsphaltCalculator
+            mode="asphalt"
+            defaultValues={{ areaSqM: 60, thicknessMillimeters: 65, unitSystem: "metric", wastePercent: 7, region: "national" }}
+          />
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              ["Updated", "Content last reviewed May 2026 for tarmac and metric quote planning."],
-              ["Estimate only", "Use local contractor pricing before making a final budget decision."],
-              ["Important unit", "Match tonnes, tons, square metres, or installed job pricing before comparing quotes."]
+              ["Match the unit", "Compare tonnes, tons, square metres, or complete installed prices on the same basis."],
+              ["Compare the full scope", "Check whether removal, base work, edging, drainage, and cleanup are included."],
+              ["Use a local rate", "Enter the current local price per tonne when you have one."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -106,6 +121,10 @@ export default function TarmacDrivewayCostCalculatorPage() {
                   If your quote is per tonne, enter the local tonne price. If it is a full installed job price, use the
                   calculator result as a quantity check rather than a final bid.
                 </p>
+                <p>
+                  Convert every quote to the same basis before comparing it: cost per square metre, material price per
+                  tonne, or one complete installed price with removal, base, edging, drainage, and cleanup listed.
+                </p>
               </div>
             </div>
             <Card className="border-zinc-200">
@@ -120,6 +139,17 @@ export default function TarmacDrivewayCostCalculatorPage() {
                 </Link>
               </CardContent>
             </Card>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related tarmac and asphalt tools</h2>
+            <div className="grid gap-3 sm:grid-cols-2">
+              {relatedPages.map((item) => (
+                <Link key={item.href} href={item.href} className="rounded-lg border border-zinc-200 bg-white p-4 text-sm font-medium text-amber-700 transition-colors hover:bg-zinc-50">
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </section>
 
           <section id="faq" className="space-y-4">

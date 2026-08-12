@@ -3,12 +3,13 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Scale, SplitSquareHorizontal } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
@@ -35,9 +36,9 @@ const quickNavSections = quickNav.map((item) => ({ id: item.href, label: item.la
 
 const faqs = [
   {
-    question: "When was this comparison content last updated?",
+    question: "Are the calculator results exact?",
     answer:
-      "The page content was last reviewed in May 2026. Use it as a planning comparison, then confirm current local bids."
+      "No. They are a quick comparison. Site conditions, local labor, and material availability can change a contractor's final price."
   },
   {
     question: "Is asphalt always cheaper?",
@@ -158,6 +159,7 @@ export default function AsphaltVsConcretePage() {
             description: pageDescription,
             url: `${siteConfig.url}/asphalt-vs-concrete-driveway-cost-calculator`
           }),
+          webPageSchema({ name: "Asphalt vs Concrete Driveway Cost Calculator", description: pageDescription, path: "/asphalt-vs-concrete-driveway-cost-calculator" }),
           faqSchema(faqs)
         ]}
       />
@@ -179,15 +181,17 @@ export default function AsphaltVsConcretePage() {
             </p>
           </div>
 
+          <ContentCredentials path="/asphalt-vs-concrete-driveway-cost-calculator" />
+
           <AsphaltCalculator mode="comparison" defaultValues={{ areaSqFt: 900, thicknessInches: 3, wastePercent: 7, region: "national" }} />
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
-              ["Updated", "Content last reviewed May 2026 for driveway material comparison and quote planning."],
-              ["Estimate only", "The calculator gives a starting range. Real bids depend on site inspection, base work, drainage, and local labor."],
-              ["Terms to match", "Compare asphalt, concrete, gravel, tarmac, tons, and tonnes exactly as they appear in contractor quotes."]
+              ["Compare the same project", "Use the same driveway area, base work, and drainage assumptions for every material."],
+              ["Site conditions matter", "Base repairs, drainage, access, and local labor can change every installed price."],
+              ["Check the quote", "Make sure the material, thickness, and cleanup are clearly listed before comparing totals."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -200,9 +204,9 @@ export default function AsphaltVsConcretePage() {
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
-              ["How to use it", "Keep the same area and compare the cost bands side by side."],
-              ["Why it helps", "It gives you a plain-English answer when you are deciding between materials."],
-              ["What changes it", "Access, base prep, drainage, and your local labor market."]
+              ["Start with the same size", "Keep the driveway area the same while you compare materials."],
+              ["Look beyond price", "Consider maintenance, appearance, and how you will use the driveway."],
+              ["Ask about the base", "Access, drainage, and base preparation can matter more than the surface material."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200">
                 <CardContent className="space-y-2">
@@ -222,16 +226,15 @@ export default function AsphaltVsConcretePage() {
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Compare the same driveway, not three different projects</h2>
               <div className="space-y-3 text-sm leading-7 text-zinc-600">
                 <p>
-                  The value of this page is that the area and basic assumptions stay the same while the material changes.
-                  That makes the cost gap easier to understand.
+                  Enter one driveway size and compare the materials under the same assumptions. That makes the cost gap
+                  easier to understand.
                 </p>
                 <p>
                   If you collect contractor bids later, ask each contractor to quote the same driveway size, prep scope,
                   drainage assumptions, and cleanup. Otherwise the material comparison gets muddy fast.
                 </p>
                 <p>
-                  For international comparisons, keep the terms clear: asphalt in the U.S., tarmac in many UK quotes,
-                  and tons or tonnes depending on the supplier.
+                  If you are outside the U.S., use the unit and material name shown on the supplier&apos;s quote.
                 </p>
               </div>
             </div>
@@ -371,10 +374,9 @@ export default function AsphaltVsConcretePage() {
 
           <section id="related-tools" className="scroll-mt-24 space-y-5">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Continue the comparison</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Explore each option</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Use these pages to narrow the estimate, check regional asphalt assumptions, or switch from comparison
-                mode into one material.
+                Use these guides and calculators to look more closely at each driveway option.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

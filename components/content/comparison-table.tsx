@@ -22,8 +22,8 @@ export type ComparisonTableProps = {
   caption?: React.ReactNode;
   note?: React.ReactNode;
   rowLabel?: React.ReactNode;
-  columns: ComparisonTableColumn[];
-  rows: ComparisonTableRow[];
+  columns: readonly ComparisonTableColumn[];
+  rows: readonly ComparisonTableRow[];
   className?: string;
 };
 

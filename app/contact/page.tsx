@@ -3,11 +3,14 @@ import { Mail } from "lucide-react";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, contactPageSchema } from "@/lib/seo";
+
+const pageDescription =
+  "Contact Asphalt Calculator to report a formula issue, submit a documented pricing correction, ask a methodology question, or share website feedback.";
 
 export const metadata = buildMetadata({
-  title: "Contact",
-  description: "Contact Asphalt Calculator for feedback, corrections, and site questions.",
+  title: "Contact the Asphalt Calculator Editorial Team",
+  description: pageDescription,
   path: "/contact"
 });
 
@@ -16,7 +19,16 @@ const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Contact", href: "/c
 export default function ContactPage() {
   return (
     <>
-      <StructuredData data={breadcrumbSchema(breadcrumbs)} />
+      <StructuredData
+        data={[
+          breadcrumbSchema(breadcrumbs),
+          contactPageSchema({
+            name: "Contact the Asphalt Calculator Editorial Team",
+            description: pageDescription,
+            path: "/contact"
+          })
+        ]}
+      />
       <section className="px-4 py-12">
         <div className="mx-auto max-w-3xl space-y-6">
           <Breadcrumbs items={breadcrumbs} />
@@ -31,6 +43,15 @@ export default function ContactPage() {
               Asphalt Calculator is operated as an independent planning tool for homeowners, property managers, and
               small paving projects. We focus on simple asphalt quantity and cost estimates, not contractor brokerage or
               final bid pricing.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h2 className="text-xl font-semibold text-zinc-950">Helpful correction details</h2>
+            <p className="text-base leading-7 text-zinc-600">
+              Include the page URL, city or region, quote date, unit type, and whether the number covers plant pickup,
+              delivery, or installation. If possible, list the compacted thickness, base work, removal, drainage, and
+              cleanup included. These details make it easier to compare your quote with the assumptions shown on the page.
             </p>
           </div>
 

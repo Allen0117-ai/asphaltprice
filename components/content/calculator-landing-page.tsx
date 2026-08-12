@@ -1,14 +1,18 @@
 import Link from "next/link";
 import type { Route } from "next";
+import type { ReactNode } from "react";
 
-import { ArrowRight, BookOpen, Calculator, ClipboardCheck, MapPin } from "lucide-react";
+import { ArrowRight, Calculator, ClipboardCheck, MapPin } from "lucide-react";
 
 import { AsphaltCalculator, type CalculatorMode } from "@/components/calculator/asphalt-calculator";
+import { AsphaltFormulaFigure } from "@/components/content/asphalt-formula-figure";
+import { ContentCredentials } from "@/components/content/content-credentials";
+import { DirectAnswer } from "@/components/content/direct-answer";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 import type { CalculatorInput, InputMode } from "@/lib/calculator/formulas";
 
@@ -44,6 +48,8 @@ export type CalculatorLandingPageConfig = {
   title: string;
   eyebrow: string;
   description: string;
+  directAnswerQuestion: string;
+  directAnswer: string;
   path: string;
   schemaName: string;
   calculatorMode: CalculatorMode;
@@ -57,20 +63,36 @@ export type CalculatorLandingPageConfig = {
   faqs: readonly { question: string; answer: string }[];
 };
 
-export function CalculatorLandingPage({ config }: { config: CalculatorLandingPageConfig }) {
+type CalculatorLandingPageProps = {
+  config: CalculatorLandingPageConfig;
+  calculator?: ReactNode;
+  includeFaqSchema?: boolean;
+  showAsphaltFormula?: boolean;
+};
+
+export function CalculatorLandingPage({
+  config,
+  calculator,
+  includeFaqSchema = true,
+  showAsphaltFormula = true
+}: CalculatorLandingPageProps) {
+  const schemas: Array<Record<string, unknown>> = [
+    breadcrumbSchema(config.breadcrumbs.map((item) => ({ label: item.title, href: item.href }))),
+    webAppSchema({
+      name: config.schemaName,
+      description: config.description,
+      url: `${siteConfig.url}${config.path}`
+    }),
+    webPageSchema({ name: config.title, description: config.description, path: config.path })
+  ];
+
+  if (includeFaqSchema) {
+    schemas.push(faqSchema(config.faqs));
+  }
+
   return (
     <>
-      <StructuredData
-        data={[
-          breadcrumbSchema(config.breadcrumbs.map((item) => ({ label: item.title, href: item.href }))),
-          webAppSchema({
-            name: config.schemaName,
-            description: config.description,
-            url: `${siteConfig.url}${config.path}`
-          }),
-          faqSchema(config.faqs)
-        ]}
-      />
+      <StructuredData data={schemas} />
 
       <section className="px-4 py-12">
         <div className="mx-auto max-w-6xl space-y-9">
@@ -84,7 +106,15 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
             <p className="text-lg leading-8 text-zinc-600">{config.description}</p>
           </div>
 
-          <AsphaltCalculator mode={config.calculatorMode} defaultValues={config.calculatorDefaults} />
+          <ContentCredentials path={config.path} />
+
+          <DirectAnswer question={config.directAnswerQuestion}>
+            <p>{config.directAnswer}</p>
+          </DirectAnswer>
+
+          {calculator ?? <AsphaltCalculator mode={config.calculatorMode} defaultValues={config.calculatorDefaults} />}
+
+          {showAsphaltFormula ? <AsphaltFormulaFigure /> : null}
 
           <section className="grid gap-4 md:grid-cols-3">
             {config.highlights.map((item) => (
@@ -100,11 +130,7 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
           {config.sections.map((section) => (
             <section key={section.title} className="space-y-5">
               <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
-                  <BookOpen className="h-4 w-4" />
-                  Guide
-                </div>
-                <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">{section.title}</h2>
+                <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">{section.title}</h2>
                 <p className="mt-3 text-sm leading-7 text-zinc-600">{section.text}</p>
               </div>
               <div className="grid gap-4 md:grid-cols-3">
@@ -124,15 +150,16 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
             <section className="space-y-4">
               <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
                 <MapPin className="h-4 w-4" />
-                Example ranges
+                Example projects
               </div>
-              <div className="overflow-hidden rounded-lg border border-zinc-200">
+              <p className="text-xs text-zinc-500 sm:hidden">Swipe the table left or right to see every column.</p>
+              <div className="overflow-x-auto rounded-lg border border-zinc-200">
                 <table className="w-full min-w-[640px] text-left text-sm">
                   <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
                     <tr>
                       <th className="px-4 py-3 font-medium">Project</th>
                       <th className="px-4 py-3 font-medium">Scope</th>
-                      <th className="px-4 py-3 font-medium">Planning range</th>
+                      <th className="px-4 py-3 font-medium">What to check</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-zinc-200">
@@ -155,7 +182,7 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
                 <ClipboardCheck className="h-4 w-4" />
                 Quote checklist
               </div>
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Before you trust a paving number</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">What to confirm before requesting quotes</h2>
               <ul className="space-y-2 text-sm leading-6 text-zinc-600">
                 {config.quoteChecks.map((item) => (
                   <li key={item}>{item}</li>
@@ -164,9 +191,9 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
             </div>
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">Best next step</p>
+                <p className="text-base font-medium text-zinc-950">When you request quotes</p>
                 <p className="text-sm leading-6 text-zinc-600">
-                  Copy the calculator result, then ask two or three local suppliers or paving contractors to quote the same size, thickness, and scope.
+                  Share the same dimensions, thickness, and scope with two or three local suppliers or paving contractors so their quotes are easier to compare.
                 </p>
               </CardContent>
             </Card>
@@ -176,7 +203,7 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related asphalt tools</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Use these pages when you need a different cost unit, local price band, or driveway-specific estimate.
+                Choose the tool that matches the next part of your project.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -187,7 +214,7 @@ export function CalculatorLandingPage({ config }: { config: CalculatorLandingPag
                       <p className="text-base font-medium text-zinc-950">{item.title}</p>
                       <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
                       <span className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
-                        Open page
+                        View tool
                         <ArrowRight className="h-4 w-4" />
                       </span>
                     </CardContent>

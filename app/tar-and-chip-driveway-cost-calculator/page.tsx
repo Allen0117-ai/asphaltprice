@@ -3,12 +3,17 @@ import type { Route } from "next";
 
 import { ArrowRight, Calculator, Layers3, ShieldCheck } from "lucide-react";
 
+import { TarChipCostCalculator } from "@/components/calculator/tar-chip-cost-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
+import { DirectAnswer } from "@/components/content/direct-answer";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+const path = "/tar-and-chip-driveway-cost-calculator";
 
 const pageDescription =
   "Estimate tar and chip driveway cost with square footage, surface scope, prep work, and comparison notes for asphalt driveways.";
@@ -16,7 +21,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Tar and Chip Driveway Cost Calculator | Estimate Method",
   description: pageDescription,
-  path: "/tar-and-chip-driveway-cost-calculator"
+  path
 });
 
 const breadcrumbs = [
@@ -101,6 +106,7 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
             description: pageDescription,
             url: `${siteConfig.url}/tar-and-chip-driveway-cost-calculator`
           }),
+          webPageSchema({ name: "Tar and Chip Driveway Cost Calculator", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -117,10 +123,29 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
               Tar and Chip Driveway Cost Calculator
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this page to estimate a tar and chip driveway by square footage and quote scope. It also helps you
-              compare chip seal with a hot mix asphalt driveway.
+              Estimate a tar and chip driveway from its square footage and the work included in the quote. It also
+              helps you compare chip seal with a hot mix asphalt driveway.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
+
+          <DirectAnswer question="How do I estimate tar and chip driveway cost?">
+            <p>
+              Estimate tar and chip driveway cost by measuring the finished square footage and multiplying it by a
+              local contractor&apos;s written price per square foot, then adding any separately quoted preparation. Unlike
+              hot mix asphalt, chip seal should not be estimated with the site&apos;s asphalt tonnage formula because the
+              system uses liquid binder and aggregate applied in one or more coats. Ask the contractor to identify the
+              binder, stone type, number of coats, rolling, base repair, grading, drainage, mobilization, tax, and
+              cleanup included in the rate. Because local conditions vary, enter the contractor&apos;s written rate instead
+              of relying on a national average. Two quotes are comparable only when they cover the same area and scope. Tar
+              and chip may suit a long rural drive or an existing stable base, but appearance, loose stone, contractor
+              availability, maintenance, and expected service life differ from hot mix asphalt. Confirm site suitability
+              with an experienced local installer.
+            </p>
+          </DirectAnswer>
+
+          <TarChipCostCalculator />
 
           <section className="grid gap-4 md:grid-cols-3">
             {estimateSteps.map((item) => (
@@ -131,6 +156,32 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
                 </CardContent>
               </Card>
             ))}
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Tar and chip versus hot mix asphalt</h2>
+            <p className="text-xs text-zinc-500 sm:hidden">Swipe the table left or right to see every column.</p>
+            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[720px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500"><tr><th className="px-4 py-3 font-medium">Question</th><th className="px-4 py-3 font-medium">Tar and chip</th><th className="px-4 py-3 font-medium">Hot mix asphalt</th></tr></thead>
+                <tbody className="divide-y divide-zinc-200 text-zinc-600">
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Estimating unit</td><td className="px-4 py-3">Square foot and coat scope</td><td className="px-4 py-3">Tons plus installed scope</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Surface</td><td className="px-4 py-3">Exposed aggregate texture</td><td className="px-4 py-3">Dense compacted mat</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Quote detail</td><td className="px-4 py-3">Binder, stone, coats, rolling</td><td className="px-4 py-3">Mix, tons, thickness, compaction</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Best next check</td><td className="px-4 py-3">Local installer experience</td><td className="px-4 py-3">Plant and paving quote</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Worked quote example</h2>
+            <p className="text-sm leading-7 text-zinc-600">
+              For a 1,000-square-foot driveway, multiply 1,000 by the contractor&apos;s stated square-foot rate. If base
+              repair is a separate fixed line item, add it after the surface calculation. Do not add an asphalt tonnage
+              estimate, because chip seal uses a different material system. Keep the rate, coat count, stone, binder,
+              prep, and cleanup in writing so a lower number does not hide a smaller scope.
+            </p>
           </section>
 
           <section className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.85fr)]">
@@ -165,7 +216,7 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related driveway cost pages</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Use these pages to compare tar and chip with asphalt and other driveway surfaces.
+                Compare tar and chip with asphalt and other driveway surfaces before requesting quotes.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

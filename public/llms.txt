@@ -1,0 +1,47 @@
+# Asphalt Calculator
+> Free asphalt quantity, driveway cost, and regional price planning tools for homeowners and property managers. Estimates are educational planning numbers, not contractor bids or engineering advice.
+
+## Start here
+- [Asphalt Calculator](https://www.asphaltprice.com/): Estimate tons, tonnes, material cost, and installed cost from area and compacted thickness.
+- [Data and Methodology](https://www.asphaltprice.com/methodology): Formula, density assumption, public sources, regional-price limitations, review process, and correction policy.
+- [About the Editorial Team](https://www.asphaltprice.com/about): Who writes and reviews the site and what the site does not claim.
+- [Disclaimer](https://www.asphaltprice.com/disclaimer): Important limits on estimates and project decisions.
+
+## Core calculators
+- [Asphalt Cost Calculator](https://www.asphaltprice.com/asphalt-cost-calculator): General material and installed-cost planning for multiple asphalt project types.
+- [Asphalt Driveway Cost Calculator](https://www.asphaltprice.com/asphalt-driveway-cost-calculator): Residential driveway quantity, material, and installed-cost planning.
+- [Asphalt Driveway Replacement Cost Calculator](https://www.asphaltprice.com/asphalt-driveway-replacement-cost-calculator): Separate removal, base repair, and new paving into one editable-rate estimate.
+- [Asphalt Driveway Resurfacing Cost Calculator](https://www.asphaltprice.com/asphalt-driveway-resurfacing-cost-calculator): Estimate preparation, localized repair, and an asphalt overlay.
+- [Driveway Sealing Cost Calculator](https://www.asphaltprice.com/driveway-sealing-cost-calculator): Estimate sealer gallons, preparation, labor, and crack-repair allowance.
+- [Asphalt Millings Calculator](https://www.asphaltprice.com/asphalt-millings-calculator): Estimate recycled asphalt pavement tons, yards, coverage, and material cost.
+- [Asphalt Tonnage Calculator](https://www.asphaltprice.com/asphalt-tonnage-calculator): Convert area and compacted thickness into short tons or metric tonnes.
+- [Asphalt Paving Cost Calculator](https://www.asphaltprice.com/asphalt-paving-cost-calculator): Parking pads, private lanes, and small-lot paving budgets.
+- [Private Asphalt Road Cost Calculator](https://www.asphaltprice.com/asphalt-road-cost-calculator): Early surface-cost and tonnage planning for private roads and access lanes; not a public-road engineering estimate.
+- [Tarmac Calculator](https://www.asphaltprice.com/tarmac-calculator): Metric-first tarmac planning using square metres, millimetres, and tonnes.
+- [Tar and Chip Driveway Cost Calculator](https://www.asphaltprice.com/tar-and-chip-driveway-cost-calculator): Calculate a chip-seal quote from a local square-foot rate without using asphalt tonnage assumptions.
+
+## Pricing and quote guides
+- [Asphalt Cost Guide](https://www.asphaltprice.com/asphalt-cost-guide): Quantity formula, cost scope, waste, and quote terminology.
+- [Asphalt Prices by State](https://www.asphaltprice.com/asphalt-prices-by-state): Broad editorial U.S. regional bands for early planning; not live state averages.
+- [Hot Mix Asphalt Cost Per Ton](https://www.asphaltprice.com/hot-mix-asphalt-cost-per-ton): Difference between plant-pickup, delivered, and installed pricing.
+- [Asphalt Price Per Yard](https://www.asphaltprice.com/asphalt-price-per-yard): Approximate cubic-yard to ton conversion and its density limitations.
+- [Asphalt Contractor Guide](https://www.asphaltprice.com/asphalt-contractor-guide): Compare written bid scope, thickness, base, drainage, cleanup, and warning signs.
+- [Asphalt Driveway Thickness Guide](https://www.asphaltprice.com/asphalt-driveway-thickness): Common residential planning ranges, base considerations, and limits that require local design.
+- [Asphalt Millings vs Gravel](https://www.asphaltprice.com/asphalt-millings-vs-gravel): Compare drainage, compaction, maintenance, and cost inputs for two driveway materials.
+
+## Key facts and limitations
+- Imperial quantity formula: area in square feet × thickness in feet × planning density in lb/ft³ ÷ 2,000 = estimated short tons before waste.
+- The site uses 145 lb/ft³ as a planning density. Actual density varies by mix, aggregate, air voids, and compaction.
+- Regional price bands are editorial starting assumptions, not live quotes, government price tables, or statistically representative state averages.
+- A current local supplier or contractor rate should replace a default band whenever available.
+- Final price can change because of mix, base repair, drainage, removal, access, minimum load, haul distance, permits, labor, season, tax, and cleanup.
+- Content and sources were last reviewed August 5, 2026.
+
+## Primary source context
+- [FHWA asphalt pavement density research](https://www.fhwa.dot.gov/pavement/asphalt/pubs/hif20003.pdf): Explains density and how aggregate and compaction change unit weight.
+- [U.S. Bureau of Labor Statistics Producer Price Index](https://www.bls.gov/ppi/): Market-direction context, not a retail asphalt quote.
+- [U.S. Energy Information Administration diesel prices](https://www.eia.gov/petroleum/gasdiesel/): Regional trucking-cost context, not a paving bid.
+
+## Contact and corrections
+- [Contact Asphalt Calculator](https://www.asphaltprice.com/contact)
+- Email: hello@asphaltprice.com

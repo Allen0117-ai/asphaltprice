@@ -34,16 +34,28 @@ const searchPages: readonly SearchPage[] = [
     keywords: ["driveway", "calculator", "installed cost", "asphalt"]
   },
   {
+    href: "/asphalt-driveway-replacement-cost-calculator" as Route,
+    title: "Asphalt driveway replacement cost calculator",
+    description: "Estimate removal, base repair, and new asphalt paving cost.",
+    keywords: ["replace driveway", "tear out", "removal", "replacement cost"]
+  },
+  {
+    href: "/asphalt-driveway-resurfacing-cost-calculator" as Route,
+    title: "Asphalt driveway resurfacing cost calculator",
+    description: "Estimate preparation, spot repair, and asphalt overlay cost.",
+    keywords: ["resurface", "overlay", "milling", "driveway repair"]
+  },
+  {
+    href: "/asphalt-driveway-thickness" as Route,
+    title: "Asphalt driveway thickness guide",
+    description: "Compare common planning thicknesses with base and traffic needs.",
+    keywords: ["how thick", "asphalt depth", "driveway specification", "base"]
+  },
+  {
     href: "/asphalt-cost-calculator" as Route,
     title: "Asphalt cost calculator",
     description: "Estimate material and installed asphalt cost by project type.",
     keywords: ["cost calculator", "material cost", "installed cost", "price"]
-  },
-  {
-    href: "/asphalt-driveway-estimate" as Route,
-    title: "Asphalt driveway estimate",
-    description: "Get a driveway estimate with project type, tonnage, and quote checks.",
-    keywords: ["driveway estimate", "asphalt estimate", "resurfacing", "replacement"]
   },
   {
     href: "/asphalt-tonnage-calculator" as Route,
@@ -70,16 +82,34 @@ const searchPages: readonly SearchPage[] = [
     keywords: ["parking lot", "paving", "commercial", "asphalt"]
   },
   {
+    href: "/driveway-sealing-cost-calculator" as Route,
+    title: "Driveway sealing cost calculator",
+    description: "Estimate sealer gallons, preparation, labor, and crack repair.",
+    keywords: ["sealcoat", "sealer", "driveway sealing", "maintenance"]
+  },
+  {
+    href: "/asphalt-millings-calculator" as Route,
+    title: "Asphalt millings calculator",
+    description: "Estimate RAP tons, cubic yards, coverage, and material cost.",
+    keywords: ["millings", "milling", "recycled asphalt", "crushed asphalt", "rap"]
+  },
+  {
+    href: "/asphalt-millings-vs-gravel" as Route,
+    title: "Asphalt millings vs gravel",
+    description: "Compare cost inputs, drainage, maintenance, and best uses.",
+    keywords: ["millings vs gravel", "recycled asphalt", "driveway material"]
+  },
+  {
     href: "/asphalt-paving-cost-calculator" as Route,
     title: "Asphalt paving cost calculator",
     description: "Estimate paving cost for driveways, pads, and small lots.",
     keywords: ["paving", "parking pad", "small lot", "asphalt"]
   },
   {
-    href: "/blacktop-driveway-cost-estimator" as Route,
-    title: "Blacktop driveway cost estimator",
-    description: "Estimate blacktop driveway cost with area, thickness, and installed pricing.",
-    keywords: ["blacktop", "driveway", "estimate", "asphalt"]
+    href: "/asphalt-road-cost-calculator" as Route,
+    title: "Private asphalt road cost calculator",
+    description: "Estimate private road and access lane asphalt tonnage and paving cost.",
+    keywords: ["road paving", "private road", "access road", "farm lane", "road cost"]
   },
   {
     href: "/blacktop-cost-per-ton" as Route,

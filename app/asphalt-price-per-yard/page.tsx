@@ -2,12 +2,16 @@ import Link from "next/link";
 
 import { Cuboid, Scale } from "lucide-react";
 
+import { AsphaltFormulaFigure } from "@/components/content/asphalt-formula-figure";
+import { ContentCredentials } from "@/components/content/content-credentials";
+import { DirectAnswer } from "@/components/content/direct-answer";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/asphalt-price-per-yard";
 
 const pageDescription =
   "Convert asphalt price per yard into tons, tonnes, and project cost with simple planning notes for asphalt, blacktop, and tarmac.";
@@ -15,7 +19,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Asphalt Price Per Yard | Tons, Tonnes & Cost Guide",
   description: pageDescription,
-  path: "/asphalt-price-per-yard"
+  path
 });
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Asphalt Price Per Yard", href: "/asphalt-price-per-yard" }];
@@ -29,7 +33,7 @@ const faqs = [
   {
     question: "Is asphalt usually sold by yard or ton?",
     answer:
-      "Asphalt is commonly discussed by ton for material planning, but some people search by cubic yard when comparing volume, truck loads, or excavation math."
+      "Asphalt is commonly discussed by ton for material planning, while cubic yards can help when comparing volume, truck loads, or excavation work."
   },
   {
     question: "Can I convert price per yard to price per ton?",
@@ -49,11 +53,8 @@ export default function AsphaltPricePerYardPage() {
       <StructuredData
         data={[
           breadcrumbSchema(breadcrumbs),
-          webAppSchema({
-            name: "Asphalt Price Per Yard Guide",
-            description: pageDescription,
-            url: `${siteConfig.url}/asphalt-price-per-yard`
-          }),
+          articleSchema({ name: "Asphalt Price Per Yard Guide", description: pageDescription, path }),
+          webPageSchema({ name: "Asphalt Price Per Yard Guide", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -69,15 +70,31 @@ export default function AsphaltPricePerYardPage() {
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Price Per Yard</h1>
             <p className="text-lg leading-8 text-zinc-600">
               Asphalt is usually easier to price by ton, but cubic yards are useful when you are thinking in volume.
-              Use this page to convert yards into tons before comparing supplier or contractor prices.
+              Convert yards into tons before comparing supplier or contractor prices.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
+
+          <DirectAnswer question="How do I convert asphalt price per yard to price per ton?">
+            <p>
+              Asphalt is normally easier to order and price by weight, but a cubic-yard figure can be converted for
+              early planning. This site uses a rounded rule of about two short tons per cubic yard, based on a planning
+              density near 145 pounds per cubic foot. Multiply cubic yards by two to estimate tons, or divide a quoted
+              price per cubic yard by two to estimate price per ton. The rule is not a supplier guarantee. Actual weight
+              changes with aggregate, mix design, temperature, air voids, moisture, and compaction, and a loose truck
+              volume is not the same as compacted pavement volume. Before ordering, ask the plant to confirm the mix
+              density, sales unit, minimum load, and whether the quote includes delivery. For a real project, area and
+              compacted thickness produce a better quantity estimate than guessing cubic yards. Use the tonnage
+              calculator, then confirm the final order with the supplier.
+            </p>
+          </DirectAnswer>
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
               ["Quick rule", "One cubic yard of asphalt is roughly 2 tons at common planning density."],
-              ["Updated", "Content last reviewed May 2026 for unit clarity and quote comparison."],
-              ["Estimate only", "Mix type and compaction can change the actual weight per cubic yard."]
+              ["Why it varies", "Mix type and compaction can change the actual weight per cubic yard."],
+              ["Before ordering", "Confirm the mix, weight, and delivery terms with the supplier."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -112,6 +129,39 @@ export default function AsphaltPricePerYardPage() {
                 </Link>
               </CardContent>
             </Card>
+          </section>
+
+          <section className="space-y-4">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Worked conversion examples</h2>
+            <p className="text-xs text-zinc-500 sm:hidden">Swipe the table left or right to see every column.</p>
+            <div className="overflow-x-auto rounded-lg border border-zinc-200">
+              <table className="w-full min-w-[680px] text-left text-sm">
+                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
+                  <tr><th className="px-4 py-3 font-medium">Starting value</th><th className="px-4 py-3 font-medium">Planning conversion</th><th className="px-4 py-3 font-medium">Use</th></tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200 text-zinc-600">
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">1 cubic yard</td><td className="px-4 py-3">About 2 short tons</td><td className="px-4 py-3">Quick volume-to-weight check</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">5 cubic yards</td><td className="px-4 py-3">About 10 short tons</td><td className="px-4 py-3">Small project planning</td></tr>
+                  <tr><td className="px-4 py-3 font-medium text-zinc-950">Quoted price per yard</td><td className="px-4 py-3">Divide by about 2</td><td className="px-4 py-3">Approximate price per ton</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm leading-7 text-zinc-600">
+              These examples all depend on the same density assumption. Read why the value is approximate on the{" "}
+              <Link href="/methodology" className="font-medium text-amber-800 underline underline-offset-4">data and methodology page</Link>.
+            </p>
+          </section>
+
+          <AsphaltFormulaFigure />
+
+          <section className="space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Why a yard-based quote needs extra care</h2>
+            <p className="text-sm leading-7 text-zinc-600">
+              Excavation and aggregate work often use cubic yards, while hot mix asphalt is commonly sold by weight.
+              Ask whether “yard” means a measured loose volume, a truck body estimate, or a calculated compacted volume.
+              Then confirm the material type, density, delivery, minimum load, and tax. A written weight ticket is more
+              precise than a generic two-tons-per-yard shortcut.
+            </p>
           </section>
 
           <section id="faq" className="space-y-4">

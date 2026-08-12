@@ -4,13 +4,15 @@ import type { Route } from "next";
 import { ArrowRight, BookOpen, CircleDollarSign, Layers3, Scale, TriangleAlert } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { StickySectionNav } from "@/components/content/sticky-section-nav";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
-import { siteConfig } from "@/lib/site";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/asphalt-cost-guide";
 
 const pageDescription =
   "Asphalt cost guide with U.S. pricing notes, formulas, waste tips, quote checks, and advice for using local ton or tonne prices.";
@@ -18,7 +20,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Asphalt Cost Guide | Pricing, Formula & Quote Tips",
   description: pageDescription,
-  path: "/asphalt-cost-guide"
+  path
 });
 
 const quickNav = [
@@ -101,19 +103,17 @@ const asphaltBasics = [
 
 const formulaCards = [
   {
-    title: "How to calculate asphalt",
+    title: "Calculate tons needed",
     text:
       "Start with area and thickness, then use the density-based tonnage formula. That gives you a planning number before you compare quotes."
   },
   {
-    title: "Blacktop calculator",
-    text:
-      "Blacktop is just another name for asphalt, so the same calculator and pricing logic work for both terms."
+    title: "Calculate material cost",
+    text: "Multiply the estimated tons by a current local material price per ton or tonne, then keep delivery separate."
   },
   {
-    title: "Tons per cubic yard",
-    text:
-      "At the base planning density, one cubic yard of asphalt is close to 2 tons. Mix and compaction will move the real number a bit."
+    title: "Check the installed quote",
+    text: "Add preparation, base repair, labor, equipment, access, cleanup, and other project work before comparing final totals."
   }
 ] as const;
 
@@ -146,7 +146,7 @@ const relatedPages = [
   {
     href: "/#calculator",
     title: "Main asphalt calculator",
-    text: "Go back to the main estimate page for tonnage and pricing together."
+    text: "Calculate tonnage and cost from your actual project dimensions."
   },
   {
     href: "/asphalt-tonnage-calculator",
@@ -167,6 +167,26 @@ const relatedPages = [
     href: "/asphalt-contractor-guide",
     title: "Asphalt contractor guide",
     text: "Use this after the estimate to compare quote scope and red flags."
+  },
+  {
+    href: "/asphalt-driveway-replacement-cost-calculator",
+    title: "Driveway replacement cost",
+    text: "Calculate tear-out, base repair, and new asphalt as a separate project scope."
+  },
+  {
+    href: "/asphalt-driveway-resurfacing-cost-calculator",
+    title: "Driveway resurfacing cost",
+    text: "Price preparation, spot repair, and a new asphalt overlay."
+  },
+  {
+    href: "/driveway-sealing-cost-calculator",
+    title: "Driveway sealing cost",
+    text: "Estimate sealer gallons, preparation, labor, and crack-repair allowance."
+  },
+  {
+    href: "/asphalt-millings-calculator",
+    title: "Asphalt millings calculator",
+    text: "Estimate recycled asphalt tons, yards, coverage, and material cost."
   }
 ] as const;
 
@@ -176,11 +196,8 @@ export default function AsphaltCostGuidePage() {
       <StructuredData
         data={[
           breadcrumbSchema(breadcrumbs),
-          webAppSchema({
-            name: "Asphalt Cost Guide",
-            description: pageDescription,
-            url: `${siteConfig.url}/asphalt-cost-guide`
-          }),
+          articleSchema({ name: "Asphalt Cost Guide", description: pageDescription, path }),
+          webPageSchema({ name: "Asphalt Cost Guide", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -195,14 +212,16 @@ export default function AsphaltCostGuidePage() {
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">Asphalt Cost Guide</h1>
             <p className="text-lg leading-8 text-zinc-600">
-              This guide explains the rough price bands behind the calculator, plus the formula and terms people
-              search for when they want to know how much asphalt they need.
+              Total asphalt cost equals the tons needed multiplied by your local material rate, plus delivery,
+              preparation, and installation. This guide explains each part so you can compare quotes on the same scope.
             </p>
             <p className="text-sm leading-6 text-zinc-600">
               Default price examples are U.S.-based. For Canada, the UK, or other markets, use the calculator with
               Metric if needed and enter your local supplier price per ton or tonne.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
@@ -214,9 +233,8 @@ export default function AsphaltCostGuidePage() {
               </div>
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">How to calculate asphalt and read coverage</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                People search for this topic using phrases like asphalt formula, blacktop calculator, and tons per
-                cubic yard. The planning formula here is area × thickness × density ÷ 2000, with 145 lb/ft³ as the
-                base density.
+                Use area, compacted thickness, and density to estimate the tons of asphalt your project needs. The
+                formula is area × thickness × density ÷ 2000, with 145 lb/ft³ as the base density.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
@@ -241,7 +259,7 @@ export default function AsphaltCostGuidePage() {
                 "What to watch for",
                 "A price that looks too neat can miss base repair, access issues, cleanup, or a thinner asphalt layer."
               ],
-              ["Best use of this page", "Get a quick range, then compare it with one or two real contractor quotes."]
+              ["Next step", "Use the range to prepare for contractor quotes."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200">
                 <CardContent className="space-y-2">
@@ -299,6 +317,11 @@ export default function AsphaltCostGuidePage() {
                 </Card>
               ))}
             </div>
+            <div className="flex flex-wrap gap-4 text-sm font-medium text-amber-700">
+              <Link href="/asphalt-driveway-replacement-cost-calculator">Calculate full driveway replacement</Link>
+              <Link href="/asphalt-driveway-resurfacing-cost-calculator">Calculate asphalt resurfacing</Link>
+              <Link href="/driveway-sealing-cost-calculator">Compare sealing before replacement</Link>
+            </div>
           </section>
 
           <section id="price-factors" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
@@ -325,10 +348,9 @@ export default function AsphaltCostGuidePage() {
             <Card className="border-zinc-200">
               <CardContent className="space-y-3">
                 <TriangleAlert className="h-5 w-5 text-amber-600" />
-                <p className="text-base font-medium text-zinc-950">Keep the estimate honest</p>
+                <p className="text-base font-medium text-zinc-950">Account for site work</p>
                 <p className="text-sm leading-6 text-zinc-600">
-                  The calculator is meant for planning. If the site needs heavy prep, drainage correction, or removal
-                  work, the real price can move well above the first pass.
+                  Heavy prep, drainage correction, or removal work can raise the project cost above the initial range.
                 </p>
               </CardContent>
             </Card>
@@ -336,10 +358,10 @@ export default function AsphaltCostGuidePage() {
 
           <section id="estimator" className="scroll-mt-24 space-y-5">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Check a project after you understand the cost drivers</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Estimate your project</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                The guide above explains why asphalt prices move. Use the calculator here as a quick check after you
-                know the area, thickness, waste allowance, and region you want to compare.
+                Enter the area, thickness, waste allowance, and region to estimate the material quantity and project
+                cost.
               </p>
             </div>
             <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 700, thicknessInches: 3, wastePercent: 7, region: "national" }} />
@@ -407,10 +429,9 @@ export default function AsphaltCostGuidePage() {
 
           <section id="related-tools" className="scroll-mt-24 space-y-5">
             <div className="max-w-3xl">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use this guide with these tools</h2>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related tools</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                The guide explains what can move the number. The related pages help you turn that explanation into a
-                quantity, a driveway budget, a regional check, or a contractor conversation.
+                Explore quantity, driveway budget, regional pricing, and contractor-quote tools for your project.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

@@ -4,12 +4,15 @@ import type { Route } from "next";
 import { ArrowRight, Calculator, CircleDollarSign, Ruler } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
+
+const path = "/asphalt-cost-per-square-foot";
 
 const pageDescription =
   "Estimate asphalt cost per square foot for driveways, pads, and small paving jobs using area, thickness, tonnage, and quote scope.";
@@ -17,7 +20,7 @@ const pageDescription =
 export const metadata = buildMetadata({
   title: "Asphalt Cost Per Square Foot | Driveway & Paving Guide",
   description: pageDescription,
-  path: "/asphalt-cost-per-square-foot"
+  path
 });
 
 const breadcrumbs = [
@@ -115,6 +118,8 @@ export default function AsphaltCostPerSquareFootPage() {
             description: pageDescription,
             url: `${siteConfig.url}/asphalt-cost-per-square-foot`
           }),
+          articleSchema({ name: "Asphalt Cost Per Square Foot", description: pageDescription, path }),
+          webPageSchema({ name: "Asphalt Cost Per Square Foot", description: pageDescription, path }),
           faqSchema(faqs)
         ]}
       />
@@ -131,10 +136,12 @@ export default function AsphaltCostPerSquareFootPage() {
               Asphalt Cost Per Square Foot
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              Use this page to connect square-foot pricing with asphalt tonnage, thickness, and installed quote scope
+              See how square-foot pricing changes with asphalt tonnage, thickness, and the work included in a quote
               for driveways, pads, and small paving jobs.
             </p>
           </div>
+
+          <ContentCredentials path={path} />
 
           <AsphaltCalculator mode="asphalt" defaultValues={{ areaSqFt: 1000, thicknessInches: 3, wastePercent: 7, region: "national" }} />
 
@@ -142,7 +149,7 @@ export default function AsphaltCostPerSquareFootPage() {
             <div className="max-w-3xl">
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-zinc-500">Quick price range</p>
               <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">
-                Typical asphalt cost per square foot in this planning model
+                Typical U.S. planning ranges by compacted thickness
               </h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
                 These rounded U.S. planning ranges use the calculator&apos;s national price assumptions and a 7% waste
@@ -217,7 +224,7 @@ export default function AsphaltCostPerSquareFootPage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related square-foot cost pages</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                These pages help you move between square footage, tonnage, per-ton price, and full quote scope.
+                Compare square-foot cost with tonnage, material price, and the full quote scope.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">

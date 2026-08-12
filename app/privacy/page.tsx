@@ -1,11 +1,15 @@
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
-import { buildMetadata, breadcrumbSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, webPageSchema } from "@/lib/seo";
+
+const path = "/privacy";
+const pageDescription =
+  "Read how Asphalt Calculator handles calculator inputs, contact emails, cookies, analytics, data sharing, and privacy requests when you use the website.";
 
 export const metadata = buildMetadata({
-  title: "Privacy Policy",
-  description: "Privacy policy for Asphalt Calculator, including data use, analytics, ads, and user rights.",
-  path: "/privacy"
+  title: "Asphalt Calculator Privacy Policy and Data Use",
+  description: pageDescription,
+  path
 });
 
 const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Privacy Policy", href: "/privacy" }];
@@ -13,12 +17,17 @@ const breadcrumbs = [{ label: "Home", href: "/" }, { label: "Privacy Policy", hr
 export default function PrivacyPage() {
   return (
     <>
-      <StructuredData data={breadcrumbSchema(breadcrumbs)} />
+      <StructuredData
+        data={[
+          breadcrumbSchema(breadcrumbs),
+          webPageSchema({ name: "Asphalt Calculator Privacy Policy", description: pageDescription, path })
+        ]}
+      />
       <section className="px-4 py-12">
         <div className="mx-auto max-w-3xl space-y-6">
           <Breadcrumbs items={breadcrumbs} />
           <h1 className="text-4xl font-semibold tracking-tight text-zinc-950">Privacy Policy</h1>
-          <p className="text-sm text-zinc-500">Last updated: May 11, 2026</p>
+          <p className="text-sm text-zinc-500">Last updated: August 5, 2026</p>
 
           <div className="space-y-3">
             <h2 className="text-xl font-semibold text-zinc-950">Overview</h2>
@@ -49,9 +58,7 @@ export default function PrivacyPage() {
           <div className="space-y-3">
             <h2 className="text-xl font-semibold text-zinc-950">Analytics, ads, and cookies</h2>
             <p className="text-base leading-7 text-zinc-600">
-              At this time, this site does not use account tracking, contact forms, or advertising scripts. If analytics,
-              advertising, affiliate links, or cookie-based tools are added later, this policy should be updated to name
-              those services and explain how they are used.
+              This site does not currently use account tracking, contact forms, advertising scripts, or cookie-based tools.
             </p>
           </div>
 

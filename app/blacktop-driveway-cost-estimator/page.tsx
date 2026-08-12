@@ -4,11 +4,12 @@ import type { Route } from "next";
 import { ArrowRight, Home, Ruler, ShieldCheck } from "lucide-react";
 
 import { AsphaltCalculator } from "@/components/calculator/asphalt-calculator";
+import { ContentCredentials } from "@/components/content/content-credentials";
 import { FaqAccordion } from "@/components/content/faq-accordion";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { StructuredData } from "@/components/seo/structured-data";
 import { Card, CardContent } from "@/components/ui/card";
-import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema } from "@/lib/seo";
+import { buildMetadata, breadcrumbSchema, faqSchema, webAppSchema, webPageSchema } from "@/lib/seo";
 import { siteConfig } from "@/lib/site";
 
 const pageDescription =
@@ -29,7 +30,7 @@ const faqs = [
   {
     question: "Is blacktop the same as asphalt?",
     answer:
-      "For most homeowner searches, blacktop and asphalt refer to the same driveway paving material, so the same estimating method works."
+      "For most residential driveways, blacktop and asphalt refer to the same paving material, so the same estimating method works."
   },
   {
     question: "How do I estimate blacktop driveway cost?",
@@ -57,7 +58,7 @@ const relatedPages = [
   {
     href: "/asphalt-driveway-cost-calculator",
     title: "Asphalt driveway cost calculator",
-    text: "Use the main driveway page for asphalt wording and more quote detail."
+    text: "Estimate the same project with asphalt terminology and a detailed quote checklist."
   },
   {
     href: "/asphalt-cost-per-square-foot",
@@ -87,6 +88,7 @@ export default function BlacktopDrivewayCostEstimatorPage() {
             description: pageDescription,
             url: `${siteConfig.url}/blacktop-driveway-cost-estimator`
           }),
+          webPageSchema({ name: "Blacktop Driveway Cost Estimator", description: pageDescription, path: "/blacktop-driveway-cost-estimator" }),
           faqSchema(faqs)
         ]}
       />
@@ -108,13 +110,15 @@ export default function BlacktopDrivewayCostEstimatorPage() {
             </p>
           </div>
 
+          <ContentCredentials path="/blacktop-driveway-cost-estimator" />
+
           <AsphaltCalculator mode="driveway" defaultValues={{ areaSqFt: 800, thicknessInches: 3, wastePercent: 7, region: "national" }} />
 
           <section className="grid gap-4 md:grid-cols-3">
             {[
-              ["Same estimating method", "Blacktop and asphalt driveway searches usually use the same paving math."],
+              ["Same calculation", "Blacktop and asphalt driveways use the same area-and-thickness calculation."],
               ["Best quote unit", "Compare both per-ton material cost and installed cost per square foot."],
-              ["Updated", "Content last reviewed May 2026 for residential driveway planning."]
+              ["Compare by scope", "Match thickness, base work, drainage, and cleanup before comparing quotes."]
             ].map(([title, text]) => (
               <Card key={title} className="border-zinc-200 bg-zinc-50">
                 <CardContent className="space-y-2">
@@ -160,7 +164,7 @@ export default function BlacktopDrivewayCostEstimatorPage() {
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Related blacktop cost pages</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Use these pages when you need asphalt wording, square-foot pricing, local ton pricing, or material comparison.
+                Compare square-foot pricing, local material rates, and other driveway surfaces.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
