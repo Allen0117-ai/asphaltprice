@@ -10,12 +10,6 @@ import { Label } from "@/components/ui/label";
 import { formatCurrency, formatDecimal } from "@/lib/calculator/formulas";
 import { computeMillingsEstimate } from "@/lib/calculator/specialty-formulas";
 
-const densityOptions = [
-  { value: 105, label: "Loose millings — 105 lb/ft³" },
-  { value: 120, label: "Typical planning value — 120 lb/ft³" },
-  { value: 135, label: "Well compacted — 135 lb/ft³" }
-] as const;
-
 function numberFromInput(value: string) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : 0;
@@ -36,7 +30,7 @@ export function AsphaltMillingsCalculator() {
   const [depthInches, setDepthInches] = useState(4);
   const [density, setDensity] = useState(120);
   const [wastePercent, setWastePercent] = useState(10);
-  const [pricePerTon, setPricePerTon] = useState(25);
+  const [pricePerTon, setPricePerTon] = useState("");
 
   const estimate = useMemo(
     () =>
@@ -45,7 +39,7 @@ export function AsphaltMillingsCalculator() {
         depthInches,
         densityLbPerCubicFt: density,
         wastePercent,
-        pricePerTon
+        pricePerTon: numberFromInput(pricePerTon)
       }),
     [density, depthInches, lengthFt, pricePerTon, wastePercent, widthFt]
   );
@@ -79,23 +73,21 @@ export function AsphaltMillingsCalculator() {
               <Input id="millings-depth" type="number" min={0.5} step={0.5} value={depthInches} onChange={(event) => setDepthInches(numberFromInput(event.target.value))} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="millings-density">Millings density</Label>
-              <select id="millings-density" value={density} onChange={(event) => setDensity(numberFromInput(event.target.value))} className="h-10 w-full rounded-md border border-zinc-200 bg-white px-3 text-sm text-zinc-950 outline-none focus:border-zinc-950">
-                {densityOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
-              </select>
+              <Label htmlFor="millings-density">Compacted density (lb/ft³)</Label>
+              <Input id="millings-density" type="number" min={1} step="any" value={density} onChange={(event) => setDensity(numberFromInput(event.target.value))} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="millings-waste">Compaction and waste allowance (%)</Label>
+              <Label htmlFor="millings-waste">Extra material allowance (%)</Label>
               <Input id="millings-waste" type="number" min={0} max={30} step={1} value={wastePercent} onChange={(event) => setWastePercent(numberFromInput(event.target.value))} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="millings-price">Local price ($/ton)</Label>
-              <Input id="millings-price" type="number" min={0} step={1} value={pricePerTon} onChange={(event) => setPricePerTon(numberFromInput(event.target.value))} />
+              <Label htmlFor="millings-price">Local material price ($/ton, optional)</Label>
+              <Input id="millings-price" type="number" min={0} step={1} placeholder="Enter a local price" value={pricePerTon} onChange={(event) => setPricePerTon(event.target.value)} />
             </div>
           </div>
 
           <p className="rounded-lg border border-zinc-200 bg-zinc-50 p-3 text-xs leading-5 text-zinc-600">
-            Millings density changes with gradation, moisture, and compaction. Ask the supplier for a scale-ticket or bulk-density value before placing a final order.
+            Use a density for the compacted material, matching the finished depth above. The default is a planning assumption. <a href="https://www.fhwa.dot.gov/publications/research/infrastructure/structures/97148/rap135.cfm" className="font-medium text-amber-800 underline underline-offset-4">FHWA describes compacted RAP density in fill applications</a>; actual material and use vary. Ask your supplier for a suitable compacted density; loose stockpile density cannot be used directly with compacted volume.
           </p>
         </CardContent>
       </Card>
@@ -111,23 +103,30 @@ export function AsphaltMillingsCalculator() {
             <Recycle className="h-5 w-5 text-amber-300" />
           </div>
 
+          {lengthFt > 0 && widthFt > 0 && depthInches > 0 && density > 0 && wastePercent >= 0 && wastePercent <= 30 ? (
+          <>
           <div aria-live="polite" className="rounded-xl border border-amber-400/30 bg-amber-400/10 p-4">
             <p className="text-sm text-amber-100">Estimated order quantity</p>
             <p className="mt-1 text-3xl font-semibold text-white">{formatDecimal(estimate.tons, 1)} tons</p>
-            <p className="mt-1 text-sm text-zinc-300">About {formatDecimal(estimate.cubicYards, 1)} cubic yards including allowance</p>
+            <p className="mt-1 text-sm text-zinc-300">Includes your extra material allowance; confirm the order weight with your supplier.</p>
           </div>
 
           <div>
             <ResultRow label="Project area" value={`${formatDecimal(estimate.areaSqFt, 0)} sq ft`} />
-            <ResultRow label="Order volume" value={`${formatDecimal(estimate.cubicYards, 1)} yd³`} />
+            <ResultRow label="Finished compacted volume" value={`${formatDecimal(estimate.compactedCubicFeet / 27, 1)} yd³`} />
             <ResultRow label="Material weight" value={`${formatDecimal(estimate.tons, 1)} tons`} />
-            <ResultRow label="Material cost" value={formatCurrency(estimate.estimatedMaterialCost)} />
+            <ResultRow label="Material cost" value={pricePerTon !== "" && Number(pricePerTon) > 0 ? formatCurrency(estimate.estimatedMaterialCost) : "Enter a local price"} />
             <ResultRow label="Coverage per ton" value={`${formatDecimal(estimate.coverageSqFtPerTon, 0)} sq ft`} />
           </div>
 
+          </>
+          ) : (
+            <p aria-live="polite" className="rounded-lg bg-white/5 p-4 text-sm text-zinc-300">Enter positive dimensions and compacted density, and an allowance from 0 to 30%.</p>
+          )}
+
           <div className="flex gap-3 rounded-lg border border-white/10 bg-white/5 p-3 text-sm leading-6 text-zinc-300">
             <Scale className="mt-0.5 h-4 w-4 shrink-0 text-amber-300" />
-            Confirm delivered weight and truck capacity with the supplier. The calculator estimates material quantity; it does not design the base or guarantee surface performance.
+            Finished volume is not loose truck volume. Ask the supplier for delivered volume, truck capacity, minimum loads, and delivery fees. The allowance is extra material, not a loose-volume conversion; avoid adding compaction twice.
           </div>
         </CardContent>
       </Card>
