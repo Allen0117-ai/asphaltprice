@@ -17,7 +17,7 @@ const config: CalculatorLandingPageConfig = {
   description: pageDescription,
   directAnswerQuestion: "How much asphalt millings do I need?",
   directAnswer:
-    "Measure length, width, compacted depth, and the supplier's bulk density to estimate asphalt millings in tons and cubic yards. The same method can be used for reclaimed asphalt pavement (RAP) or crushed asphalt when the supplier provides a suitable density. Because recycled material varies, confirm the scale-ticket weight, truck capacity, and recommended installed depth before ordering. This estimate covers material quantity, not base design, drainage, or final pavement performance.",
+    "Measure length, width, compacted depth, and the supplier's compacted density to estimate asphalt millings in tons and cubic yards. The same method can be used for reclaimed asphalt pavement (RAP) or crushed asphalt when the supplier provides a suitable density. Because recycled material varies, confirm the scale-ticket weight, truck capacity, and recommended installed depth before ordering. This estimate covers material quantity, not base design, drainage, or final pavement performance.",
   path: "/asphalt-millings-calculator",
   schemaName: "Asphalt Millings Calculator",
   calculatorMode: "asphalt",
@@ -29,11 +29,11 @@ const config: CalculatorLandingPageConfig = {
   highlights: [
     {
       title: "Tons and cubic yards",
-      text: "Estimate both common ordering units from the same planned area and compacted depth."
+      text: "Estimate order weight and finished compacted volume from the planned area and depth."
     },
     {
       title: "Local density input",
-      text: "Use a supplier-provided density when available because millings can weigh differently after compaction."
+      text: "Use a supplier-provided compacted density; loose material needs a different conversion."
     },
     {
       title: "Material-only estimate",
@@ -52,12 +52,20 @@ const config: CalculatorLandingPageConfig = {
         },
         {
           title: "Choose compacted depth",
-          text: "Enter the planned final depth, then allow for compaction and waste so the delivered material is not short."
+          text: "Enter the finished depth and compacted density. Add an extra material allowance only where appropriate; ask the supplier how it accounts for losses."
         },
         {
           title: "Confirm ticket weight",
-          text: "Ask whether the supplier sells by ton or yard and request the material density or a recent scale-ticket weight."
+          text: "Ask whether the supplier sells by ton or loose yard, and request a compacted density and delivery conversion for the actual material."
         }
+      ]
+    },
+    {
+      title: "Compacted volume versus delivered volume",
+      text: "The calculator multiplies finished compacted volume by compacted density to estimate tons. The cubic yards shown are the finished layer, not the loose volume in a truck. Ask the supplier for its loose bulk density or delivered-load conversion. The extra allowance is applied to weight; do not add a separate compaction factor without checking whether it is already included.",
+      items: [
+        { title: "Finished volume", text: "Length × width × compacted depth ÷ 27 gives compacted cubic yards when all dimensions are in feet." },
+        { title: "Delivery and price", text: "Ask for the material price per ton, loose volume or truck capacity, minimum order, delivery fee, tax, and whether spreading and rolling are included." }
       ]
     },
     {
@@ -87,7 +95,7 @@ const config: CalculatorLandingPageConfig = {
   ],
   quoteChecks: [
     "Confirm whether the supplier prices asphalt millings by ton, cubic yard, truckload, or delivered load.",
-    "Ask for a material density or scale-ticket weight instead of relying only on a generic conversion.",
+    "Ask for compacted density and a separate loose-volume conversion; a scale ticket alone is weight, not density.",
     "Compare delivered quantity, spreading, grading, and compaction as separate line items.",
     "Confirm the planned finished depth, base condition, drainage work, and access for delivery trucks."
   ],
@@ -111,7 +119,7 @@ const config: CalculatorLandingPageConfig = {
   faqs: [
     {
       question: "How do I calculate asphalt millings?",
-      answer: "Measure the area, choose a compacted depth, apply a density for the supplied material, and add an allowance for compaction and waste. The calculator converts this into tons and cubic yards."
+      answer: "Multiply area by finished depth and compacted density to estimate weight, then add an allowance for losses. Finished compacted cubic yards are not loose truck volume; ask the supplier for the conversion."
     },
     {
       question: "Are asphalt millings and crushed asphalt the same?",
@@ -123,7 +131,7 @@ const config: CalculatorLandingPageConfig = {
     },
     {
       question: "Should I order millings by tons or cubic yards?",
-      answer: "Use the unit the supplier sells. Tons are weight-based, while cubic yards are volume-based, so the conversion depends on the material density."
+      answer: "Tons measure weight; cubic yards measure volume. Ask whether a yard is loose or compacted and get the matching conversion from the supplier."
     },
     {
       question: "Can this calculator design my millings driveway base?",

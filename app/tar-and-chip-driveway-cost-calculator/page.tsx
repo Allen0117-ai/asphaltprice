@@ -145,6 +145,16 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
             </p>
           </DirectAnswer>
 
+          <section className="rounded-xl border border-amber-200 bg-amber-50 p-5 text-sm leading-7 text-zinc-700">
+            <h2 className="text-lg font-semibold text-zinc-950">Chip seal driveway cost per square foot</h2>
+            <p className="mt-2">
+              HomeGuide&apos;s December 2025 guide reports $2–$5 per square foot for driveway installation and $1–$3
+              for resurfacing. These are published estimates, not local quotes; scope, project size, coats, base
+              condition, and location affect the price. Its guide does not establish what every quote includes.
+            </p>
+            <a href="https://homeguide.com/costs/tar-and-chip-driveway-cost" className="mt-2 inline-block font-medium text-amber-800 underline underline-offset-4">Read HomeGuide&apos;s price guide</a>
+          </section>
+
           <TarChipCostCalculator />
 
           <section className="grid gap-4 md:grid-cols-3">
@@ -177,10 +187,10 @@ export default function TarAndChipDrivewayCostCalculatorPage() {
           <section className="space-y-3">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Worked quote example</h2>
             <p className="text-sm leading-7 text-zinc-600">
-              For a 1,000-square-foot driveway, multiply 1,000 by the contractor&apos;s stated square-foot rate. If base
+              For illustration only, 1,000 square feet at $3 per square foot is $3,000 for the surface. If base
               repair is a separate fixed line item, add it after the surface calculation. Do not add an asphalt tonnage
               estimate, because chip seal uses a different material system. Keep the rate, coat count, stone, binder,
-              prep, and cleanup in writing so a lower number does not hide a smaller scope.
+              prep, and cleanup in writing so a lower number does not hide a smaller scope. The $3 rate is an example, not a current quote.
             </p>
           </section>
 

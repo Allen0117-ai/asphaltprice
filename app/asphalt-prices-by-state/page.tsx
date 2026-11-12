@@ -10,13 +10,12 @@ import { Breadcrumbs } from "@/components/seo/breadcrumbs";
 import { Card, CardContent } from "@/components/ui/card";
 import { StructuredData } from "@/components/seo/structured-data";
 import { articleSchema, buildMetadata, breadcrumbSchema, faqSchema, webPageSchema } from "@/lib/seo";
-import { regionPricing, stateBuckets } from "@/lib/calculator/regional-prices";
-import { formatCurrency } from "@/lib/calculator/formulas";
+import { stateBuckets } from "@/lib/calculator/regional-prices";
 
 const path = "/asphalt-prices-by-state";
 
 const pageDescription =
-  "Estimate asphalt price per ton near me with U.S. state price bands, California notes, quote checks, tonnage tips, and contractor questions.";
+  "Find published asphalt price examples and learn how to request comparable local material, delivery, and paving quotes.";
 
 export const metadata = buildMetadata({
   title: "Asphalt Price Per Ton Near Me | U.S. State Pricing Guide",
@@ -25,7 +24,8 @@ export const metadata = buildMetadata({
 });
 
 const quickNav = [
-  { label: "State bands", href: "#state-bands" },
+  { label: "State groups", href: "#state-bands" },
+  { label: "Price examples", href: "#price-examples" },
   { label: "Price notes", href: "#price-notes" },
   { label: "Why prices vary", href: "#why-vary" },
   { label: "Contractor quotes", href: "#contractor-quotes" },
@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "How do I find asphalt price per ton near me?",
     answer:
-      "Use your state or region in the table as a starting range, then ask two or three nearby asphalt plants or paving contractors for the current material price per ton and delivered or installed price."
+      "Search for asphalt plants or paving contractors in your city or county. Ask two or three for current quotes, specifying whether you need plant pickup, delivery, or installation."
   },
   {
     question: "Is asphalt price per ton near me the same as the installed driveway price?",
@@ -49,11 +49,11 @@ const faqs = [
   },
   {
     question: "Are these exact state prices?",
-    answer: "No. They are broad planning bands grouped by region so you have a quick starting point before you request local quotes."
+    answer: "No. The state groups are geographic navigation, not state-specific prices. The published examples below apply only to their stated locations, dates, and scopes."
   },
   {
     question: "Why not use ZIP code pricing?",
-    answer: "ZIP-level pricing needs live local plant and contractor data. These estimated regional bands provide a clear starting point instead."
+    answer: "Reliable ZIP-level pricing needs current local plant and contractor data that we do not have. Ask nearby suppliers for a quote for your project."
   },
   {
     question: "When should I get a real quote?",
@@ -61,27 +61,27 @@ const faqs = [
   },
   {
     question: "Should I use state prices or the calculator first?",
-    answer: "Use both. The state page gives a regional band, and the calculator turns your actual area into tonnage and cost."
+    answer: "Use the calculator to estimate tonnage, then ask local suppliers or contractors for current prices. Its default cost ranges are assumptions, not verified local quotes."
   },
   {
     question: "How do I calculate total cost for my state?",
     answer:
-      "First calculate tonnage with the main calculator or the tonnage page. Then multiply by your state group's price per ton and add labor or prep if you need a full project budget."
+      "Estimate tonnage with the calculator, then multiply by a current material quote. Ask for delivery and installation separately, including any preparation work."
   },
   {
     question: "Can I use this with a blacktop calculator?",
     answer:
-      "Yes. Blacktop is another common name for asphalt, so the same regional pricing logic applies."
+      "Yes. Blacktop is another common name for asphalt; confirm the mix and local price with your supplier."
   },
   {
     question: "What is the price of blacktop per ton?",
     answer:
-      "Blacktop and asphalt use the same regional material bands. The real price per ton still depends on mix, plant location, order size, delivery, and whether the quote is material-only or installed."
+      "Blacktop generally refers to asphalt paving mix. Ask a local supplier for the mix and quantity you need; pickup, delivery, and installation are different scopes."
   },
   {
     question: "Can Canadian or UK visitors use these estimates?",
     answer:
-      "Yes, but treat the U.S. table as a comparison only. In Canada, ask for local asphalt price per tonne. In the UK, tarmac and asphalt pricing is usually quoted locally by tonne, square metre, or installed job."
+      "The quote checklist can help, but the price examples are U.S.-specific. In Canada, ask for local pricing per tonne; in the UK, ask whether the quote is per tonne, square metre, or installed job."
   }
 ];
 
@@ -91,7 +91,7 @@ const whyPricesVary = [
   {
     title: "Local plant pricing",
     text:
-      "The closest asphalt plant can change the number quickly. Use the state range as a starting point, then confirm current pricing with a nearby plant or paving contractor."
+      "The closest asphalt plant can change the number quickly. Confirm current pricing with a nearby plant or paving contractor."
   },
   {
     title: "Labor and season",
@@ -106,7 +106,7 @@ const whyPricesVary = [
   {
     title: "Base and drainage",
     text:
-      "A state price band cannot see your driveway. Soft base, poor drainage, and removal work can move the final quote."
+      "A published material price cannot account for your driveway. Soft base, poor drainage, and removal work can move the final quote."
   },
   {
     title: "Access",
@@ -115,66 +115,19 @@ const whyPricesVary = [
   }
 ] as const;
 
-const priceNotes = [
-  {
-    title: "How to read these ranges",
-    text:
-      "They are regional estimates, not today's supplier rates. Confirm the current rate before ordering material."
-  },
-  {
-    title: "Source and estimate basis",
-    text:
-      "Ranges are based on regional paving cost patterns, contractor quote comparisons, material-versus-installed differences, and typical haul and labor adjustments."
-  },
-  {
-    title: "California and high-cost markets",
-    text:
-      "California, coastal metro areas, and tight urban jobs often land toward the high side because labor, trucking, access, and environmental requirements can be more expensive."
-  },
-  {
-    title: "Canada, UK, tonne, and tarmac terms",
-    text:
-      "If you are outside the U.S., keep the same method but replace per ton with local per tonne pricing. UK visitors may see tarmac used as the everyday word for asphalt surfacing."
-  },
-  {
-    title: "Blacktop price per ton",
-    text:
-      "Blacktop is another name for asphalt. Use the same state band, then confirm the current price of blacktop per ton with a nearby plant or paving contractor."
-  }
-] as const;
-
 const localPriceSteps = [
-  {
-    title: "Start with your state band",
-    text: "Use the region card to get a rough material and installed price range before you call anyone."
-  },
-  {
-    title: "Calculate tons needed",
-    text: "Use your actual area, thickness, and waste allowance so the price is tied to a real quantity."
-  },
-  {
-    title: "Call nearby suppliers",
-    text: "Ask for material-only, delivered, and installed pricing because each number means something different."
-  }
+  { title: "1. Estimate the quantity", text: "Measure the area and compacted depth; use the calculator to estimate tons." },
+  { title: "2. Find local providers", text: "Search for asphalt plants or paving contractors in your city or county. Confirm they serve your location and project size." },
+  { title: "3. Compare written quotes", text: "Ask two or three providers for the same mix, quantity, location, and scope. Separate pickup, delivery, and installation." }
 ] as const;
 
 const contractorQuestions = [
-  "Is this quote for material only, delivered asphalt, or fully installed asphalt?",
-  "What asphalt mix, thickness, and compacted depth are included?",
-  "Does the price include base repair, grading, drainage, removal, trucking, cleanup, and permits?",
-  "How far is the asphalt plant from the job, and can haul time affect the price?",
-  "Is the quote valid this week only, or does it include a price hold?"
+  "What mix and compacted thickness are included?",
+  "What is the material price per ton, and is there a minimum load or small-order charge?",
+  "What are delivery, fuel, tax, and other fees?",
+  "For installation, are removal, base repair, grading, drainage, and cleanup included?",
+  "How long is the quote valid, and when can the work be done?"
 ] as const;
-
-const stateRegionPricing = stateBuckets.map((bucket) => regionPricing[bucket.region]);
-const materialRange = {
-  low: Math.min(...stateRegionPricing.map((pricing) => pricing.asphaltMaterialLow)),
-  high: Math.max(...stateRegionPricing.map((pricing) => pricing.asphaltMaterialHigh))
-};
-const installedRange = {
-  low: Math.min(...stateRegionPricing.map((pricing) => pricing.asphaltInstalledLow)),
-  high: Math.max(...stateRegionPricing.map((pricing) => pricing.asphaltInstalledHigh))
-};
 
 const relatedPages = [
   {
@@ -200,12 +153,12 @@ const relatedPages = [
   {
     href: "/asphalt-cost-guide",
     title: "Asphalt cost guide",
-    text: "Understand the price factors that state averages cannot see."
+    text: "Understand the factors that change a local quote."
   },
   {
     href: "/asphalt-contractor-guide",
     title: "Asphalt contractor guide",
-    text: "Use the regional band to ask better questions when bids come in."
+    text: "Ask better questions when bids come in."
   },
   {
     href: "/blacktop-cost-per-ton",
@@ -215,7 +168,7 @@ const relatedPages = [
   {
     href: "/asphalt-driveway-replacement-cost-calculator",
     title: "Driveway replacement cost",
-    text: "Add removal, base repair, and new paving to a state-level material range."
+    text: "Consider removal, base repair, and new paving when requesting quotes."
   },
   {
     href: "/asphalt-driveway-resurfacing-cost-calculator",
@@ -242,15 +195,13 @@ export default function AsphaltPricesByStatePage() {
             <Breadcrumbs items={breadcrumbs} />
             <div className="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-medium text-amber-950">
               <MapPinned className="h-3.5 w-3.5" />
-              Broad state-level bands
+              Local pricing guide
             </div>
             <h1 className="text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl">
               Asphalt Price Per Ton Near Me by State
             </h1>
             <p className="text-lg leading-8 text-zinc-600">
-              U.S. states are grouped into practical pricing bands to help you estimate material pricing before a
-              local bid. Outside the U.S., use the tonnage calculator and enter your local price per ton or
-              tonne. Canada and UK visitors can also use the same method for asphalt, blacktop, or tarmac planning.
+              Find your state group, see what published prices actually cover, and prepare a request for local suppliers or contractors. Prices depend on the mix, quantity, delivery, and work required.
             </p>
           </div>
 
@@ -261,13 +212,15 @@ export default function AsphaltPricesByStatePage() {
               <CardContent className="space-y-3">
                 <p className="text-sm font-medium text-amber-300">Quick answer</p>
                 <h2 className="text-2xl font-semibold tracking-tight text-white">
-                  Regional material bands run about {formatCurrency(materialRange.low)}–{formatCurrency(materialRange.high)} per ton.
+                  Get a local price for your actual project.
                 </h2>
                 <p className="text-sm leading-6 text-zinc-300">
-                  Broad installed bands run about {formatCurrency(installedRange.low)}–{formatCurrency(installedRange.high)} per ton.
-                  These are grouped regional estimates—not live state or supplier quotes. Delivery, minimum loads,
-                  season, access, and site preparation can change the actual local price.
+                  Public price lists and bids offer examples, not current quotes for your address. Ask local providers
+                  separately for plant pickup, delivered material, and installation.
                 </p>
+                <a href="#contractor-quotes" className="inline-flex font-medium text-amber-300 underline underline-offset-4">
+                  See the quote request template
+                </a>
               </CardContent>
             </Card>
 
@@ -285,106 +238,66 @@ export default function AsphaltPricesByStatePage() {
 
           <StickySectionNav sections={quickNavSections} className="mt-2" />
 
-          <section id="state-bands" className="scroll-mt-24 space-y-5">
+          <section id="state-bands" className="scroll-mt-44 space-y-5">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 text-sm font-semibold text-amber-700">
-                <BookOpen className="h-4 w-4" />
-                State bands
+                <BookOpen className="h-4 w-4" /> State groups
               </div>
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">Use your state group as a starting point</h2>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-zinc-950">Find your state</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                These are broad planning ranges, not live local quotes. They are useful when you want to know whether
-                your first estimate is in the right neighborhood before you call local contractors or nearby asphalt
-                plants.
+                These groups organize the states geographically; they do not represent verified state prices.
+                Search for plants and contractors in your city or county and confirm their service area.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {stateBuckets.map((bucket) => {
-                const pricing = regionPricing[bucket.region];
-
-                return (
-                  <Card key={bucket.label} className="border-zinc-200">
-                    <CardContent className="space-y-4">
-                      <div>
-                        <p className="text-lg font-semibold text-zinc-950">{bucket.label}</p>
-                        <p className="mt-1 text-sm leading-6 text-zinc-600">{pricing.note}</p>
-                      </div>
-
-                      <div className="space-y-2 text-sm text-zinc-600">
-                        <p>
-                          Material price: {formatCurrency(pricing.asphaltMaterialLow)} - {formatCurrency(pricing.asphaltMaterialHigh)} per ton
-                        </p>
-                        <p>
-                          Installed price: {formatCurrency(pricing.asphaltInstalledLow)} - {formatCurrency(pricing.asphaltInstalledHigh)} per ton
-                        </p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {bucket.states.map((state) => (
-                          <span key={state} className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-700">
-                            {state}
-                          </span>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
-            </div>
-            <p className="text-xs text-zinc-500 sm:hidden">Swipe the table left or right to compare every column.</p>
-            <div className="overflow-x-auto rounded-lg border border-zinc-200">
-              <table className="w-full min-w-[720px] text-left text-sm">
-                <thead className="bg-zinc-50 text-xs uppercase tracking-[0.14em] text-zinc-500">
-                  <tr>
-                    <th className="px-4 py-3 font-medium">Region</th>
-                    <th className="px-4 py-3 font-medium">Material per ton</th>
-                    <th className="px-4 py-3 font-medium">Installed per ton</th>
-                    <th className="px-4 py-3 font-medium">Regional note</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-zinc-200">
-                  {stateBuckets.map((bucket) => {
-                    const pricing = regionPricing[bucket.region];
-
-                    return (
-                      <tr key={bucket.label}>
-                        <td className="px-4 py-3 font-medium text-zinc-950">{bucket.label}</td>
-                        <td className="px-4 py-3 text-zinc-600">
-                          {formatCurrency(pricing.asphaltMaterialLow)} - {formatCurrency(pricing.asphaltMaterialHigh)}
-                        </td>
-                        <td className="px-4 py-3 text-zinc-600">
-                          {formatCurrency(pricing.asphaltInstalledLow)} - {formatCurrency(pricing.asphaltInstalledHigh)}
-                        </td>
-                        <td className="px-4 py-3 text-zinc-600">{pricing.note}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section id="price-notes" className="scroll-mt-24 space-y-5">
-            <div className="max-w-3xl">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">What the prices include</h2>
-              <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Compare plant pickup, delivered material, and fully installed work separately. A quote that combines
-                those scopes can look higher even when the material rate is similar.
-              </p>
-            </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              {priceNotes.map((item) => (
-                <Card key={item.title} className="border-zinc-200">
-                  <CardContent className="space-y-2">
-                    <p className="text-base font-medium text-zinc-950">{item.title}</p>
-                    <p className="text-sm leading-6 text-zinc-600">{item.text}</p>
+              {stateBuckets.map((bucket) => (
+                <Card key={bucket.label} className="border-zinc-200">
+                  <CardContent className="space-y-4">
+                    <h3 className="text-lg font-semibold text-zinc-950">{bucket.label}</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {bucket.states.map((state) => (
+                        <span key={state} className="rounded-full bg-zinc-100 px-3 py-1 text-xs text-zinc-700">{state}</span>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           </section>
 
-          <section id="why-vary" className="scroll-mt-24 space-y-5">
+          <section id="price-examples" className="scroll-mt-44 space-y-5">
+            <div className="max-w-3xl space-y-3">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Published price examples</h2>
+              <p className="text-sm leading-7 text-zinc-600">
+                Checked November 10, 2026. These examples show how prices and scopes differ; they are not state averages
+                or guaranteed current offers. Availability, order size, taxes, and delivery can change your price.
+              </p>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              <Card className="border-zinc-200"><CardContent className="space-y-3">
+                <h3 className="font-semibold text-zinc-950">Vermont: plant pickup</h3>
+                <p className="text-sm leading-6 text-zinc-600">Pike Industries lists $80–$89 per ton for standard 3/8-inch surface mix at its listed Vermont plants, effective April 1, 2026. Prices are at the plant and subject to change.</p>
+                <a className="text-sm font-medium text-amber-800 underline underline-offset-4" href="https://pikeindustries.com/wp-content/uploads/2025/04/2026-HMA-Price-Cards-VT.pdf">View Pike&apos;s 2026 price card</a>
+              </CardContent></Card>
+              <Card className="border-zinc-200"><CardContent className="space-y-3">
+                <h3 className="font-semibold text-zinc-950">Grayson County, Texas: delivered bids</h3>
+                <p className="text-sm leading-6 text-zinc-600">The county&apos;s 2026 bid tab lists $91–$109.75 per ton for hot mix/hot lay delivered to its Sherman precinct from three bidders. Public bids have their own terms and are not residential quotes.</p>
+                <a className="text-sm font-medium text-amber-800 underline underline-offset-4" href="https://www.co.grayson.tx.us/page/open/3539/0/2026-03%20ASPHALT%20MATERIALS%20BID%20TABULATION%20-%20STATUS%20CLOSED">View the county bid tabulation</a>
+              </CardContent></Card>
+            </div>
+          </section>
+
+          <section id="price-notes" className="scroll-mt-44 space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">What these prices include</h2>
+            <p className="max-w-3xl text-sm leading-7 text-zinc-600">
+              Plant pickup, delivery, and installation are different scopes. The examples above do not establish a
+              nationwide or state-wide range. Our calculator&apos;s default regional cost inputs are planning assumptions;
+              their original quote samples are not documented, so they should not be treated as verified current prices.
+              Enter a current local material price when available. See our <Link href="/methodology" className="font-medium text-amber-800 underline underline-offset-4">methodology</Link> for the calculation and its limits.
+            </p>
+          </section>
+
+          <section id="why-vary" className="scroll-mt-44 space-y-5">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Why asphalt prices vary by state</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
@@ -404,78 +317,48 @@ export default function AsphaltPricesByStatePage() {
             </div>
           </section>
 
-          <section id="contractor-quotes" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(320px,1fr)]">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Ask local contractors before you lock the budget</h2>
-              <div className="space-y-3 text-sm leading-7 text-zinc-600">
-                <p>
-                  A state average can tell you if a quote looks reasonable. A contractor can tell you what your actual
-                  driveway, parking area, or private road needs.
-                </p>
-                <p>
-                  For the cleanest comparison, ask every contractor to quote the same thickness, prep work, asphalt
-                  mix, and cleanup scope.
-                </p>
-              </div>
+          <section id="contractor-quotes" className="scroll-mt-44 space-y-5">
+            <div className="max-w-3xl space-y-3">
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Request comparable local quotes</h2>
+              <p className="text-sm leading-7 text-zinc-600">For material, contact nearby asphalt plants; for paving, contact contractors serving your area. Send the same details to two or three providers. Select and copy the template below, then replace the brackets before sending it yourself.</p>
             </div>
+            <div className="grid gap-4 lg:grid-cols-2">
+              <Card className="border-zinc-200 bg-zinc-50"><CardContent className="space-y-3">
+                <h3 className="font-semibold text-zinc-950">Quote request template</h3>
+                <div className="select-text whitespace-pre-line rounded-lg border border-zinc-200 bg-white p-4 text-sm leading-7 text-zinc-700">{`Hello, I would like a quote for an asphalt project in [city / ZIP code].
 
-            <Card className="border-zinc-200">
-              <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">Questions to ask</p>
-                <ul className="space-y-2 text-sm leading-6 text-zinc-600">
-                  {contractorQuestions.map((question) => (
-                    <li key={question}>{question}</li>
-                  ))}
+Project: [driveway, road, or other]
+Area: [square feet or length × width]
+Compacted asphalt thickness: [inches, if known]
+Estimated quantity: [tons, if known]
+Existing surface and preparation needed: [details or unknown]
+Requested scope: [plant pickup / delivery / installation]
+Preferred timing: [date or flexible]
+
+Please itemize the mix and material price per ton, minimum order, delivery and other fees. For installation, please include preparation, removal, base work, drainage, and cleanup, or identify exclusions. How long is the quote valid?`}</div>
+                <Link href="/#calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">Estimate your asphalt quantity <ArrowRight className="h-4 w-4" /></Link>
+              </CardContent></Card>
+              <Card className="border-zinc-200"><CardContent className="space-y-3">
+                <h3 className="font-semibold text-zinc-950">Before comparing quotes</h3>
+                <ul className="list-disc space-y-2 pl-5 text-sm leading-6 text-zinc-600">
+                  {contractorQuestions.map((question) => <li key={question}>{question}</li>)}
                 </ul>
-              </CardContent>
-            </Card>
-          </section>
-
-          <section id="how-to-use" className="scroll-mt-24 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.8fr)]">
-            <div className="space-y-4">
-              <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">How to use these bands</h2>
-              <div className="space-y-3 text-sm leading-7 text-zinc-600">
-                <p>
-                  Use the state group as a starting point, then enter your actual square footage in the main
-                  calculator or tonnage page.
-                </p>
-                <p>When you compare bids, keep thickness, prep scope, and cleanup assumptions the same.</p>
-                <p>
-                  If a quote is far outside the band, do not reject it immediately. Ask what is included. The difference
-                  may be removal, base repair, drainage, access, or a thicker asphalt section.
-                </p>
-                <p>
-                  For California and other high-cost regions, start near the upper half of the regional band until a
-                  local contractor confirms the current price.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/asphalt-driveway-cost-calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
-                  Open driveway calculator
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/asphalt-cost-guide" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">
-                  Read the cost guide
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
+                <p className="text-sm leading-6 text-zinc-600">A delivered material quote is not an installed price. Ask a contractor to inspect the site before relying on a full project budget.</p>
+              </CardContent></Card>
             </div>
-
-            <Card className="border-zinc-200">
-              <CardContent className="space-y-3">
-                <p className="text-base font-medium text-zinc-950">What can change your quote</p>
-                <p className="text-sm leading-6 text-zinc-600">
-                  Base condition, drainage, access, and current material availability can all change the final price.
-                </p>
-              </CardContent>
-            </Card>
           </section>
 
-          <section id="related-tools" className="scroll-mt-24 space-y-5">
+          <section id="how-to-use" className="scroll-mt-44 space-y-3">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Use your quote in the calculator</h2>
+            <p className="max-w-3xl text-sm leading-7 text-zinc-600">Enter your measured area and compacted thickness, then enter the supplier&apos;s material price per ton. The custom price estimates material only; the installed range remains a separate default assumption. Confirm quantity and scope before ordering; delivery, base work, and other charges may be separate.</p>
+            <Link href="/#calculator" className="inline-flex items-center gap-2 text-sm font-medium text-amber-700">Open the calculator <ArrowRight className="h-4 w-4" /></Link>
+          </section>
+
+          <section id="related-tools" className="scroll-mt-44 space-y-5">
             <div className="max-w-3xl">
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Tools for quantity and total cost</h2>
               <p className="mt-3 text-sm leading-7 text-zinc-600">
-                Combine the state range with your measured area, asphalt thickness, and written quote scope.
+                Use your measured area, asphalt thickness, and written quote scope with the right tool.
               </p>
             </div>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -496,7 +379,7 @@ export default function AsphaltPricesByStatePage() {
             </div>
           </section>
 
-          <section id="faq" className="scroll-mt-24 space-y-4">
+          <section id="faq" className="scroll-mt-44 space-y-4">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-950">Common questions</h2>
             <FaqAccordion items={faqs} defaultOpenIndex={0} />
           </section>
